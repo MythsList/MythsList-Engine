@@ -23,22 +23,44 @@ class StoryMenuState extends MusicBeatState
 	// song names (in uppercase because why not)
 	var weekData:Array<Dynamic> = [
 		['TUTORIAL'],
-		['SL-AO', 'STRANGE-ACTIVITY', 'DESTRUCTION-PROGRAM']
+		['BOPEEBO', 'FRESH', 'DADBATTLE'],
+		['SPOOKEEZ', 'SOUTH', "MONSTER"],
+		['PICO', 'PHILLY', "BLAMMED"],
+		['SATIN-PANTIES', "HIGH", "MILF"],
+		['COCOA', 'EGGNOG', 'WINTER-HORRORLAND'],
+		['SENPAI', 'ROSES', 'THORNS']
 	];
 
 	// left character, middle character and right character
 	var weekCharacters:Array<Dynamic> = [
 		['dad', 'bf', 'gf'],
-		['sl-a0', 'bf', 'gf']
+		['dad', 'bf', 'gf'],
+		['spooky', 'bf', 'gf'],
+		['pico', 'bf', 'gf'],
+		['mom', 'bf', 'gf'],
+		['parents-christmas', 'bf', 'gf'],
+		['senpai', 'bf', 'gf']
 	];
 
 	// doesn't affect gameplay so put whatever you want
 	var weekNames:Array<String> = [
-		" ",
-		"V E R S E"
+		"TUTORIAL",
+		"VS DOUBLE D",
+		"SPOOKY MONTH",
+		"NEWGROUNDS SHOWDOWN",
+		"VS DOUBLE M",
+		"UNHOLY XMAS",
+		"HATING SIMULATOR",
 	];
 
-	public static var weekUnlocked:Array<Bool> = [true, true]; // true values should be the same amount as your weeks (tutorial counts)
+	/*
+	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true]; // true values should be the same amount as your weeks (tutorial counts)
+	*/
+
+	for (i in 0...weekData.lenght)
+	{
+		weekUnlocked.add(true);
+	}
 
 	var curDifficulty:Int = 1;
 	var curWeek:Int = 0;
