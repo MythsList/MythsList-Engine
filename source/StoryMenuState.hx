@@ -53,14 +53,16 @@ class StoryMenuState extends MusicBeatState
 		"HATING SIMULATOR",
 	];
 
-	/*
 	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true]; // true values should be the same amount as your weeks (tutorial counts)
-	*/
+
+	/*
+	public static var weekUnlocked:Array<Bool>;
 
 	for (item in weekData.lenght)
 	{
 		weekUnlocked.push(true);
 	}
+	*/
 
 	var curDifficulty:Int = 1;
 	var curWeek:Int = 0;
