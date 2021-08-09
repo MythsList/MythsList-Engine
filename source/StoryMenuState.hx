@@ -57,7 +57,7 @@ class StoryMenuState extends MusicBeatState
 	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true]; // true values should be the same amount as your weeks (tutorial counts)
 	*/
 
-	for (i in 0...weekData.lenght)
+	for (item in weekData.lenght)
 	{
 		weekUnlocked.push(true);
 	}
