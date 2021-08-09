@@ -1763,22 +1763,16 @@ class PlayState extends MusicBeatState
 					var altAnim:String = '';
 
 					if (SONG.song.toLowerCase() != 'tutorial')
-					{
 						camZooming = true;
-					}
 
 					if (SONG.notes[Math.floor(curStep / 16)] != null)
 					{
 						if (SONG.notes[Math.floor(curStep / 16)].altAnim)
 							altAnim = '-alt';
-						else
-							altAnim = '';
 					}
-					
-					if (altAnim == '' || altAnim == ' ' || altAnim == null)
-						dad.playAnim('sing' + curPress[daNote.noteData], false);
-					else
-						dad.playAnim('sing' + curPress[daNote.noteData] + altAnim, false);
+
+					var singData:Int = Std.int(Math.abs(daNote.noteData));
+					dad.playAnim('sing' + curPress[singData] + altAnim, true);
 
 					dad.holdTimer = 0;
 
