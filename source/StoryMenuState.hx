@@ -123,7 +123,7 @@ class StoryMenuState extends MusicBeatState
 			default:
 				BG.color = 0xFFfde871;
 			case 0:
-				BG.color = 0xFF7f003b;
+				BG.color = 0xFFd60064;
 			case 1:
 				BG.color = 0xFFaf66ce;
 			case 2:
@@ -417,7 +417,7 @@ class StoryMenuState extends MusicBeatState
 			default:
 				BG.color = 0xFFfde871;
 			case 0:
-				BG.color = 0xFF7f003b;
+				BG.color = 0xFFd60064;
 			case 1:
 				BG.color = 0xFFaf66ce;
 			case 2:

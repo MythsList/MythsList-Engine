@@ -57,7 +57,7 @@ class WeekselectState extends MusicBeatState
 			addWeek(2, 'spooky', 'SPOOKY MONTH');
 
 		if (StoryMenuState.weekUnlocked[3] || isDebug)
-			addWeek(3, 'pico', 'NEWGROUNDS SHOWDOWN');
+			addWeek(3, 'pico', 'NG SHOWDOWN');
 
 		if (StoryMenuState.weekUnlocked[4] || isDebug)
 			addWeek(4, 'mom', 'VS DOUBLE M');
