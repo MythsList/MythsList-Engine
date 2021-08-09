@@ -1153,11 +1153,14 @@ class PlayState extends MusicBeatState
 	function updateAccuracy()
 	{
 		totalPlayed += 1;
-		accuracy = Math.max(0,totalNotesHit / (totalPlayed * 0.5) * 100);
-		accuracyDefault = Math.max(0, totalNotesHitDefault / (totalPlayed * 0.5) * 100);
 
+		accuracy = Math.max(0, (totalNotesHit / (totalPlayed * 0.5)) * 100);
+		accuracyDefault = Math.max(0, (totalNotesHitDefault / (totalPlayed * 0.5)) * 100);
+
+		/*
 		if (accuracy > 100.00) // cringe code
 			accuracy = 100.00;
+		*/
 
 		if (misses > 0)
 			fc = false;
@@ -1778,9 +1781,9 @@ class PlayState extends MusicBeatState
 					}
 					
 					if (altAnim == '' || altAnim == ' ' || altAnim == null)
-						dad.playAnim('sing' + curPress[daNote.noteData], true);
+						dad.playAnim('sing' + curPress[daNote.noteData], false);
 					else
-						dad.playAnim('sing' + curPress[daNote.noteData] + altAnim, true);
+						dad.playAnim('sing' + curPress[daNote.noteData] + altAnim, false);
 
 					dad.holdTimer = 0;
 
@@ -1993,6 +1996,8 @@ class PlayState extends MusicBeatState
 			totalNotesHit += 1;
 
 		songScore += score;
+
+		updateAccuracy();
 
 		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
@@ -2311,7 +2316,6 @@ class PlayState extends MusicBeatState
 		if (keyP)
 		{
 			goodNoteHit(note);
-			updateAccuracy();
 		}
 		else
 		{
@@ -2425,8 +2429,6 @@ class PlayState extends MusicBeatState
 		gf.playAnim('hairFall');
 		phillyTrain.x = FlxG.width + 200;
 		trainMoving = false;
-		// trainSound.stop();
-		// trainSound.time = 0;
 		trainCars = 8;
 		trainFinishing = false;
 		startedMoving = false;
@@ -2452,10 +2454,6 @@ class PlayState extends MusicBeatState
 			resyncVocals();
 		}
 
-		if (dad.curCharacter == 'spooky' && curStep % 4 == 2)
-		{
-			// dad.dance();
-		}
 		#if desktop
 		songLength = FlxG.sound.music.length;
 
