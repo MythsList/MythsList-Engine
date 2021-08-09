@@ -59,7 +59,7 @@ class StoryMenuState extends MusicBeatState
 
 	for (i in 0...weekData.lenght)
 	{
-		weekUnlocked.add(true);
+		weekUnlocked.push(true);
 	}
 
 	var curDifficulty:Int = 1;
