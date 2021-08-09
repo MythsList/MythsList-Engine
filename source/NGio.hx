@@ -16,9 +16,6 @@ import openfl.display.Stage;
 
 using StringTools;
 
-/**
- * MADE BY GEOKURELI THE LEGENED GOD HERO MVP
- */
 class NGio
 {
 	public static var isLoggedIn:Bool = false;

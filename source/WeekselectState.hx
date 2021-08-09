@@ -51,7 +51,22 @@ class WeekselectState extends MusicBeatState
 			addWeek(0, 'gf', 'TUTORIAL');
 
 		if (StoryMenuState.weekUnlocked[1] || isDebug)
-			addWeek(1, 'sl-a0', 'SL-AO');
+			addWeek(1, 'dad', 'VS DOUBLE D');
+
+		if (StoryMenuState.weekUnlocked[2] || isDebug)
+			addWeek(2, 'spooky', 'SPOOKY MONTH');
+
+		if (StoryMenuState.weekUnlocked[3] || isDebug)
+			addWeek(3, 'pico', 'NEWGROUNDS SHOWDOWN');
+
+		if (StoryMenuState.weekUnlocked[4] || isDebug)
+			addWeek(4, 'mom', 'VS DOUBLE M');
+
+		if (StoryMenuState.weekUnlocked[5] || isDebug)
+			addWeek(5, 'parents-christmas', 'UNHOLY XMAS');
+
+		if (StoryMenuState.weekUnlocked[6] || isDebug)
+			addWeek(6, 'senpai', 'HATING SIMULATOR');
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
 		add(bg);
