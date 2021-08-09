@@ -1635,7 +1635,7 @@ class PlayState extends MusicBeatState
 		{
 			switch (curBeat)
 			{
-				case 128, 129, 130:
+				case 128 | 129 | 130:
 					vocals.volume = 0;
 			}
 		}
@@ -1777,7 +1777,10 @@ class PlayState extends MusicBeatState
 							altAnim = '';
 					}
 					
-					dad.playAnim('sing' + curPress[daNote.noteData] + altAnim, true);
+					if (altAnim == '' || altAnim == ' ' || altAnim == null)
+						dad.playAnim('sing' + curPress[daNote.noteData], true);
+					else
+						dad.playAnim('sing' + curPress[daNote.noteData] + altAnim, true);
 
 					dad.holdTimer = 0;
 
@@ -1903,11 +1906,6 @@ class PlayState extends MusicBeatState
 
 				StoryMenuState.weekUnlocked[Std.int(Math.min(storyWeek + 1, StoryMenuState.weekUnlocked.length - 1))] = true;
 
-				/*
-				if (SONG.validScore)
-					Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
-				*/
-
 				Highscore.saveWeekScore(storyWeek, campaignScore, storyDifficulty);
 
 				FlxG.save.data.weekUnlocked = StoryMenuState.weekUnlocked;
@@ -1915,7 +1913,7 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
-				var difficulty:String = "";
+				var difficulty:String = '';
 
 				switch(storyDifficulty)
 				{
@@ -2286,6 +2284,8 @@ class PlayState extends MusicBeatState
 			});
 
 			boyfriend.playAnim('sing' + curPress[direction] + 'miss', true);
+
+			updateAccuracy();
 		}
 	}
 
@@ -2316,7 +2316,6 @@ class PlayState extends MusicBeatState
 		else
 		{
 			badNoteCheck();
-			updateAccuracy();
 		}
 	}
 
