@@ -79,9 +79,34 @@ class FreeplayState extends MusicBeatState
 				bg.color = 0xFF7f003b;
 			case 1:
 				if (StoryMenuState.weekUnlocked[1] || isDebug)
-					addWeek(['SL-AO', 'STRANGE-ACTIVITY', 'DESTRUCTION-PROGRAM', 'MONASTERY-IN-DISGUISE'], 1, ['sl-a0', 'sl-a0-red', 'sl-a0-red', 'sl-a0']);
+					addWeek(['BOPEEBO', 'FRESH', 'DADBATTLE'], 1, ['dad']);
 
-				bg.color = 0xFF505050;
+				bg.color = 0xFFaf66ce;
+			case 2:
+				if (StoryMenuState.weekUnlocked[2] || isDebug)
+					addWeek(['SPOOKEEZ', 'SOUTH', 'MONSTER'], 2, ['spooky', 'spooky', 'monster']);
+
+				bg.color = 0xFFd56a00;
+			case 3:
+				if (StoryMenuState.weekUnlocked[3] || isDebug)
+					addWeek(['PICO', 'PHILLY', 'BLAMMED'], 3, ['pico']);
+
+				bg.color = 0xFFb7d855;
+			case 4:
+				if (StoryMenuState.weekUnlocked[4] || isDebug)
+					addWeek(['SATIN-PANTIES', 'HIGH', 'MILF'], 4, ['mom']);
+
+				bg.color = 0xFFd8558e;
+			case 5: 
+				if (StoryMenuState.weekUnlocked[5] || isDebug)
+					addWeek(['COCOA', 'EGGNOG', 'WINTER-HORRORLAND'], 5, ['parents-christmas', 'parents-christmas', 'monster-christmas']);
+
+				bg.color = 0xFFf3ff6e;
+			case 6: 
+				if (StoryMenuState.weekUnlocked[6] || isDebug)
+					addWeek(['SENPAI', 'ROSES', 'THORNS'], 6, ['senpai', 'senpai', 'spirit']);
+
+				bg.color = 0xFFffaa6f;
 		}
 
 		add(bg);
@@ -128,14 +153,6 @@ class FreeplayState extends MusicBeatState
 
 		changeSelection();
 		changeDiff();
-
-		selector = new FlxText();
-
-		selector.size = 40;
-		selector.text = ">";
-		// add(selector);
-
-		// var swag:Alphabet = new Alphabet(1, 0, "swag");
 
 		super.create();
 	}
@@ -248,11 +265,8 @@ class FreeplayState extends MusicBeatState
 		if (curSelected >= songs.length)
 			curSelected = 0;
 
-		// selector.y = (70 * curSelected) + 30;
-
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
-		// lerpScore = 0;
 		#end
 
 		#if PRELOAD_ALL
@@ -270,17 +284,14 @@ class FreeplayState extends MusicBeatState
 
 		for (item in grpSongs.members)
 		{
-			// item.x = (FlxG.width / 2) - (item.width / 2);
 			item.targetY = bullShit - curSelected;
 			bullShit++;
 
 			item.alpha = 0.6;
-			// item.setGraphicSize(Std.int(item.width * 0.8));
 
 			if (item.targetY == 0)
 			{
 				item.alpha = 1;
-				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
 	}

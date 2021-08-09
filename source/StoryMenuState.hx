@@ -99,9 +99,19 @@ class StoryMenuState extends MusicBeatState
 			default:
 				BG.color = 0xFFfde871;
 			case 0:
-				BG.color = 0xFFa5004d;
+				BG.color = 0xFF7f003b;
 			case 1:
-				BG.color = 0xFF6e6e6e;
+				BG.color = 0xFFaf66ce;
+			case 2:
+				BG.color = 0xFFd56a00;
+			case 3:
+				BG.color = 0xFFb7d855;
+			case 4:
+				BG.color = 0xFFd8558e;
+			case 5:
+				BG.color = 0xFFf3ff6e;
+			case 6:
+				BG.color = 0xFFffaa6f;
 		}
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
@@ -383,9 +393,19 @@ class StoryMenuState extends MusicBeatState
 			default:
 				BG.color = 0xFFfde871;
 			case 0:
-				BG.color = 0xFFa5004d;
+				BG.color = 0xFF7f003b;
 			case 1:
-				BG.color = 0xFF6e6e6e;
+				BG.color = 0xFFaf66ce;
+			case 2:
+				BG.color = 0xFFd56a00;
+			case 3:
+				BG.color = 0xFFb7d855;
+			case 4:
+				BG.color = 0xFFd8558e;
+			case 5:
+				BG.color = 0xFFf3ff6e;
+			case 6:
+				BG.color = 0xFFffaa6f;
 		}
 
 		FlxG.sound.play(Paths.sound('scrollMenu'));
