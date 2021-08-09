@@ -617,40 +617,6 @@ class Character extends FlxSprite
 				addOffset("singDOWN-alt", -30, -27);
 
 				playAnim('idle');
-
-			case 'sl-a0':
-				tex = Paths.getSparrowAtlas('sl-a0');
-				frames = tex;
-				animation.addByPrefix('idle', 'sl-a0 idle dance', 24);
-				animation.addByPrefix('singUP', 'sl-a0 Sing Note UP', 24);
-				animation.addByPrefix('singRIGHT', 'sl-a0 Sing Note RIGHT', 24);
-				animation.addByPrefix('singDOWN', 'sl-a0 Sing Note DOWN', 24);
-				animation.addByPrefix('singLEFT', 'sl-a0 Sing Note LEFT', 24);
-
-				addOffset('idle');
-				addOffset("singUP", 0, 20);
-				addOffset("singRIGHT", 0, 0);
-				addOffset("singLEFT", -20, 0);
-				addOffset("singDOWN", 0, -20);
-
-				playAnim('idle');
-
-			case 'sl-a0-red':
-				tex = Paths.getSparrowAtlas('sl-a0_red');
-				frames = tex;
-				animation.addByPrefix('idle', 'sl-a0_red idle dance', 24);
-				animation.addByPrefix('singUP', 'sl-a0_red Sing Note UP', 24);
-				animation.addByPrefix('singRIGHT', 'sl-a0_red Sing Note RIGHT', 24);
-				animation.addByPrefix('singDOWN', 'sl-a0_red Sing Note DOWN', 24);
-				animation.addByPrefix('singLEFT', 'sl-a0_red Sing Note LEFT', 24);
-
-				addOffset('idle');
-				addOffset("singUP", 0, 20);
-				addOffset("singRIGHT", 0, 0);
-				addOffset("singLEFT", -20, 0);
-				addOffset("singDOWN", 0, -20);
-
-				playAnim('idle');
 		}
 
 		dance();

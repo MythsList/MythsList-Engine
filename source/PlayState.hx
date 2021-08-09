@@ -500,26 +500,6 @@ class PlayState extends MusicBeatState
 
 		                  add(stageCurtains);
 		          }
-				  case 'sl-ao' | 'strange-activity':
-		          {
-		                  defaultCamZoom = 0.8;
-		                  curStage = 'stage';
-		                  var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('bgcubeone'));
-		                  bg.antialiasing = true;
-		                  bg.scrollFactor.set(0.9, 0.9);
-		                  bg.active = false;
-		                  add(bg);
-		          }
-				  case 'destruction-program':
-		          {
-		                  defaultCamZoom = 0.8;
-		                  curStage = 'stage';
-		                  var bg:FlxSprite = new FlxSprite(-600, -400).loadGraphic(Paths.image('bgcubetwo'));
-		                  bg.antialiasing = true;
-		                  bg.scrollFactor.set(0.9, 0.9);
-		                  bg.active = false;
-		                  add(bg);
-		          }
               }
 
 		var gfVersion:String = 'gf';
@@ -533,11 +513,6 @@ class PlayState extends MusicBeatState
 			case 'school' | 'schoolEvil':
 				gfVersion = 'gf-pixel';
 		}
-
-		/*
-		if (curStage == 'limo')
-			gfVersion = 'gf-car';
-		*/
 
 		gf = new Character(400, 130, gfVersion);
 		gf.scrollFactor.set(0.95, 0.95);
@@ -578,9 +553,6 @@ class PlayState extends MusicBeatState
 				dad.x -= 150;
 				dad.y += 100;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
-			case 'sl-a0' | 'sl-a0-red':
-				dad.x -= 100;
-				dad.y += 100;
 		}
 
 		// boyfriend = new Boyfriend(770, 450, SONG.player1);
@@ -828,9 +800,7 @@ class PlayState extends MusicBeatState
 						FlxG.sound.play(Paths.sound('ANGRY'));
 
 					schoolIntro(doof);
-				}
-				case 'sl-ao' | 'strange-activity' | 'destruction-program':
-					schoolIntro(doof);
+				};
 				default:
 					startCountdown();
 			}

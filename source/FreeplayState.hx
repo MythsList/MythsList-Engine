@@ -48,7 +48,7 @@ class FreeplayState extends MusicBeatState
 
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Menus", null);
+		DiscordClient.changePresence("In The Main Menus", null);
 		#end
 
 		var isDebug:Bool = false;
@@ -67,6 +67,8 @@ class FreeplayState extends MusicBeatState
 
 		You can also change the background's color with 'bg.color = hex color code'
 		*/
+
+		bg.color = 0xFFFFFFFF;
 
 		switch (curWeekfp)
 		{
