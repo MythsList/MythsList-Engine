@@ -1154,8 +1154,8 @@ class PlayState extends MusicBeatState
 	{
 		totalPlayed += 1;
 
-		accuracy = Math.max(0, totalNotesHit / totalPlayed * 100);
-		accuracyDefault = Math.max(0, totalNotesHitDefault / totalPlayed * 100);
+		accuracy = Math.max(0, (totalNotesHit / totalPlayed) * 100);
+		accuracyDefault = Math.max(0, (totalNotesHitDefault / totalPlayed) * 100);
 
 		if (misses > 0)
 			fc = false;
@@ -1986,6 +1986,8 @@ class PlayState extends MusicBeatState
 
 		songScore += score;
 
+		updateAccuracy();
+
 		var pixelShitPart1:String = "";
 		var pixelShitPart2:String = '';
 
@@ -2344,9 +2346,6 @@ class PlayState extends MusicBeatState
 				notes.remove(note, true);
 				note.destroy();
 			}
-
-			totalNotesHit += 1;
-			updateAccuracy();
 		}
 	}
 
