@@ -18,5 +18,3 @@ bf-pixel
 senpai
 senpai-angry
 spirit
-sl-a0
-sl-a0-red

@@ -158,5 +158,4 @@
 	<SubTexture name="spooky dance idle BLACK LINES0013" x="2164" y="3066" width="357" height="484" frameX="-79" frameY="-61" frameWidth="492" frameHeight="549"/>
 	<SubTexture name="spooky dance idle BLACK LINES0014" x="2531" y="3066" width="354" height="494" frameX="-78" frameY="-52" frameWidth="492" frameHeight="549"/>
 	<SubTexture name="spooky dance idle BLACK LINES0015" x="2531" y="3066" width="354" height="494" frameX="-78" frameY="-52" frameWidth="492" frameHeight="549"/>
-	<SubTexture name="cube lol idle BLACK LINES0000" x="4000" y="3191" width="376" height="376" frameX="-20" frameY="0" frameWidth="381" frameHeight="381"/>
 </TextureAtlas>
