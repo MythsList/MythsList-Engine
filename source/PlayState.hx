@@ -555,9 +555,13 @@ class PlayState extends MusicBeatState
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
 		}
 
-		// boyfriend = new Boyfriend(770, 450, SONG.player1);
-
-		boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
+		switch(SONG.song.toLowerCase())
+		{
+			case 'senpai' | 'roses' | 'thorns':
+				boyfriend = new Boyfriend(770, 450, SONG.player1);
+			default:
+				boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
+		}
 
 		switch (curStage)
 		{
@@ -733,7 +737,11 @@ class PlayState extends MusicBeatState
 				version.y = engineversion.y + engineversion.height;
 		}
 
-		iconP1 = new HealthIcon(MythsListEngineData.characterSkin, true);
+		if (SONG.player1 == 'bf-pixel')
+			iconP1 = new HealthIcon(SONG.player1, true);
+		else
+			iconP1 = new HealthIcon(MythsListEngineData.characterSkin, true);
+
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
 
@@ -1148,7 +1156,7 @@ class PlayState extends MusicBeatState
 		accuracy = Math.max(0,totalNotesHit / (totalPlayed * 0.5) * 100);
 		accuracyDefault = Math.max(0, totalNotesHitDefault / (totalPlayed * 0.5) * 100);
 
-		if (accuracy >= 99.99) // cringe code
+		if (accuracy > 100.00) // cringe code
 			accuracy = 100.00;
 
 		if (misses > 0)
@@ -1512,7 +1520,10 @@ class PlayState extends MusicBeatState
 
 		#if debug
 		if (FlxG.keys.justPressed.NINE && !endingSong)
-			FlxG.switchState(new AnimationDebug(MythsListEngineData.characterSkin));
+			if (SONG.player1 == "bf-pixel")
+				FlxG.switchState(new AnimationDebug(SONG.player1));
+			else
+				FlxG.switchState(new AnimationDebug(MythsListEngineData.characterSkin));
 
 			#if desktop
 			DiscordClient.changePresence("In Animation Debug Menu", null, iconRPC, true);
@@ -2275,8 +2286,6 @@ class PlayState extends MusicBeatState
 			});
 
 			boyfriend.playAnim('sing' + curPress[direction] + 'miss', true);
-
-			updateAccuracy();
 		}
 	}
 
@@ -2295,8 +2304,6 @@ class PlayState extends MusicBeatState
 			noteMiss(2);
 		if (rightP)
 			noteMiss(3);
-
-		updateAccuracy();
 	}
 
 	function noteCheck(keyP:Bool, note:Note):Void
@@ -2304,10 +2311,12 @@ class PlayState extends MusicBeatState
 		if (keyP)
 		{
 			goodNoteHit(note);
+			updateAccuracy();
 		}
 		else
 		{
 			badNoteCheck();
+			updateAccuracy();
 		}
 	}
 
@@ -2345,7 +2354,6 @@ class PlayState extends MusicBeatState
 				notes.remove(note, true);
 				note.destroy();
 			}
-			updateAccuracy();
 		}
 	}
 
