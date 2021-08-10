@@ -21,7 +21,7 @@ using StringTools;
 class StoryMenuState extends MusicBeatState
 {
 	// song names (in uppercase because why not)
-	var weekData:Array<Dynamic> = [
+	public static var weekData:Array<Dynamic> = [
 		['TUTORIAL'],
 		['BOPEEBO', 'FRESH', 'DADBATTLE'],
 		['SPOOKEEZ', 'SOUTH', "MONSTER"],
@@ -53,16 +53,11 @@ class StoryMenuState extends MusicBeatState
 		"HATING SIMULATOR",
 	];
 
-	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true]; // true values should be the same amount as your weeks (tutorial counts)
-
 	/*
-	public static var weekUnlocked:Array<Bool>;
-
-	for (item in weekData.lenght)
-	{
-		weekUnlocked.push(true);
-	}
+	public static var weekUnlocked:Array<Bool> = [true, true, true, true, true, true, true]; // true values should be the same amount as your weeks (tutorial counts)
 	*/
+
+	public static var weekUnlocked:Array<Bool> = [];
 
 	var curDifficulty:Int = 1;
 	var curWeek:Int = 0;
@@ -92,6 +87,11 @@ class StoryMenuState extends MusicBeatState
 		{
 			if (!FlxG.sound.music.playing)
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+		}
+
+		for (i in 0...weekData.length)
+		{
+			weekUnlocked.push(true);
 		}
 
 		persistentUpdate = persistentDraw = true;
@@ -347,6 +347,10 @@ class StoryMenuState extends MusicBeatState
 			{
 				LoadingState.loadAndSwitchState(new PlayState(), true);
 			});
+		}
+		else
+		{
+			FlxG.camera.shake(0.02, 0.02);
 		}
 	}
 

@@ -67,18 +67,17 @@ class TitleState extends MusicBeatState
 		var ng:NGio = new NGio(APIStuff.API, APIStuff.EncKey);
 		#end
 
-		FlxG.save.bind('funkin', 'ninjamuffin99');
+		// FlxG.save.bind('funkin', 'ninjamuffin99');
 
 		Highscore.load();
 
+		/*
 		if (FlxG.save.data.weekUnlocked != null)
 		{
-			if (StoryMenuState.weekUnlocked.length < 4)
-				StoryMenuState.weekUnlocked.insert(0, true);
-
 			if (!StoryMenuState.weekUnlocked[0])
 				StoryMenuState.weekUnlocked[0] = true;
 		}
+		*/
 
 		#if FREEPLAY
 		FlxG.switchState(new FreeplayState());
