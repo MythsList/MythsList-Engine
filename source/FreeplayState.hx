@@ -168,6 +168,7 @@ class FreeplayState extends MusicBeatState
 			songCharacters = [MythsListEngineData.characterSkin];
 
 		var num:Int = 0;
+		
 		for (song in songs)
 		{
 			addSong(song, weekNum, songCharacters[num]);

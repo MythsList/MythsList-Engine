@@ -21,7 +21,7 @@ using StringTools;
 class StoryMenuState extends MusicBeatState
 {
 	// song names (in uppercase because why not)
-	public static var weekData:Array<Dynamic> = [
+	var weekData:Array<Dynamic> = [
 		['TUTORIAL'],
 		['BOPEEBO', 'FRESH', 'DADBATTLE'],
 		['SPOOKEEZ', 'SOUTH', "MONSTER"],
@@ -414,7 +414,7 @@ class StoryMenuState extends MusicBeatState
 			bullShit++;
 		}
 
-		// Hello, I make complex codes.
+		// Hello, I make "complex" codes.
 
 		switch (curWeek)
 		{
@@ -444,6 +444,7 @@ class StoryMenuState extends MusicBeatState
 	function updateText()
 	{
 		grpWeekCharacters.members[0].animation.play(weekCharacters[curWeek][0]);
+
 		txtTracklist.text = "TRACKS:\n";
 
 		switch (grpWeekCharacters.members[0].animation.curAnim.name)
@@ -470,6 +471,16 @@ class StoryMenuState extends MusicBeatState
 		for (i in 0...stringThing.length + 1)
 		{
 			txtTracklist.text += "\n" + stringThing[i].toUpperCase();
+		}
+
+		// in case because shit bug
+		
+		if (txtTracklist.text = "TRACKS:\n")
+		{
+			for (i in 0...stringThing.length + 1)
+			{
+				txtTracklist.text += "\n" + stringThing[i].toUpperCase();
+			}
 		}
 
 		txtTracklist.screenCenter(X);
