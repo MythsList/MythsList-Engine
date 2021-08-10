@@ -1173,7 +1173,7 @@ class PlayState extends MusicBeatState
 		accuracy = Math.max(0, (totalNotesHit / totalPlayed * 100));
 		accuracyDefault = Math.max(0, (totalNotesHitDefault / totalPlayed * 100));
 
-		trace(totalNotesHit + " / " + totalPlayed + " * 100 = " + accuracy + "%");
+		// trace(totalNotesHit + " / " + totalPlayed + " * 100 = " + accuracy + "%");
 
 		if (misses > 0)
 			fc = false;
@@ -1971,25 +1971,25 @@ class PlayState extends MusicBeatState
 
 		var daRating:String = 'sick';
 
-		if (noteDiff > Conductor.safeZoneOffset * 0.85 || noteDiff < Conductor.safeZoneOffset * -0.85)
+		if (noteDiff > Conductor.safeZoneOffset * 0.85)
 		{
 			daRating = 'shit';
 			totalNotesHit += 0.25;
 			score = 0;
 		}
-		else if (noteDiff > Conductor.safeZoneOffset * 0.7 || noteDiff < Conductor.safeZoneOffset * -0.7)
+		else if (noteDiff > Conductor.safeZoneOffset * 0.7)
 		{
 			daRating = 'bad';
 			totalNotesHit += 0.45;
 			score = 50;
 		}
-		else if (noteDiff > Conductor.safeZoneOffset * 0.4 || noteDiff < Conductor.safeZoneOffset * -0.4)
+		else if (noteDiff > Conductor.safeZoneOffset * 0.4)
 		{
 			daRating = 'good';
 			totalNotesHit += 0.75;
 			score = 200;
 		}
-		else if (noteDiff > Conductor.safeZoneOffset * 0.2 || noteDiff < Conductor.safeZoneOffset * -0.2)
+		else if (noteDiff > Conductor.safeZoneOffset * 0.2)
 		{
 			daRating = 'sick';
 			totalNotesHit += 1;
