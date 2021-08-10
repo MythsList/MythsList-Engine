@@ -475,7 +475,7 @@ class StoryMenuState extends MusicBeatState
 
 		// in case because shit bug
 		
-		if (txtTracklist.text = "TRACKS:\n")
+		if (txtTracklist.text == "TRACKS:\n")
 		{
 			for (i in 0...stringThing.length + 1)
 			{
