@@ -682,21 +682,27 @@ class Character extends FlxSprite
 			{
 				case 'gf' | 'gf-christmas' | 'gf-car' | 'gf-pixel':
 				{
-					danced = !danced;
-
-					if (danced)
-						playAnim('danceRight');
-					else
-						playAnim('danceLeft');
+					if (animation.finished)
+					{
+						danced = !danced;
+	
+						if (danced)
+							playAnim('danceRight');
+						else
+							playAnim('danceLeft');
+					}
 				}
 				case 'spooky':
 				{
-					danced = !danced;
+					if (animation.finished)
+					{
+						danced = !danced;
 
-					if (danced)
-						playAnim('danceRight');
-					else
-						playAnim('danceLeft');
+						if (danced)
+							playAnim('danceRight');
+						else
+							playAnim('danceLeft');
+					}
 				}
 				default:
 				{
