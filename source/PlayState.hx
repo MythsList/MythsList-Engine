@@ -567,8 +567,17 @@ class PlayState extends MusicBeatState
 
 		switch(SONG.song.toLowerCase())
 		{
+			// For songs that do not use the original BF
+
+			case 'satin-panties' | 'high' | 'milf':
+				boyfriend = new Boyfriend(770, 450, SONG.player1);
+			case 'cocoa' | 'eggnog' | 'winter-horrorland':
+				boyfriend = new Boyfriend(770, 450, SONG.player1);
 			case 'senpai' | 'roses' | 'thorns':
 				boyfriend = new Boyfriend(770, 450, SONG.player1);
+
+			// If your song isn't mentioned then it will use the currently selected character
+
 			default:
 				boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
 		}
@@ -1989,7 +1998,7 @@ class PlayState extends MusicBeatState
 			totalNotesHit += 0.75;
 			score = 200;
 		}
-		else if (noteDiff > Conductor.safeZoneOffset * 0.2)
+		else if (noteDiff > Conductor.safeZoneOffset * -0.1)
 		{
 			daRating = 'sick';
 			totalNotesHit += 1;
@@ -1998,7 +2007,7 @@ class PlayState extends MusicBeatState
 
 		songScore += Math.round(score);
 
-		var pixelShitPart1:String = "";
+		var pixelShitPart1:String = '';
 		var pixelShitPart2:String = '';
 
 		if (curStage.startsWith('school'))
