@@ -2,17 +2,11 @@
 
 This is the GitHub repository for MythsList Engine.
 
-------
-
 ## Building Instructions
-
-------
 
 ### Downloading the Required Programs
 
 Follow all of the steps here so you can proceed to the next section:
-
-------
 
 1. Download [Haxe 4.1.5](https://haxe.org/download/version/4.1.5/) (Downloading the most recent version (4.2.0) is NOT recommended at all, you must download the version 4.1.5)
 2. Download [HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/)
@@ -30,8 +24,6 @@ haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 
 At the moment, you can optionally fix the transition bug in songs with zoomed out cameras.
 - Enter the command `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons` in powershell/cmd.exe.
-
-------
 
 You should have everything ready for compiling the game! Follow the section below to continue with the building!
 
@@ -60,8 +52,6 @@ For **MacOS**, you have to install [Xcode](https://developer.apple.com/xcode/). 
 
 Once you have **all** of those installed (Required programs for All devices and required VSC components for Windows devices), it's now pretty easy to compile the game. You just need to run one of the commands below (First command is recommended if you want to have the HaxeFlixel console activated and FNF's debugging features but if you want to play it without them then the second command is recommended):
 
-------
-
 #### Desktop
 
 Windows
@@ -83,8 +73,6 @@ lime test mac -release
 lime test mac -32bit
 ```
 
-------
-
 #### Browser
 
 All
@@ -93,8 +81,6 @@ lime test html5 -debug
 lime test html5 -release
 lime test html5 -32bit
 ```
-
-------
 
 After you entered one of those commands, powershell/cmd will take a while before exporting all of the source code's assets, depending on your computer's performance it can take up to 1 whole hour so I suggest doing something else while it is exporting.
 
