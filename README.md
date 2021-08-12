@@ -42,8 +42,6 @@ For **Windows**, you have to install [Visual Studio Community 2019](https://visu
 
 Make sure you have over than 7GB on your computer before installing those components.
 
-------
-
 For **MacOS**, you have to install [Xcode](https://developer.apple.com/xcode/). If you get any error, try installing an older version.
 
 ------
