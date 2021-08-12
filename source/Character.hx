@@ -20,6 +20,10 @@ class Character extends FlxSprite
 
 	public var holdTimer:Float = 0;
 
+	// Thanks Bob and Bosip source code
+	var colorPrefix:String = '0xFF';
+	public var healthBarColor:String;
+
 	public function new(x:Float, y:Float, ?character:String = 'bf', ?isPlayer:Bool = false)
 	{
 		super(x, y);
@@ -34,6 +38,8 @@ class Character extends FlxSprite
 		switch (curCharacter)
 		{
 			case 'gf':
+				healthBarColor = colorPrefix + 'A5004D';
+
 				tex = Paths.getSparrowAtlas('GF_assets');
 				frames = tex;
 				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
@@ -65,6 +71,8 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 
 			case 'gf-christmas':
+				healthBarColor = colorPrefix + 'A5004D';
+
 				tex = Paths.getSparrowAtlas('christmas/gfChristmas', 'week5');
 				frames = tex;
 				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
@@ -96,12 +104,13 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 
 			case 'gf-car':
+				healthBarColor = colorPrefix + 'A5004D';
+
 				tex = Paths.getSparrowAtlas('gfCar', 'week4');
 				frames = tex;
 				animation.addByIndices('singUP', 'GF Dancing Beat Hair blowing CAR', [0], "", 24, false);
 				animation.addByIndices('danceLeft', 'GF Dancing Beat Hair blowing CAR', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-				animation.addByIndices('danceRight', 'GF Dancing Beat Hair blowing CAR', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24,
-					false);
+				animation.addByIndices('danceRight', 'GF Dancing Beat Hair blowing CAR', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
 
 				addOffset('danceLeft', 0);
 				addOffset('danceRight', 0);
@@ -109,6 +118,8 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 
 			case 'gf-pixel':
+				healthBarColor = colorPrefix + 'A5004D';
+
 				tex = Paths.getSparrowAtlas('weeb/gfPixel', 'week6');
 				frames = tex;
 				animation.addByIndices('singUP', 'GF IDLE', [2], "", 24, false);
@@ -125,7 +136,9 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'dad':
-				tex = Paths.getSparrowAtlas('DADDY_DEAREST');
+				healthBarColor = colorPrefix + 'AF66CE';
+
+				tex = Paths.getSparrowAtlas('DADDY_DEAREST', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'Dad idle dance', 24);
 				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24);
@@ -142,6 +155,8 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'spooky':
+				healthBarColor = colorPrefix + 'D57E00';
+
 				tex = Paths.getSparrowAtlas('spooky_kids_assets', 'week2');
 				frames = tex;
 				animation.addByPrefix('singUP', 'spooky UP NOTE', 24, false);
@@ -162,6 +177,8 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 
 			case 'mom':
+				healthBarColor = colorPrefix + 'D8558E';
+
 				tex = Paths.getSparrowAtlas('Mom_Assets', 'week4');
 				frames = tex;
 
@@ -180,6 +197,8 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'mom-car':
+				healthBarColor = colorPrefix + 'D8558E';
+
 				tex = Paths.getSparrowAtlas('momCar', 'week4');
 				frames = tex;
 
@@ -198,6 +217,8 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'monster':
+				healthBarColor = colorPrefix + 'F3FF6E';
+
 				tex = Paths.getSparrowAtlas('Monster_Assets', 'week2');
 				frames = tex;
 				animation.addByPrefix('idle', 'monster idle', 24, false);
@@ -214,6 +235,8 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'monster-christmas':
+				healthBarColor = colorPrefix + 'F3FF6E';
+
 				tex = Paths.getSparrowAtlas('christmas/monsterChristmas', 'week5');
 				frames = tex;
 				animation.addByPrefix('idle', 'monster idle', 24, false);
@@ -230,6 +253,8 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'pico':
+				healthBarColor = colorPrefix + 'B7D855';
+
 				tex = Paths.getSparrowAtlas('Pico_FNF_assetss', 'week3');
 				frames = tex;
 				animation.addByPrefix('idle', "Pico Idle Dance", 24);
@@ -268,7 +293,9 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf':
-				var tex = Paths.getSparrowAtlas('BOYFRIEND');
+				healthBarColor = colorPrefix + '31B0D1';
+
+				var tex = Paths.getSparrowAtlas('BOYFRIEND', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -307,6 +334,8 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-christmas':
+				healthBarColor = colorPrefix + '31B0D1';
+
 				var tex = Paths.getSparrowAtlas('christmas/bfChristmas', 'week5');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
@@ -336,7 +365,9 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-car':
-				var tex = Paths.getSparrowAtlas('bfCar');
+				healthBarColor = colorPrefix + '31B0D1';
+
+				var tex = Paths.getSparrowAtlas('bfCar', 'week4');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -362,7 +393,9 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-minus':
-				var tex = Paths.getSparrowAtlas('BOYFRIEND_MINUS');
+				healthBarColor = colorPrefix + '31B0D1';
+
+				var tex = Paths.getSparrowAtlas('BOYFRIEND_MINUS', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -401,7 +434,9 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-old':
-				var tex = Paths.getSparrowAtlas('BOYFRIEND_OLD');
+				healthBarColor = colorPrefix + 'E9FF48';
+
+				var tex = Paths.getSparrowAtlas('BOYFRIEND_OLD', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -440,7 +475,9 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-veryold':
-				var tex = Paths.getSparrowAtlas('BOYFRIEND_VERYOLD');
+				healthBarColor = colorPrefix + '5FB6F1';
+
+				var tex = Paths.getSparrowAtlas('BOYFRIEND_VERYOLD', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -479,6 +516,8 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-pixel':
+				healthBarColor = colorPrefix + '7BD6F6';
+
 				frames = Paths.getSparrowAtlas('weeb/bfPixel', 'week6');
 				animation.addByPrefix('idle', 'BF IDLE', 24, false);
 				animation.addByPrefix('singUP', 'BF UP NOTE', 24, false);
@@ -513,6 +552,8 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-pixel-dead':
+				healthBarColor = colorPrefix + '7BD6F6';
+
 				frames = Paths.getSparrowAtlas('weeb/bfPixelsDEAD', 'week6');
 				animation.addByPrefix('singUP', "BF Dies pixel", 24, false);
 				animation.addByPrefix('firstDeath', "BF Dies pixel", 24, false);
@@ -532,6 +573,8 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'senpai':
+				healthBarColor = colorPrefix + 'FFAA6F';
+
 				frames = Paths.getSparrowAtlas('weeb/senpai', 'week6');
 				animation.addByPrefix('idle', 'Senpai Idle', 24, false);
 				animation.addByPrefix('singUP', 'SENPAI UP NOTE', 24, false);
@@ -553,6 +596,8 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'senpai-angry':
+				healthBarColor = colorPrefix + 'FFAA6F';
+
 				frames = Paths.getSparrowAtlas('weeb/senpai', 'week6');
 				animation.addByPrefix('idle', 'Angry Senpai Idle', 24, false);
 				animation.addByPrefix('singUP', 'Angry Senpai UP NOTE', 24, false);
@@ -574,6 +619,8 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'spirit':
+				healthBarColor = colorPrefix + 'FF3C6E';
+
 				frames = Paths.getPackerAtlas('weeb/spirit', 'week6');
 				animation.addByPrefix('idle', "idle spirit_", 24, false);
 				animation.addByPrefix('singUP', "up_", 24, false);
@@ -595,6 +642,8 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'parents-christmas':
+				healthBarColor = colorPrefix + 'C55CAA';
+
 				frames = Paths.getSparrowAtlas('christmas/mom_dad_christmas_assets', 'week5');
 				animation.addByPrefix('idle', 'Parent Christmas Idle', 24, false);
 				animation.addByPrefix('singUP', 'Parent Up Note Dad', 24, false);
@@ -682,22 +731,46 @@ class Character extends FlxSprite
 			{
 				case 'gf' | 'gf-christmas' | 'gf-car' | 'gf-pixel':
 				{
-					if (animation.finished)
+					if (animation.curAnim.name.startsWith('sing') && curCharacter == 'gf')
+					{
+						if (animation.finished)
+						{
+							danced = !danced;
+			
+							if (danced)
+								playAnim('danceRight');
+							else
+								playAnim('danceLeft');
+						}
+					}
+					else
+					{
+						if (animation.curAnim.name.startsWith('scared') || animation.curAnim.name.startsWith('sad') || animation.finished)
+						{
+							danced = !danced;
+				
+							if (danced)
+								playAnim('danceRight');
+							else
+								playAnim('danceLeft');
+						}
+					}
+				}
+				case 'spooky':
+				{
+					if (animation.curAnim.name.startsWith('sing') && animation.finished)
 					{
 						danced = !danced;
-	
+
 						if (danced)
 							playAnim('danceRight');
 						else
 							playAnim('danceLeft');
 					}
-				}
-				case 'spooky':
-				{
-					if (animation.finished)
+					else if (animation.finished)
 					{
 						danced = !danced;
-
+	
 						if (danced)
 							playAnim('danceRight');
 						else
