@@ -31,7 +31,7 @@ You should have everything ready for compiling the game! Follow the section belo
 
 ### Downloading the Required Programs for Certain Devices
 
-For **Windows**, you have to install [Visual Studio Community 2019](https://visualstudio.microsoft.com/en/vs/community/). While installing the program, do not click on any of the options to install workloads but instead, go to the "individual components" tab and choose the following components below (THEY MUST BE INSTALLED OR ELSE YOU WON'T BE ABLE TO COMPILE):
+- For **Windows**, you have to install [Visual Studio Community 2019](https://visualstudio.microsoft.com/en/vs/community/). While installing the program, do not click on any of the options to install workloads but instead, go to the "individual components" tab and choose the following components below (THEY MUST BE INSTALLED OR ELSE YOU WON'T BE ABLE TO COMPILE):
 
 * MSVC v141 - VS 2017 C++ x64/x86 build tools
 * MSVC v142 - VS 2019 C++ x64/x86 build tools
@@ -42,7 +42,7 @@ For **Windows**, you have to install [Visual Studio Community 2019](https://visu
 
 Make sure you have over than 7GB on your computer before installing those components.
 
-For **MacOS**, you have to install [Xcode](https://developer.apple.com/xcode/). If you get any error, try installing an older version.
+- For **MacOS**, you have to install [Xcode](https://developer.apple.com/xcode/). If you get any error, try installing an older version.
 
 ------
 
