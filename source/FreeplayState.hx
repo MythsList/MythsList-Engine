@@ -24,7 +24,11 @@ class FreeplayState extends MusicBeatState
 	var curDifficulty:Int = 1;
 
 	var scoreText:FlxText;
+
 	var diffText:FlxText;
+	var leftArrow:FlxText;
+	var rightArrow:FlxText;
+
 	var lerpScore:Int = 0;
 	var intendedScore:Int = 0;
 
@@ -137,9 +141,17 @@ class FreeplayState extends MusicBeatState
 		scoreText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, LEFT);
 		add(scoreText);
 
-		diffText = new FlxText(scoreBG.x + 5, scoreText.y + 35, 0, "", 24);
+		leftArrow = new FlxText(scoreBG.x + 5, scoreText.y + 35, 0, "<", 24);
+		leftArrow.font = scoreText.font;
+		add(leftArrow);
+
+		diffText = new FlxText(leftArrow.width + leftArrow.x + 5, leftArrow.y, 0, "NORMAL", 24);
 		diffText.font = scoreText.font;
 		add(diffText);
+
+		rightArrow = new FlxText(diffText.width + diffText.x + 5, diffText.y, 0, ">", 24);
+		rightArrow.font = scoreText.font;
+		add(rightArrow);
 
 		var engineversionText:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
 		engineversionText.scrollFactor.set();
@@ -244,19 +256,22 @@ class FreeplayState extends MusicBeatState
 		switch (curDifficulty)
 		{
 			case 0:
-				diffText.text = "EASY";
+				diffText.text = 'EASY';
 			case 1:
 				diffText.text = 'NORMAL';
 			case 2:
-				diffText.text = "HARD";
+				diffText.text = 'HARD';
 		}
+
+		diffText.x = leftArrow.width + leftArrow.x + 5;
+		diffText.y = leftArrow.y;
+
+		rightArrow.x = diffText.width + diffText.x + 5;
+		rightArrow.y = diffText.y;
 	}
 
 	function changeSelection(change:Int = 0)
 	{
-		#if !switch
-		#end
-
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
 		curSelected += change;

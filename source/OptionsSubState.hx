@@ -19,7 +19,13 @@ using StringTools;
 
 class OptionsSubState extends MusicBeatState
 {
-	var textMenuItems:Array<String> = ['Controls', 'Gameplay', 'Character selection', 'Achievements', 'Reset data'];
+	var textMenuItems:Array<String> = [
+		'Controls',
+		'Gameplay',
+		'Character selection',
+		'Achievements',
+		'Reset data'
+	];
 
 	var selector:FlxSprite;
 	var curSelected:Int = 0;
