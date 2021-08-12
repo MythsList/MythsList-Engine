@@ -2,10 +2,9 @@
 
 This is the GitHub repository for MythsList Engine.
 
-[![GitHub issues](https://img.shields.io/github/issues/MythsList/MythsList-Engine)](https://github.com/MythsList/MythsList-Engine/issues) [![GitHub pull requests](https://img.shields.io/github/issues-pr/MythsList/MythsList-Engine)](https://github.com/MythsList/MythsList-Engine/pulls)
----
-![GitHub repo size](https://img.shields.io/github/repo-size/MythsList/MythsList-Engine) ![Lines of code](https://img.shields.io/tokei/lines/github/MythsList/MythsList-Engine)
----
+[![GitHub issues](https://img.shields.io/github/issues/MythsList/MythsList-Engine)](https://github.com/MythsList/MythsList-Engine/issues)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr/MythsList/MythsList-Engine)](https://github.com/MythsList/MythsList-Engine/pulls)
+![GitHub repo size](https://img.shields.io/github/repo-size/MythsList/MythsList-Engine)
 ![GitHub](https://img.shields.io/github/license/MythsList/MythsList-Engine)
 
 ## Building Instructions
