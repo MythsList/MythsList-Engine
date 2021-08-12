@@ -1,6 +1,6 @@
 # MythsList Engine
 
-This is the GitHub repository for MythsList Engine.
+This is the GitHub repository for **MythsList Engine**.
 
 [![GitHub issues](https://img.shields.io/github/issues/MythsList/MythsList-Engine)](https://github.com/MythsList/MythsList-Engine/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/MythsList/MythsList-Engine)](https://github.com/MythsList/MythsList-Engine/pulls)
@@ -27,16 +27,13 @@ haxelib git polymod https://github.com/larsiusprime/polymod.git
 haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
 ```
 
-At the moment, you can optionally fix the transition bug in songs with zoomed out cameras.
-- Enter the command `haxelib git flixel-addons https://github.com/HaxeFlixel/flixel-addons` in powershell/cmd.exe.
-
-You should have everything ready for compiling the game! Follow the section below to continue with the building!
+You should have everything ready for compiling the game, you can continue your building now!
 
 ------
 
-### Downloading the Required Programs for Certain Devices
+### Installing the Required Programs for Certain Devices
 
-- For **Windows**, you have to install [Visual Studio Community 2019](https://visualstudio.microsoft.com/en/vs/community/). While installing the program, do not click on any of the options to install workloads but instead, go to the "individual components" tab and choose the following components below (THEY MUST BE INSTALLED OR ELSE YOU WON'T BE ABLE TO COMPILE):
+- For **Windows** devices, you have to install [Visual Studio Community 2019](https://visualstudio.microsoft.com/en/vs/community/). While installing the required program, do not click on any of the options to install workloads but instead, go to the "individual components" tab and choose the following components below (THEY MUST BE INSTALLED OR ELSE YOU WON'T BE ABLE TO COMPILE THE GAME):
 
 ```
 MSVC v141 - VS 2017 C++ x64/x86 build tools
@@ -47,15 +44,15 @@ C++ CMake tools for windows
 C++ ATL for v142 build tools (x86 & x64)
 ```
 
-Make sure you have over than 7GB on your computer before installing those components.
+Make sure you have more than 7GB on your computer before installing those components.
 
-- For **MacOS**, you have to install [Xcode](https://developer.apple.com/xcode/). If you get any error, try installing an older version.
+- For **MacOS** devices, you have to install [Xcode](https://developer.apple.com/xcode/). If you get any error, try installing an older version of the program.
 
 ------
 
 ### Compiling the Game
 
-Once you have **all** of those installed (Required programs for All devices and required VSC components for Windows devices), it's now pretty easy to compile the game. You just need to run one of the commands below (First command is recommended if you want to have the HaxeFlixel console activated and FNF's debugging features but if you want to play it without them then the second command is recommended):
+Once you have **all** of those installed (Required programs for All devices and required VSC components for Windows devices), it's now pretty easy to compile the game. You just need to run one of the commands below (First command is recommended if you want to have the HaxeFlixel console activated and FNF's debugging features but if you want to play the game without them then the second command is most likely to be used):
 
 #### Desktop
 
@@ -80,14 +77,24 @@ lime test mac -32bit
 
 #### Browser
 
-All
+All Devices
 ```
 lime test html5 -debug
 lime test html5 -release
 lime test html5 -32bit
 ```
 
-After you entered one of those commands, powershell/cmd will take a while before exporting all of the source code's assets, depending on your computer's performance it can take up to 1 whole hour so I suggest doing something else while it is exporting.
+After you entered one of those commands, powershell/cmd.exe will take a while before exporting all of the source code's assets, depending on your computer's performance it can take up to a whole hour because it is like downloading a game, it's a pretty large file to process so I suggest you to do something else while Friday Night Funkin' is exporting.
+
+Once it is done, have fun with the engine!
+
+## Contact
+
+- Discord - 52#9242
+- [Twitter](https://twitter.com/mythslist)
+- [GameBanana](https://gamebanana.com/members/1947708)
+- [Roblox](https://www.roblox.com/users/851155547/profile) (why not?)
+- [E-mail](mailto:mythslistofficial@gmail.com)
 
 ## Credits
 
@@ -98,6 +105,6 @@ After you entered one of those commands, powershell/cmd will take a while before
 ### Friday Night Funkin'
 
 - [ninjamuffin99](https://twitter.com/ninja_muffin99) - Programmer
-- [PhantomArcade3K](https://twitter.com/phantomarcade3k) - Art
-- [Evilsk8r](https://twitter.com/evilsk8r) - Art
+- [PhantomArcade3K](https://twitter.com/phantomarcade3k) - Artist
+- [Evilsk8r](https://twitter.com/evilsk8r) - Artist
 - [Kawaisprite](https://twitter.com/kawaisprite) - Musician
