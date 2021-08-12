@@ -16,7 +16,7 @@ Follow all of the steps here so you can proceed to the next section:
 1. Download [Haxe 4.1.5](https://haxe.org/download/version/4.1.5/) (Downloading the most recent version (4.2.0) is NOT recommended at all, you must download the version 4.1.5)
 2. Download [HaxeFlixel](https://haxeflixel.com/documentation/install-haxeflixel/)
 3. Download [git-scm](https://git-scm.com/downloads)
-4. In powershell or cmd.exe, enter those commands (after you did the 3 steps above):
+4. Open Powershell as administrator or cmd.exe and enter those commands (after you did the 3 steps above):
 ```
 haxelib install flixel
 haxelib install flixel-addons
