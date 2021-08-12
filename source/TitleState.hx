@@ -342,15 +342,15 @@ class TitleState extends MusicBeatState
 			case 10:
 				deleteCoolText();
 			case 11:
-				createCoolText(['FUNNY']);
+				createCoolText(['PLACEHOLDER']);
 			case 12:
-				addMoreText('CUBE');
+				addMoreText('TEXT');
 			case 13:
 				addMoreText('LOL');
 			case 14:
 				deleteCoolText();
 			case 15:
-				createCoolText(['V E R S E']);
+				createCoolText(['PLACEHOLDER']);
 			case 16:
 				skipIntro();
 		}

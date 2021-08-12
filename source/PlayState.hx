@@ -1797,6 +1797,21 @@ class PlayState extends MusicBeatState
 
 					dad.playAnim('sing' + curPress[singData] + altAnim, true);
 
+					cpuStrums.forEach(function(spr:FlxSprite)
+					{
+						if (Math.abs(daNote.noteData) == spr.ID)
+							spr.animation.play('confirm', true);
+
+						if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
+						{
+							spr.centerOffsets();
+							spr.offset.x -= 13;
+							spr.offset.y -= 13;
+						}
+						else
+							spr.centerOffsets();
+					});
+
 					dad.holdTimer = 0;
 
 					if (SONG.needsVoices)
@@ -1832,6 +1847,15 @@ class PlayState extends MusicBeatState
 				}
 			});
 		}
+
+		cpuStrums.forEach(function(spr:FlxSprite)
+		{
+			if (spr.animation.curAnim.name == 'confirm' && spr.animation.finished)
+			{
+				spr.animation.play('static', true);
+				spr.centerOffsets();
+			}
+		});
 
 		if (!inCutscene)
 			keyShit();
