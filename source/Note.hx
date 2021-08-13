@@ -44,7 +44,7 @@ class Note extends FlxSprite
 		isSustainNote = sustainNote;
 
 		if (MythsListEngineData.middleScroll)
-			x += (((FlxG.width / 2) * -0.42) + 96);
+			x += (((FlxG.width / 2) * -0.42) + 50);
 		else if (!MythsListEngineData.middleScroll)
 			x += 96;
 

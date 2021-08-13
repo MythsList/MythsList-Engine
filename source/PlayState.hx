@@ -1306,7 +1306,7 @@ class PlayState extends MusicBeatState
 
 			if (player == 1 && MythsListEngineData.middleScroll)
 			{
-			    babyArrow.x += ((FlxG.width / 2) * -0.42);
+			    babyArrow.x += (((FlxG.width / 2) * -0.42) - 46);
 			}
 
 			cpuStrums.forEach(function(spr:FlxSprite)
