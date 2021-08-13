@@ -21,7 +21,13 @@ using StringTools;
 
 class GameplaySubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = ['Downscroll', 'Middlescroll', 'Stats display', 'Song infos display'];
+	var textMenuItems:Array<String> = [
+		'Downscroll',
+		'Middlescroll',
+		'Stats display',
+		'Song infos display',
+		'Version display'
+	];
 
 	var selector:FlxSprite;
 	var curSelected:Int = 0;
@@ -40,11 +46,14 @@ class GameplaySubState extends MusicBeatSubstate
 			FlxG.save.data.statsDisplay = true;
 		if (FlxG.save.data.songinfosDisplay == null)
 			FlxG.save.data.songinfosDisplay = true;
+		if (FlxG.save.data.versionDisplay == null)
+			FlxG.save.data.versionDisplay = true;
 
 		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
 		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
 		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
+		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
 
 		FlxG.save.flush();
 
@@ -86,6 +95,11 @@ class GameplaySubState extends MusicBeatSubstate
 					if (FlxG.save.data.songinfosDisplay)
 						optionText.color = FlxColor.GREEN;
 					else if (!FlxG.save.data.songinfosDisplay)
+						optionText.color = FlxColor.RED;
+				case 'Version display':
+					if (FlxG.save.data.versionDisplay)
+						optionText.color = FlxColor.GREEN;
+					else if (!FlxG.save.data.versionDisplay)
 						optionText.color = FlxColor.RED;
 			}
 
@@ -172,6 +186,17 @@ class GameplaySubState extends MusicBeatSubstate
 						interact(true, curSelected);
 						grpOptions.members[curSelected].color = FlxColor.GREEN;
 					}
+				case "Version display":
+					if (FlxG.save.data.versionDisplay)
+					{
+						interact(false, curSelected);
+						grpOptions.members[curSelected].color = FlxColor.RED;
+					}
+					else if (!FlxG.save.data.versionDisplay)
+					{
+						interact(true, curSelected);
+						grpOptions.members[curSelected].color = FlxColor.GREEN;
+					}
 			}
 		}
 	}
@@ -220,6 +245,8 @@ class GameplaySubState extends MusicBeatSubstate
 						FlxG.save.data.statsDisplay = true;
 					case 3:
 						FlxG.save.data.songinfosDisplay = true;
+					case 4:
+						FlxG.save.data.versionDisplay = true;
 				}
 			case false:
 				switch(selected)
@@ -232,6 +259,8 @@ class GameplaySubState extends MusicBeatSubstate
 						FlxG.save.data.statsDisplay = false;
 					case 3:
 						FlxG.save.data.songinfosDisplay = false;
+					case 4:
+						FlxG.save.data.versionDisplay = false;
 				}
 		}
 		
@@ -239,6 +268,7 @@ class GameplaySubState extends MusicBeatSubstate
 		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
 		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
+		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
 
 		FlxG.save.flush();
 	}

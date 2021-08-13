@@ -630,14 +630,6 @@ class PlayState extends MusicBeatState
 			}
 			case 'school' | 'schoolEvil':
 			{
-				/*
-				if (curStage == 'schoolEvil')
-				{
-					var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
-					add(evilTrail);
-				}
-				*/
-
 				boyfriend.x += 200;
 				boyfriend.y += 220;
 				gf.x += 180;
@@ -645,16 +637,21 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		add(gf);
-
 		if (curStage == 'limo')
+		{
+			add(gf);
 			add(limo);
-
-		add(dad);
-		add(boyfriend);
+			add(dad);
+			add(boyfriend);
+		}
+		else
+		{
+			add(gf);
+			add(dad);
+			add(boyfriend);
+		}
 
 		var doof:DialogueBox = new DialogueBox(false, dialogue);
-
 		doof.scrollFactor.set();
 		doof.finishThing = startCountdown;
 
@@ -783,6 +780,12 @@ class PlayState extends MusicBeatState
 				version.y = engineversion.y - engineversion.height;
 			else
 				version.y = engineversion.y + engineversion.height;
+		}
+
+		if (MythsListEngineData.versionDisplay)
+		{
+			version.alpha = 0;
+			engineversion.alpha = 0;
 		}
 
 		if (SONG.player1 == 'bf-pixel')
