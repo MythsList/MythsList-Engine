@@ -219,6 +219,33 @@ class PlayState extends MusicBeatState
 
 		switch (SONG.song.toLowerCase())
 		{
+			case 'bopeebo' | 'fresh' | 'dadbattle':
+			{
+				defaultCamZoom = 0.9;
+		        curStage = 'stage';
+		        var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback', 'week1'));
+		        bg.antialiasing = true;
+		        bg.scrollFactor.set(0.9, 0.9);
+		        bg.active = false;
+		        add(bg);
+
+		        var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront', 'week1'));
+		        stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
+		        stageFront.updateHitbox();
+		        stageFront.antialiasing = true;
+		        stageFront.scrollFactor.set(0.9, 0.9);
+		        stageFront.active = false;
+		        add(stageFront);
+
+		        var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains', 'week1'));
+		        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
+		        stageCurtains.updateHitbox();
+		        stageCurtains.antialiasing = true;
+		        stageCurtains.scrollFactor.set(1.3, 1.3);
+		        stageCurtains.active = false;
+
+		        add(stageCurtains);
+			}
 			case 'spookeez' | 'south' | 'monster': 
             {
 				curStage = 'spooky';
@@ -478,13 +505,13 @@ class PlayState extends MusicBeatState
 		    {
 		        defaultCamZoom = 0.9;
 		        curStage = 'stage';
-		        var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback'));
+		        var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback', 'tutorial'));
 		        bg.antialiasing = true;
 		        bg.scrollFactor.set(0.9, 0.9);
 		        bg.active = false;
 		        add(bg);
 
-		        var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront'));
+		        var stageFront:FlxSprite = new FlxSprite(-650, 600).loadGraphic(Paths.image('stagefront', 'tutorial'));
 		        stageFront.setGraphicSize(Std.int(stageFront.width * 1.1));
 		        stageFront.updateHitbox();
 		        stageFront.antialiasing = true;
@@ -492,7 +519,7 @@ class PlayState extends MusicBeatState
 		        stageFront.active = false;
 		        add(stageFront);
 
-		        var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains'));
+		        var stageCurtains:FlxSprite = new FlxSprite(-500, -300).loadGraphic(Paths.image('stagecurtains', 'tutorial'));
 		        stageCurtains.setGraphicSize(Std.int(stageCurtains.width * 0.9));
 		        stageCurtains.updateHitbox();
 		        stageCurtains.antialiasing = true;

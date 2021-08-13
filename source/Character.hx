@@ -138,7 +138,7 @@ class Character extends FlxSprite
 			case 'dad':
 				healthBarColor = colorPrefix + 'AF66CE';
 
-				tex = Paths.getSparrowAtlas('DADDY_DEAREST', 'shared');
+				tex = Paths.getSparrowAtlas('DADDY_DEAREST', 'week1');
 				frames = tex;
 				animation.addByPrefix('idle', 'Dad idle dance', 24);
 				animation.addByPrefix('singUP', 'Dad Sing Note UP', 24);
