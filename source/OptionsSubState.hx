@@ -160,6 +160,8 @@ class OptionsSubState extends MusicBeatState
 			FlxG.save.data.statsDisplay = true;
 		if (FlxG.save.data.songinfosDisplay != null)
 			FlxG.save.data.songinfosDisplay = true;
+		if (FlxG.save.data.versionDisplay != null)
+			FlxG.save.data.versionDisplay = true;
 
 		if (FlxG.save.data.characterSkin != null)
 			FlxG.save.data.characterSkin = 'bf';
@@ -186,6 +188,7 @@ class OptionsSubState extends MusicBeatState
 		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
 		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
+		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
 
