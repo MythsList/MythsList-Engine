@@ -25,6 +25,7 @@ class MythsListEngineData
     public static var middleScroll:Bool;
     public static var statsDisplay:Bool;
     public static var songinfosDisplay:Bool;
+    public static var versionDisplay:Bool;
 
     // CHARACTER SELECTION
 
