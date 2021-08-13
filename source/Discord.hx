@@ -39,7 +39,7 @@ class DiscordClient
 		DiscordRpc.presence({
 			details: "In The Main Menus",
 			state: null,
-			largeImageKey: 'spawnlocation',
+			largeImageKey: 'placeholderlogo',
 			largeImageText: null
 		});
 	}
@@ -75,7 +75,7 @@ class DiscordClient
 		DiscordRpc.presence({
 			details: details,
 			state: state,
-			largeImageKey: 'spawnlocation',
+			largeImageKey: 'placeholderlogo',
 			largeImageText: null,
 			smallImageKey : null,
 			startTimestamp : Std.int(startTimestamp / 1000),
