@@ -782,7 +782,7 @@ class PlayState extends MusicBeatState
 				version.y = engineversion.y + engineversion.height;
 		}
 
-		if (MythsListEngineData.versionDisplay)
+		if (!MythsListEngineData.versionDisplay)
 		{
 			version.alpha = 0;
 			engineversion.alpha = 0;
