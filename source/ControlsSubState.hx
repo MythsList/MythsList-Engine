@@ -20,7 +20,12 @@ using StringTools;
 
 class ControlsSubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = ['SDKL', 'DFJK', 'ASWD', 'QSZD'];
+	var textMenuItems:Array<String> = [
+		'SDKL',
+		'DFJK',
+		'ASWD',
+		'QSZD'
+	];
 
 	var selector:FlxSprite;
 	var curSelected:Int = 0;
@@ -30,13 +35,6 @@ class ControlsSubState extends MusicBeatSubstate
 	public function new()
 	{
 		super();
-
-		if (FlxG.save.data.keyBinds == null)
-			FlxG.save.data.keyBinds = 'SDKL';
-
-		MythsListEngineData.keyBinds = FlxG.save.data.keyBinds;
-
-		FlxG.save.flush();
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		menuBG.color = 0xFF71fd89;
@@ -217,8 +215,8 @@ class ControlsSubState extends MusicBeatSubstate
 		
 		controls.setKeyboardScheme(Solo, true);
 
-		MythsListEngineData.keyBinds = FlxG.save.data.keyBinds;
-
 		FlxG.save.flush();
+
+		MythsListEngineData.dataSave();
 	}
 }

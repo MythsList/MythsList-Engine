@@ -60,30 +60,6 @@ class AchievementsSubState extends MusicBeatSubstate
 	{
 		super();
 
-		if (FlxG.save.data.dataCategoryOne == null)
-			FlxG.save.data.dataCategoryOne = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryTwo == null)
-			FlxG.save.data.dataCategoryTwo = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryThree == null)
-			FlxG.save.data.dataCategoryThree = [false, false, false, false, false];
-
-		if (FlxG.save.data.fcAmount == null)
-			FlxG.save.data.fcAmount = 0;
-		if (FlxG.save.data.playAmount == null)
-			FlxG.save.data.playAmount = 0;
-		if (FlxG.save.data.deathAmount == null)
-			FlxG.save.data.deathAmount = 0;
-
-		MythsListEngineData.dataCategoryOne = FlxG.save.data.dataCategoryOne;
-		MythsListEngineData.dataCategoryTwo = FlxG.save.data.dataCategoryTwo;
-		MythsListEngineData.dataCategoryThree = FlxG.save.data.dataCategoryThree;
-
-		MythsListEngineData.fcAmount = FlxG.save.data.fcAmount;
-		MythsListEngineData.playAmount = FlxG.save.data.playAmount;
-		MythsListEngineData.deathAmount = FlxG.save.data.deathAmount;
-
-		FlxG.save.flush();
-
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		menuBG.color = 0xFF71fd89;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));

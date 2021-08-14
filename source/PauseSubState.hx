@@ -21,7 +21,7 @@ class PauseSubState extends MusicBeatSubstate
 	var pauseMusic:FlxSound;
 
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
-	var menuItems:Array<String> = ['Resume', 'Restart song', 'Exit to freeplay menu', 'Exit to main menu'];
+	var menuItems:Array<String>;
 
 	public function new(x:Float, y:Float)
 	{
@@ -29,6 +29,8 @@ class PauseSubState extends MusicBeatSubstate
 
 		if (PlayState.isStoryMode)
 			menuItems = ['Resume', 'Restart song', 'Exit to story menu', 'Exit to main menu'];
+		else
+			menuItems = ['Resume', 'Restart song', 'Exit to freeplay menu', 'Exit to main menu'];
 
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
@@ -88,16 +90,18 @@ class PauseSubState extends MusicBeatSubstate
 
 		super.update(elapsed);
 
+		/*
 		var upP = controls.UP_P;
 		var downP = controls.DOWN_P;
 		var accepted = controls.ACCEPT;
+		*/
 
-		if (upP)
+		if (controls.UP_P)
 			changeSelection(-1);
-		if (downP)
+		if (controls.DOWN_P)
 			changeSelection(1);
 
-		if (accepted)
+		if (controls.ACCEPT)
 		{
 			var daSelected:String = menuItems[curSelected];
 

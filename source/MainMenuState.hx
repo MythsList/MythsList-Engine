@@ -28,7 +28,11 @@ class MainMenuState extends MusicBeatState
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
 
-	var optionShit:Array<String> = ['storymode', 'freeplay', 'options'];
+	var optionShit:Array<String> = [
+		'storymode',
+		'freeplay',
+		'options'
+	];
 
 	override function create()
 	{
@@ -38,7 +42,6 @@ class MainMenuState extends MusicBeatState
 
 		Only will work the first time you launch the game 
 		Or after you clicked on the "Reset data" button in the Options menu.
-		*/
 
 		if (FlxG.save.data.keyBinds == null)
 			FlxG.save.data.keyBinds = 'SDKL';
@@ -94,9 +97,11 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.save.flush();
 
-		/* End of the data saving mess */
+		End of the data saving mess
+		*/
 
-		
+		MythsListEngineData.dataLoad();
+
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Main Menu", null);

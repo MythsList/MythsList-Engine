@@ -38,25 +38,6 @@ class GameplaySubState extends MusicBeatSubstate
 	{
 		super();
 
-		if (FlxG.save.data.downScroll == null)
-			FlxG.save.data.downScroll = false;
-		if (FlxG.save.data.middleScroll == null)
-			FlxG.save.data.middleScroll = false;
-		if (FlxG.save.data.statsDisplay == null)
-			FlxG.save.data.statsDisplay = true;
-		if (FlxG.save.data.songinfosDisplay == null)
-			FlxG.save.data.songinfosDisplay = true;
-		if (FlxG.save.data.versionDisplay == null)
-			FlxG.save.data.versionDisplay = true;
-
-		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
-		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
-		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
-		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
-		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
-
-		FlxG.save.flush();
-
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		menuBG.color = 0xFF71fd89;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
@@ -263,13 +244,9 @@ class GameplaySubState extends MusicBeatSubstate
 						FlxG.save.data.versionDisplay = false;
 				}
 		}
-		
-		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
-		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
-		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
-		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
-		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
 
 		FlxG.save.flush();
+
+		MythsListEngineData.dataSave();
 	}
 }

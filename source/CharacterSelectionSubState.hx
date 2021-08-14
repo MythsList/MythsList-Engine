@@ -30,8 +30,19 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 	(Related to HealthIcon.hx and Character.hx, would recommend putting your character's name in like I did)
 	*/
 
-	var textMenuItems:Array<String> = ['Boyfriend', 'Minus Boyfriend', 'Beta Boyfriend', 'Old Boyfriend'];
-	var Icons:Array<String> = ['bf', 'bf-minus', 'bf-old', 'bf-veryold'];
+	var textMenuItems:Array<String> = [
+		'Boyfriend',
+		'Minus Boyfriend',
+		'Beta Boyfriend',
+		'Old Boyfriend'
+	];
+
+	var Icons:Array<String> = [
+		'bf',
+		'bf-minus',
+		'bf-old',
+		'bf-veryold'
+	];
 
 	var selector:FlxSprite;
 
@@ -46,13 +57,6 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 	public function new()
 	{
 		super();
-
-		if (FlxG.save.data.characterSkin == null)
-			FlxG.save.data.characterSkin = 'bf';
-
-		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
-
-		FlxG.save.flush();
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		menuBG.color = 0xFF71fd89;
@@ -226,9 +230,8 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
 
 		FlxG.save.data.characterSkin = Icons[selected];
-
-		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
-
 		FlxG.save.flush();
+
+		MythsListEngineData.dataSave();
 	}
 }

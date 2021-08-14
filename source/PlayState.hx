@@ -211,9 +211,9 @@ class PlayState extends MusicBeatState
 		detailsPausedText = "[PAUSED] " + detailsText;
 		
 		if (fc)
-			DiscordClient.changePresence(detailsText, SONG.song + storyDifficultyText + "| Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC);
+			DiscordClient.changePresence(detailsText, SONG.song + storyDifficultyText + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC);
 		else
-			DiscordClient.changePresence(detailsText, SONG.song + storyDifficultyText + "| Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC);
+			DiscordClient.changePresence(detailsText, SONG.song + storyDifficultyText + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC);
 
 		#end
 
@@ -1116,9 +1116,9 @@ class PlayState extends MusicBeatState
 		// Updating Discord Rich Presence (with Time Left)
 
 		if (fc)
-			DiscordClient.changePresence(detailsText, SONG.song + "| Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC);
+			DiscordClient.changePresence(detailsText, SONG.song + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC);
 		else
-			DiscordClient.changePresence(detailsText, SONG.song + "| Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC);
+			DiscordClient.changePresence(detailsText, SONG.song + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC);
 
 		#end
 	}
@@ -1392,9 +1392,9 @@ class PlayState extends MusicBeatState
 			if (startTimer.finished)
 			{
 				if (fc)
-					DiscordClient.changePresence(detailsText, SONG.song + "| Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC, true, songLength - Conductor.songPosition);
+					DiscordClient.changePresence(detailsText, SONG.song + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC, true, songLength - Conductor.songPosition);
 				else
-					DiscordClient.changePresence(detailsText, SONG.song + "| Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC, true, songLength - Conductor.songPosition);
+					DiscordClient.changePresence(detailsText, SONG.song + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC, true, songLength - Conductor.songPosition);
 			}
 			else
 			{
@@ -1430,9 +1430,9 @@ class PlayState extends MusicBeatState
 		if (health > 0 && !paused)
 		{
 			if (fc)
-				DiscordClient.changePresence(detailsText, SONG.song + "| Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC);
+				DiscordClient.changePresence(detailsText, SONG.song + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC);
 			else
-				DiscordClient.changePresence(detailsText, SONG.song + "| Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC);	
+				DiscordClient.changePresence(detailsText, SONG.song + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC);	
 		}
 		#end
 
@@ -1530,9 +1530,9 @@ class PlayState extends MusicBeatState
 		
 			#if desktop
 			if (fc)
-				DiscordClient.changePresence(detailsPausedText, SONG.song + "| Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC);
+				DiscordClient.changePresence(detailsPausedText, SONG.song + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC);
 			else
-				DiscordClient.changePresence(detailsPausedText, SONG.song + "| Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC);
+				DiscordClient.changePresence(detailsPausedText, SONG.song + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC);
 			#end
 		}
 
@@ -1572,10 +1572,6 @@ class PlayState extends MusicBeatState
 		#if debug
 		if (FlxG.keys.justPressed.EIGHT && !endingSong)
 			FlxG.switchState(new AnimationDebug(SONG.player2));
-
-			#if desktop
-			DiscordClient.changePresence("In Animation Debug Menu", null, iconRPC, true);
-			#end
 		#end
 
 		#if debug
@@ -1589,10 +1585,6 @@ class PlayState extends MusicBeatState
 						FlxG.switchState(new AnimationDebug(MythsListEngineData.characterSkin));
 				}
 			}
-
-			#if desktop
-			DiscordClient.changePresence("In Animation Debug Menu", null, iconRPC, true);
-			#end
 		#end
 
 		if (startingSong)
@@ -2546,9 +2538,9 @@ class PlayState extends MusicBeatState
 
 		// Updating Discord Rich Presence (with Time Left)
 		if (fc)
-			DiscordClient.changePresence(detailsText, SONG.song + "| Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC, true, songLength - Conductor.songPosition);
+			DiscordClient.changePresence(detailsText, SONG.song + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC, true, songLength - Conductor.songPosition);
 		else
-			DiscordClient.changePresence(detailsText, SONG.song + "| Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC, true, songLength - Conductor.songPosition);
+			DiscordClient.changePresence(detailsText, SONG.song + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC, true, songLength - Conductor.songPosition);
 		#end
 	}
 
