@@ -1579,11 +1579,16 @@ class PlayState extends MusicBeatState
 		#end
 
 		#if debug
-		if (FlxG.keys.justPressed.NINE && !endingSong)
-			if (SONG.player1 == "bf-pixel")
-				FlxG.switchState(new AnimationDebug(SONG.player1));
-			else
-				FlxG.switchState(new AnimationDebug(MythsListEngineData.characterSkin));
+			if (FlxG.keys.justPressed.NINE && !endingSong)
+			{
+				switch(SONG.player1)
+				{
+					case 'bf-pixel' | 'bf-christmas' | 'bf-car':
+						FlxG.switchState(new AnimationDebug(SONG.player1));
+					default:
+						FlxG.switchState(new AnimationDebug(MythsListEngineData.characterSkin));
+				}
+			}
 
 			#if desktop
 			DiscordClient.changePresence("In Animation Debug Menu", null, iconRPC, true);
@@ -1679,14 +1684,14 @@ class PlayState extends MusicBeatState
 		{
 			switch (curBeat)
 			{
-				case 16:
-					camZooming = true;
+				case 16 | 80:
+				{
+					if (curBeat == 16)
+						camZooming = true;
+
 					gfSpeed = 2;
-				case 48:
-					gfSpeed = 1;
-				case 80:
-					gfSpeed = 2;
-				case 112:
+				}
+				case 48 | 112:
 					gfSpeed = 1;
 			}
 		}
@@ -2591,11 +2596,10 @@ class PlayState extends MusicBeatState
 
 		if (curBeat % gfSpeed == 0)
 		{
-		iconP1.setGraphicSize(Std.int(iconP1.width + 30));
-		iconP2.setGraphicSize(Std.int(iconP2.width + 30));
-
-		iconP1.updateHitbox();
-		iconP2.updateHitbox();
+			iconP1.setGraphicSize(Std.int(iconP1.width + 30));
+			iconP2.setGraphicSize(Std.int(iconP2.width + 30));
+			iconP1.updateHitbox();
+			iconP2.updateHitbox();
 		}
 
 		if (curBeat % gfSpeed == 0)

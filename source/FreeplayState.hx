@@ -257,10 +257,13 @@ class FreeplayState extends MusicBeatState
 		{
 			case 0:
 				diffText.text = 'EASY';
+				diffText.color = 0xFF00FF00;
 			case 1:
 				diffText.text = 'NORMAL';
+				diffText.color = 0xFFFFFF00;
 			case 2:
 				diffText.text = 'HARD';
+				diffText.color = 0xFFFF0000;
 		}
 
 		diffText.x = leftArrow.width + leftArrow.x + 5;
