@@ -38,7 +38,10 @@ class AchievementsSubState extends MusicBeatSubstate
 
 	var curselectBG:FlxSprite;
 
+	var curIconName:String;
+
 	var curSelected:Int = 0;
+	var curDesc:Int = 0;
 
 	var curCatSelected:Int = 1;
 	var curCategory:String = 'One';
@@ -46,6 +49,12 @@ class AchievementsSubState extends MusicBeatSubstate
 	var descList = CoolUtil.coolTextFile(Paths.txt('achievementDescriptions'));
 
 	var curtext:FlxText;
+	var curProgress:FlxText;
+
+	/*
+	I DO NOT RECOMMEND ADDING YOUR OWN ACHIEVEMENTS UNLESS YOU KNOW WHAT YOU ARE DOING
+	FOR THE MOMENT THIS CODE ISNT MEANT TO BE CHANGED BECAUSE THE CODE IS BAD LOL
+	*/
 
 	public function new()
 	{
@@ -197,10 +206,17 @@ class AchievementsSubState extends MusicBeatSubstate
 
 		curBG.x = FlxG.width - curBG.width;
 
-		curtext = new FlxText(curBG.x + 5, curBG.y + 5, 0, descList[curSelected], 26);
+		curtext = new FlxText(curBG.x + 5, curBG.y + 5, 0, descList[curDesc], 26);
 		curtext.scrollFactor.set();
 		curtext.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT);
+		curtext.antialiasing = true;
 		add(curtext);
+
+		curProgress = new FlxText(curtext.x, (curBG.y + curBG.height) - curtext.height - 5, 0, "PlaceHolder", 26);
+		curProgress.scrollFactor.set();
+		curProgress.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT);
+		curProgress.antialiasing = true;
+		add(curProgress);
 
 		var engineversionText:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
 		engineversionText.scrollFactor.set();
@@ -212,7 +228,7 @@ class AchievementsSubState extends MusicBeatSubstate
 		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(modversionText);
 
-		changeSelection(0);
+		changeCategory(0);
 	}
 
 	override function update(elapsed:Float)
@@ -255,6 +271,8 @@ class AchievementsSubState extends MusicBeatSubstate
 				if (curSelected >= achievementsCategoryOne.length)
 					curSelected = 0;
 
+				curDesc = curSelected;
+
 				for (i in 0...achievementsCategoryOne.length)
 				{
 					if (i == curSelected)
@@ -262,7 +280,7 @@ class AchievementsSubState extends MusicBeatSubstate
 						curselectBG.x = (grpIconsOne.members[i].getGraphicMidpoint().x) - 74/2;
 						curselectBG.y = (grpIconsOne.members[i].getGraphicMidpoint().y) - 74/2;
 				
-						curtext.text = descList[curSelected];
+						curtext.text = descList[curDesc];
 					}
 				}
 			}
@@ -273,6 +291,8 @@ class AchievementsSubState extends MusicBeatSubstate
 				if (curSelected >= achievementsCategoryTwo.length)
 					curSelected = 0;
 
+				curDesc = curSelected + achievementsCategoryOne.length;
+
 				for (i in 0...achievementsCategoryTwo.length)
 				{
 					if (i == curSelected)
@@ -280,7 +300,7 @@ class AchievementsSubState extends MusicBeatSubstate
 						curselectBG.x = (grpIconsTwo.members[i].getGraphicMidpoint().x) - 74/2;
 						curselectBG.y = (grpIconsTwo.members[i].getGraphicMidpoint().y) - 74/2;
 				
-						curtext.text = descList[curSelected];
+						curtext.text = descList[curDesc];
 					}
 				}
 			}
@@ -291,6 +311,8 @@ class AchievementsSubState extends MusicBeatSubstate
 				if (curSelected >= achievementsCategoryThree.length)
 					curSelected = 0;
 
+				curDesc = curSelected + (achievementsCategoryOne.length + achievementsCategoryTwo.length);
+
 				for (i in 0...achievementsCategoryThree.length)
 				{
 					if (i == curSelected)
@@ -298,10 +320,20 @@ class AchievementsSubState extends MusicBeatSubstate
 						curselectBG.x = (grpIconsThree.members[i].getGraphicMidpoint().x) - 74/2;
 						curselectBG.y = (grpIconsThree.members[i].getGraphicMidpoint().y) - 74/2;
 				
-						curtext.text = descList[curSelected];
+						curtext.text = descList[curDesc];
 					}
 				}
 			}
+		}
+
+		switch(curIconName)
+		{
+			case 'fc':
+				curProgress.text = "Amount of songs you've FC'd: " + MythsListEngineData.fcAmount;
+			case 'play':
+				curProgress.text = "Amount of songs you've played: " + MythsListEngineData.playAmount;
+			case 'death':
+				curProgress.text = "Amount of times you've died: " + MythsListEngineData.deathAmount;
 		}
 	}
 
@@ -320,10 +352,13 @@ class AchievementsSubState extends MusicBeatSubstate
 		{
 			case 1:
 				curCategory = 'One';
+				curIconName = 'fc';
 			case 2:
 				curCategory = 'Two';
+				curIconName = 'play';
 			case 3:
 				curCategory = 'Three';
+				curIconName = 'death';
 		}
 
 		changeSelection(0, true);

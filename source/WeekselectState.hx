@@ -31,7 +31,7 @@ class WeekselectState extends MusicBeatState
 	override function create()
 	{
 		#if desktop
-			DiscordClient.changePresence("In the Menus", null);
+			DiscordClient.changePresence("In The Main Menus", null);
 		#end
 
 		var isDebug:Bool = false;

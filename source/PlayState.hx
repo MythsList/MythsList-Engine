@@ -705,7 +705,12 @@ class PlayState extends MusicBeatState
 
 		healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this, 'health', 0, 2);
 		healthBar.scrollFactor.set();
-		healthBar.createFilledBar(FlxColor.fromString(dad.healthBarColor), FlxColor.fromString(boyfriend.healthBarColor));
+
+		if (dad.healthBarColor == '0xFF000000')
+			healthBar.createFilledBar(FlxColor.RED, FlxColor.fromString(boyfriend.healthBarColor));
+		else
+			healthBar.createFilledBar(FlxColor.fromString(dad.healthBarColor), FlxColor.fromString(boyfriend.healthBarColor));
+
 		add(healthBar);
 
 		scoreTxt = new FlxText(0, healthBarBG.y + 50, 0, "", 20);
@@ -2359,9 +2364,21 @@ class PlayState extends MusicBeatState
 
 	function badNoteCheck(daNote:Note):Void
 	{
+		var leftp = controls.LEFT_P;
+		var downp = controls.DOWN_P;
+		var upp = controls.UP_P;
+		var rightp = controls.RIGHT_P;
+
 		if (daNote == null)
 		{
-			noteMiss(0);
+			if (leftp)
+				noteMiss(0);
+			if (downp)
+				noteMiss(1);
+			if (upp)
+				noteMiss(2);
+			if(rightp)
+				noteMiss(3);
 		}
 		else
 		{

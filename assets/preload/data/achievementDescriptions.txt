@@ -1,8 +1,15 @@
-TEST1
-TEST2
-TEST3
-TEST4
-TEST5
-TEST6
-TEST7
-TEST8
+Full combo 1 song
+Full combo 5 songs
+Full combo 10 songs
+Full combo 25 songs
+Full combo 50 songs
+Play 1 song
+Play 10 songs
+Play 25 songs
+Play 50 songs
+Play 100 songs
+Die once
+Die 15 times
+Die 25 times
+Die 50 times
+Die 80 times
