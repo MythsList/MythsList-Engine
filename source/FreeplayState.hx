@@ -146,7 +146,7 @@ class FreeplayState extends MusicBeatState
 		add(leftArrow);
 
 		diffText = new FlxText(leftArrow.width + leftArrow.x + 5, leftArrow.y, 0, "NORMAL", 24);
-		diffText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		diffText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(diffText);
 
 		rightArrow = new FlxText(diffText.width + diffText.x + 5, diffText.y, 0, ">", 24);
