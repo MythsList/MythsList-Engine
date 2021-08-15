@@ -13,3 +13,6 @@ Die 15 times
 Die 25 times
 Die 50 times
 Die 80 times
+Play a song using upscroll
+Play a song using downscroll
+Play a song using middlescroll

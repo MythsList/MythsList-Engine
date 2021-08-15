@@ -36,6 +36,11 @@ class AchievementsSubState extends MusicBeatSubstate
 	var grpIconsThree:FlxTypedGroup<FlxSprite>;
 	var grpFramesThree:FlxTypedGroup<FlxSprite>;
 
+	var achievementsCategoryFour:Array<String> = ['upscroll', 'downscroll', 'middlescroll'];
+	var framesCategoryFour:Array<String> = ['bronze', 'bronze', 'silver'];
+	var grpIconsFour:FlxTypedGroup<FlxSprite>;
+	var grpFramesFour:FlxTypedGroup<FlxSprite>;
+
 	var curselectBG:FlxSprite;
 
 	var curIconName:String;
@@ -88,6 +93,11 @@ class AchievementsSubState extends MusicBeatSubstate
 		add(grpIconsThree);
 		grpFramesThree = new FlxTypedGroup<FlxSprite>();
 		add(grpFramesThree);
+
+		grpIconsFour = new FlxTypedGroup<FlxSprite>();
+		add(grpIconsFour);
+		grpFramesFour = new FlxTypedGroup<FlxSprite>();
+		add(grpFramesFour);
 
 		for (i in 0...achievementsCategoryOne.length)
 		{
@@ -148,33 +158,62 @@ class AchievementsSubState extends MusicBeatSubstate
 		}
 
 		for (i in 0...achievementsCategoryThree.length)
-			{
-				var achievementIcon:FlxSprite = new FlxSprite(0, 300).loadGraphic(Paths.image('achievementassets/icons/icon-' + achievementsCategoryThree[i]), false, 50, 50);
-				achievementIcon.antialiasing = true;
-				achievementIcon.updateHitbox();
-				grpIconsThree.add(achievementIcon);
+		{
+			var achievementIcon:FlxSprite = new FlxSprite(0, 300).loadGraphic(Paths.image('achievementassets/icons/icon-' + achievementsCategoryThree[i]), false, 50, 50);
+			achievementIcon.antialiasing = true;
+			achievementIcon.updateHitbox();
+			grpIconsThree.add(achievementIcon);
 	
-				if (i == 0)
-					achievementIcon.x = 100;
-				else if (i > 0)
-					achievementIcon.x = grpIconsThree.members[0].x + (100 * i);
+			if (i == 0)
+				achievementIcon.x = 100;
+			else if (i > 0)
+				achievementIcon.x = grpIconsThree.members[0].x + (100 * i);
 	
-				var achievementFrame:FlxSprite = new FlxSprite((achievementIcon.getGraphicMidpoint().x) - 64/2, (achievementIcon.getGraphicMidpoint().y) - 64/2).loadGraphic(Paths.image('achievementassets/frames/frame-' + framesCategoryThree[i]), false, 65, 65);
-				achievementFrame.antialiasing = true;
-				achievementFrame.updateHitbox();
-				grpFramesThree.add(achievementFrame);
+			var achievementFrame:FlxSprite = new FlxSprite((achievementIcon.getGraphicMidpoint().x) - 64/2, (achievementIcon.getGraphicMidpoint().y) - 64/2).loadGraphic(Paths.image('achievementassets/frames/frame-' + framesCategoryThree[i]), false, 65, 65);
+			achievementFrame.antialiasing = true;
+			achievementFrame.updateHitbox();
+			grpFramesThree.add(achievementFrame);
 
-				if (MythsListEngineData.dataCategoryThree[i])
-				{
-					achievementIcon.alpha = 1;
-					achievementFrame.alpha = 1;
-				}
-				else
-				{
-					achievementIcon.alpha = 0.6;
-					achievementFrame.alpha = 0.6;
-				}	
+			if (MythsListEngineData.dataCategoryThree[i])
+			{
+				achievementIcon.alpha = 1;
+				achievementFrame.alpha = 1;
 			}
+			else
+			{
+				achievementIcon.alpha = 0.6;
+				achievementFrame.alpha = 0.6;
+			}	
+		}
+
+		for (i in 0...achievementsCategoryFour.length)
+		{
+			var achievementIcon:FlxSprite = new FlxSprite(0, 400).loadGraphic(Paths.image('achievementassets/icons/icon-' + achievementsCategoryFour[i]), false, 50, 50);
+			achievementIcon.antialiasing = true;
+			achievementIcon.updateHitbox();
+			grpIconsFour.add(achievementIcon);
+		
+			if (i == 0)
+				achievementIcon.x = 100;
+			else if (i > 0)
+				achievementIcon.x = grpIconsFour.members[0].x + (100 * i);
+		
+			var achievementFrame:FlxSprite = new FlxSprite((achievementIcon.getGraphicMidpoint().x) - 64/2, (achievementIcon.getGraphicMidpoint().y) - 64/2).loadGraphic(Paths.image('achievementassets/frames/frame-' + framesCategoryFour[i]), false, 65, 65);
+			achievementFrame.antialiasing = true;
+			achievementFrame.updateHitbox();
+			grpFramesFour.add(achievementFrame);
+	
+			if (MythsListEngineData.dataCategoryFour[i])
+			{
+				achievementIcon.alpha = 1;
+				achievementFrame.alpha = 1;
+			}
+			else
+			{
+				achievementIcon.alpha = 0.6;
+				achievementFrame.alpha = 0.6;
+			}	
+		}
 
 		var curBG:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width / 2), 150, 0xFF000000);
 		curBG.alpha = 0.25;
@@ -248,6 +287,7 @@ class AchievementsSubState extends MusicBeatSubstate
 					curSelected = 0;
 
 				curDesc = curSelected;
+				curIconName = achievementsCategoryOne[curSelected];
 
 				for (i in 0...achievementsCategoryOne.length)
 				{
@@ -268,6 +308,7 @@ class AchievementsSubState extends MusicBeatSubstate
 					curSelected = 0;
 
 				curDesc = curSelected + achievementsCategoryOne.length;
+				curIconName = achievementsCategoryTwo[curSelected];
 
 				for (i in 0...achievementsCategoryTwo.length)
 				{
@@ -288,6 +329,7 @@ class AchievementsSubState extends MusicBeatSubstate
 					curSelected = 0;
 
 				curDesc = curSelected + (achievementsCategoryOne.length + achievementsCategoryTwo.length);
+				curIconName = achievementsCategoryThree[curSelected];
 
 				for (i in 0...achievementsCategoryThree.length)
 				{
@@ -295,6 +337,27 @@ class AchievementsSubState extends MusicBeatSubstate
 					{
 						curselectBG.x = (grpIconsThree.members[i].getGraphicMidpoint().x) - 74/2;
 						curselectBG.y = (grpIconsThree.members[i].getGraphicMidpoint().y) - 74/2;
+				
+						curtext.text = descList[curDesc];
+					}
+				}
+			}
+			case 'Four':
+			{
+				if (curSelected < 0)
+					curSelected = achievementsCategoryFour.length - 1;
+				if (curSelected >= achievementsCategoryFour.length)
+					curSelected = 0;
+
+				curDesc = curSelected + (achievementsCategoryOne.length + achievementsCategoryTwo.length + achievementsCategoryThree.length);
+				curIconName = achievementsCategoryFour[curSelected];
+
+				for (i in 0...achievementsCategoryFour.length)
+				{
+					if (i == curSelected)
+					{
+						curselectBG.x = (grpIconsFour.members[i].getGraphicMidpoint().x) - 74/2;
+						curselectBG.y = (grpIconsFour.members[i].getGraphicMidpoint().y) - 74/2;
 				
 						curtext.text = descList[curDesc];
 					}
@@ -310,6 +373,12 @@ class AchievementsSubState extends MusicBeatSubstate
 				curProgress.text = "Amount of songs you've played: " + MythsListEngineData.playAmount;
 			case 'death':
 				curProgress.text = "Amount of times you've died: " + MythsListEngineData.deathAmount;
+			case 'upscroll':
+				curProgress.text = "Played with upscroll: " + MythsListEngineData.playUpscroll;
+			case 'downscroll':
+				curProgress.text = "Played with downscroll: " + MythsListEngineData.playDownscroll;
+			case 'middlescroll':
+				curProgress.text = "Played with middlescroll: " + MythsListEngineData.playMiddlescroll;
 		}
 	}
 
@@ -320,21 +389,20 @@ class AchievementsSubState extends MusicBeatSubstate
 		curCatSelected += change;
 
 		if (curCatSelected < 1)
-			curCatSelected = 3;
-		if (curCatSelected > 3)
+			curCatSelected = 4;
+		if (curCatSelected > 4)
 			curCatSelected = 1;
 
 		switch(curCatSelected)
 		{
 			case 1:
 				curCategory = 'One';
-				curIconName = 'fc';
 			case 2:
 				curCategory = 'Two';
-				curIconName = 'play';
 			case 3:
 				curCategory = 'Three';
-				curIconName = 'death';
+			case 4:
+				curCategory = 'Four';
 		}
 
 		changeSelection(0, true);

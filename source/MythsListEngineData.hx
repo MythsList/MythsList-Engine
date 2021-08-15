@@ -36,12 +36,16 @@ class MythsListEngineData
     public static var dataCategoryOne:Array<Bool>;
     public static var dataCategoryTwo:Array<Bool>;
     public static var dataCategoryThree:Array<Bool>;
+	public static var dataCategoryFour:Array<Bool>;
 
     // ACHIEVEMENTS PROGRESS
 
     public static var fcAmount:Int;
     public static var playAmount:Int;
     public static var deathAmount:Int;
+	public static var playUpscroll:Bool;
+	public static var playDownscroll:Bool;
+	public static var playMiddlescroll:Bool;
 
     static public function dataLoad():Void
     {
@@ -70,6 +74,8 @@ class MythsListEngineData
 			FlxG.save.data.dataCategoryThree = [false, false, false, false, false];
 		if (FlxG.save.data.dataCategoryThree == null)
 			FlxG.save.data.dataCategoryThree = [false, false, false, false, false];
+		if (FlxG.save.data.dataCategoryFour == null)
+			FlxG.save.data.dataCategoryFour = [false, false, false, false, false];
 
 		if (FlxG.save.data.fcAmount == null)
 			FlxG.save.data.fcAmount = 0;
@@ -77,6 +83,12 @@ class MythsListEngineData
 			FlxG.save.data.playAmount = 0;
 		if (FlxG.save.data.deathAmount == null)
 			FlxG.save.data.deathAmount = 0;
+		if (FlxG.save.data.playUpscroll == null)
+			FlxG.save.data.playUpscroll = false;
+		if (FlxG.save.data.playDownscroll == null)
+			FlxG.save.data.playDownscroll = false;
+		if (FlxG.save.data.playMiddlescroll == null)
+			FlxG.save.data.playMiddlescroll = false;
 
 		MythsListEngineData.keyBinds = FlxG.save.data.keyBinds;
 
@@ -91,10 +103,14 @@ class MythsListEngineData
 		MythsListEngineData.dataCategoryOne = FlxG.save.data.dataCategoryOne;
 		MythsListEngineData.dataCategoryTwo = FlxG.save.data.dataCategoryTwo;
 		MythsListEngineData.dataCategoryThree = FlxG.save.data.dataCategoryThree;
+		MythsListEngineData.dataCategoryFour = FlxG.save.data.dataCategoryFour;
 
 		MythsListEngineData.fcAmount = FlxG.save.data.fcAmount;
 		MythsListEngineData.playAmount = FlxG.save.data.playAmount;
 		MythsListEngineData.deathAmount = FlxG.save.data.deathAmount;
+		MythsListEngineData.playUpscroll = FlxG.save.data.playUpscroll;
+		MythsListEngineData.playDownscroll = FlxG.save.data.playDownscroll;
+		MythsListEngineData.playMiddlescroll = FlxG.save.data.playMiddlescroll;
 
 		FlxG.save.flush();
     }
@@ -114,10 +130,14 @@ class MythsListEngineData
 		MythsListEngineData.dataCategoryOne = FlxG.save.data.dataCategoryOne;
 		MythsListEngineData.dataCategoryTwo = FlxG.save.data.dataCategoryTwo;
 		MythsListEngineData.dataCategoryThree = FlxG.save.data.dataCategoryThree;
+		MythsListEngineData.dataCategoryFour = FlxG.save.data.dataCategoryFour;
 
 		MythsListEngineData.fcAmount = FlxG.save.data.fcAmount;
 		MythsListEngineData.playAmount = FlxG.save.data.playAmount;
 		MythsListEngineData.deathAmount = FlxG.save.data.deathAmount;
+		MythsListEngineData.playUpscroll = FlxG.save.data.playUpscroll;
+		MythsListEngineData.playDownscroll = FlxG.save.data.playDownscroll;
+		MythsListEngineData.playMiddlescroll = FlxG.save.data.playMiddlescroll;
     }
 
     static public function dataReset():Void
@@ -147,6 +167,8 @@ class MythsListEngineData
 			FlxG.save.data.dataCategoryThree = [false, false, false, false, false];
 		if (FlxG.save.data.dataCategoryThree != null)
 			FlxG.save.data.dataCategoryThree = [false, false, false, false, false];
+		if (FlxG.save.data.dataCategoryFour != null)
+			FlxG.save.data.dataCategoryFour = [false, false, false, false, false];
 
 		if (FlxG.save.data.fcAmount != null)
 			FlxG.save.data.fcAmount = 0;
@@ -154,6 +176,12 @@ class MythsListEngineData
 			FlxG.save.data.playAmount = 0;
 		if (FlxG.save.data.deathAmount != null)
 			FlxG.save.data.deathAmount = 0;
+		if (FlxG.save.data.playUpscroll != null)
+			FlxG.save.data.playUpscroll = false;
+		if (FlxG.save.data.playDownscroll != null)
+			FlxG.save.data.playDownscroll = false;
+		if (FlxG.save.data.playMiddlescroll != null)
+			FlxG.save.data.playMiddlescroll = false;
 
 		MythsListEngineData.keyBinds = FlxG.save.data.keyBinds;
 
@@ -168,10 +196,14 @@ class MythsListEngineData
 		MythsListEngineData.dataCategoryOne = FlxG.save.data.dataCategoryOne;
 		MythsListEngineData.dataCategoryTwo = FlxG.save.data.dataCategoryTwo;
 		MythsListEngineData.dataCategoryThree = FlxG.save.data.dataCategoryThree;
+		MythsListEngineData.dataCategoryFour = FlxG.save.data.dataCategoryFour;
 
 		MythsListEngineData.fcAmount = FlxG.save.data.fcAmount;
 		MythsListEngineData.playAmount = FlxG.save.data.playAmount;
 		MythsListEngineData.deathAmount = FlxG.save.data.deathAmount;
+		MythsListEngineData.playUpscroll = FlxG.save.data.playUpscroll;
+		MythsListEngineData.playDownscroll = FlxG.save.data.playDownscroll;
+		MythsListEngineData.playMiddlescroll = FlxG.save.data.playMiddlescroll;
 
         FlxG.save.flush();
     }

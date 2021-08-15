@@ -597,9 +597,15 @@ class PlayState extends MusicBeatState
 			// For songs that do not use the original BF
 
 			case 'satin-panties' | 'high' | 'milf':
-				boyfriend = new Boyfriend(770, 450, SONG.player1);
+				if (MythsListEngineData.characterSkin == 'bf')
+					boyfriend = new Boyfriend(770, 450, SONG.player1);
+				else
+					boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
 			case 'cocoa' | 'eggnog' | 'winter-horrorland':
-				boyfriend = new Boyfriend(770, 450, SONG.player1);
+				if (MythsListEngineData.characterSkin == 'bf')
+					boyfriend = new Boyfriend(770, 450, SONG.player1);
+				else
+					boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
 			case 'senpai' | 'roses' | 'thorns':
 				boyfriend = new Boyfriend(770, 450, SONG.player1);
 
@@ -1926,6 +1932,24 @@ class PlayState extends MusicBeatState
 		FlxG.save.data.playAmount += 1;
 		MythsListEngineData.playAmount = FlxG.save.data.playAmount;
 
+		if (!MythsListEngineData.downScroll)
+		{
+			FlxG.save.data.playUpscroll = true;
+			MythsListEngineData.playUpscroll = FlxG.save.data.playUpscroll;
+		}
+		
+		if (MythsListEngineData.downScroll)
+		{
+			FlxG.save.data.playDownscroll = true;
+			MythsListEngineData.playDownscroll = FlxG.save.data.playDownscroll;
+		}
+
+		if (MythsListEngineData.middleScroll)
+		{
+			FlxG.save.data.playMiddlescroll = true;
+			MythsListEngineData.playMiddlescroll = FlxG.save.data.playMiddlescroll;
+		}
+
 		switch(MythsListEngineData.playAmount)
 		{
 			case 1:
@@ -1968,6 +1992,36 @@ class PlayState extends MusicBeatState
 					FlxG.save.data.dataCategoryOne[4] = true;
 					MythsListEngineData.dataCategoryOne[4] = FlxG.save.data.dataCategoryOne[4];
 			}
+		}
+
+		switch(MythsListEngineData.playUpscroll)
+		{
+			case true:
+				FlxG.save.data.dataCategoryFour[0] = true;
+				MythsListEngineData.dataCategoryFour[0] = FlxG.save.data.dataCategoryFour[0];
+			case false:
+				FlxG.save.data.dataCategoryFour[0] = false;
+				MythsListEngineData.dataCategoryFour[0] = FlxG.save.data.dataCategoryFour[0];
+		}
+
+		switch(MythsListEngineData.playDownscroll)
+		{
+			case true:
+				FlxG.save.data.dataCategoryFour[1] = true;
+				MythsListEngineData.dataCategoryFour[1] = FlxG.save.data.dataCategoryFour[1];
+			case false:
+				FlxG.save.data.dataCategoryFour[1] = false;
+				MythsListEngineData.dataCategoryFour[1] = FlxG.save.data.dataCategoryFour[1];
+		}
+
+		switch(MythsListEngineData.playMiddlescroll)
+		{
+			case true:
+				FlxG.save.data.dataCategoryFour[2] = true;
+				MythsListEngineData.dataCategoryFour[2] = FlxG.save.data.dataCategoryFour[2];
+			case false:
+				FlxG.save.data.dataCategoryFour[2] = false;
+				MythsListEngineData.dataCategoryFour[2] = FlxG.save.data.dataCategoryFour[2];
 		}
 
 		FlxG.save.flush();
