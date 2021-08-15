@@ -1,9 +1,20 @@
 package;
 
+import flixel.system.FlxAssets.FlxSoundAsset;
+import lime.tools.AssetType;
+import flixel.input.FlxInput;
+import flixel.system.FlxAssets.FlxGraphicAsset;
 import flixel.FlxG;
 import flixel.graphics.frames.FlxAtlasFrames;
 import openfl.utils.AssetType;
 import openfl.utils.Assets as OpenFlAssets;
+import openfl.display.BitmapData;
+import openfl.utils.ByteArray;
+import haxe.io.Bytes;
+import flixel.util.typeLimit.OneOfTwo;
+import openfl.media.Sound;
+
+using StringTools;
 
 class Paths
 {
@@ -113,5 +124,19 @@ class Paths
 	inline static public function getPackerAtlas(key:String, ?library:String)
 	{
 		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', library));
+	}
+
+	inline public static function offsets(path:String, ?library:String):Array<String>
+	{
+		var daList:Array<String> = [];
+
+		daList = lime.utils.Assets.getText('shared:assets/shared/images/characters/offsets/$path.txt').trim().split('\n');
+	
+		for (i in 0...daList.length)
+		{
+			daList[i] = daList[i].trim();
+		}
+	
+		return daList;
 	}
 }
