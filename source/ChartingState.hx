@@ -119,7 +119,8 @@ class ChartingState extends MusicBeatState
 		}
 
 		FlxG.mouse.visible = true;
-		FlxG.save.bind('funkin', 'ninjamuffin99');
+
+		// FlxG.save.bind('funkin', 'ninjamuffin99');
 
 		tempBpm = _song.bpm;
 
@@ -754,15 +755,11 @@ class ChartingState extends MusicBeatState
 	{
 		if (check_mustHitSection.checked)
 		{
-			// leftIcon.animation.play(MythsListEngineData.characterSkin);
-			// rightIcon.animation.play(PlayState.SONG.player2);
 			leftIcon.setPosition(0, -100);
 			rightIcon.setPosition(gridBG.width / 2, -100);
 		}
 		else
 		{
-			// leftIcon.animation.play(PlayState.SONG.player2);
-			// rightIcon.animation.play(MythsListEngineData.characterSkin);
 			leftIcon.setPosition(gridBG.width / 2, -100);
 			rightIcon.setPosition(0, -100);
 		}
