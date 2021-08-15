@@ -996,10 +996,23 @@ class PlayState extends MusicBeatState
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 
-			introAssets.set('default', ['ready', "set", "go"]);
+			introAssets.set('default', [
+				'ready',
+				'set', 
+				'go'
+			]);
 
-			introAssets.set('school', ['weeb/pixelUI/ready-pixel', 'weeb/pixelUI/set-pixel', 'weeb/pixelUI/date-pixel']);
-			introAssets.set('schoolEvil', ['weeb/pixelUI/ready-pixel', 'weeb/pixelUI/set-pixel', 'weeb/pixelUI/date-pixel']);
+			introAssets.set('school', [
+				'weeb/pixelUI/ready-pixel',
+				'weeb/pixelUI/set-pixel',
+				'weeb/pixelUI/date-pixel'
+			]);
+
+			introAssets.set('schoolEvil', [
+				'weeb/pixelUI/ready-pixel',
+				'weeb/pixelUI/set-pixel',
+				'weeb/pixelUI/date-pixel'
+			]);
 
 			var introAlts:Array<String> = introAssets.get('default');
 			var altSuffix:String = '';
@@ -1672,28 +1685,30 @@ class PlayState extends MusicBeatState
 		FlxG.watch.addQuick("beatShit", curBeat);
 		FlxG.watch.addQuick("stepShit", curStep);
 
-		if (curSong == 'Fresh')
+		switch(curSong.toLowerCase())
 		{
-			switch (curBeat)
+			case 'fresh':
 			{
-				case 16 | 80:
+				switch (curBeat)
 				{
-					if (curBeat == 16)
-						camZooming = true;
+					case 16 | 80:
+					{
+						if (curBeat == 16)
+							camZooming = true;
 
-					gfSpeed = 2;
+						gfSpeed = 2;
+					}
+					case 48 | 112:
+						gfSpeed = 1;
 				}
-				case 48 | 112:
-					gfSpeed = 1;
 			}
-		}
-
-		if (curSong == 'Bopeebo')
-		{
-			switch (curBeat)
+			case 'bopeebo':
 			{
-				case 128 | 129 | 130:
-					vocals.volume = 0;
+				switch (curBeat)
+				{
+					case 128 | 129 | 130:
+						vocals.volume = 0;
+				}
 			}
 		}
 

@@ -40,7 +40,7 @@ class Character extends FlxSprite
 			case 'gf':
 				healthBarColor = colorPrefix + 'A5004D';
 
-				tex = Paths.getSparrowAtlas('GF_assets');
+				tex = Paths.getSparrowAtlas('characters/GF_assets', 'shared');
 				frames = tex;
 				animation.addByPrefix('cheer', 'GF Cheer', 24, false);
 				animation.addByPrefix('singLEFT', 'GF left note', 24, false);
@@ -295,7 +295,7 @@ class Character extends FlxSprite
 			case 'bf':
 				healthBarColor = colorPrefix + '31B0D1';
 
-				var tex = Paths.getSparrowAtlas('BOYFRIEND', 'shared');
+				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -395,7 +395,7 @@ class Character extends FlxSprite
 			case 'bf-minus':
 				healthBarColor = colorPrefix + '31B0D1';
 
-				var tex = Paths.getSparrowAtlas('BOYFRIEND_MINUS', 'shared');
+				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND_MINUS', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -436,7 +436,7 @@ class Character extends FlxSprite
 			case 'bf-old':
 				healthBarColor = colorPrefix + 'E9FF48';
 
-				var tex = Paths.getSparrowAtlas('BOYFRIEND_OLD', 'shared');
+				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND_OLD', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -477,7 +477,7 @@ class Character extends FlxSprite
 			case 'bf-veryold':
 				healthBarColor = colorPrefix + '5FB6F1';
 
-				var tex = Paths.getSparrowAtlas('BOYFRIEND_VERYOLD', 'shared');
+				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND_VERYOLD', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
 				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
@@ -691,6 +691,28 @@ class Character extends FlxSprite
 		}
 	}
 
+	// THIS SHIT IS BROKEN
+
+	/*
+	public function loadOffsetFile(character:String, library:String = 'shared')
+	{
+		var offsetFile = CoolUtil.coolTextFile(Paths.txt('images/characters/offsets/' + character + "Offsets", library));
+	
+		for (i in 0...offsetFile.length)
+		{
+			var data:Array<String> = offsetFile[i].split(' ');
+
+			if (data[1] == null)
+				data[1] = '0';
+
+			if (data[2] == null)
+				data[2] = '0';
+
+			addOffset(data[0], Std.parseInt(data[1]), Std.parseInt(data[2]));
+		}
+	}
+	*/
+
 	override function update(elapsed:Float)
 	{
 		if (!curCharacter.startsWith('bf'))
@@ -711,12 +733,14 @@ class Character extends FlxSprite
 			}
 		}
 
+		/*
 		switch (curCharacter)
 		{
 			case 'gf':
 				if (animation.curAnim.name == 'hairFall' && animation.curAnim.finished)
 					playAnim('danceRight');
 		}
+		*/
 
 		super.update(elapsed);
 	}
@@ -790,6 +814,7 @@ class Character extends FlxSprite
 		animation.play(AnimName, Force, Reversed, Frame);
 
 		var daOffset = animOffsets.get(AnimName);
+
 		if (animOffsets.exists(AnimName))
 		{
 			offset.set(daOffset[0], daOffset[1]);

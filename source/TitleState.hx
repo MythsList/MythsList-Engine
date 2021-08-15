@@ -98,6 +98,7 @@ class TitleState extends MusicBeatState
 	}
 
 	var logoBl:FlxSprite;
+	var logoEngine:FlxSprite;
 	var gfDance:FlxSprite;
 	var danceLeft:Bool = false;
 	var titleText:FlxSprite;
@@ -145,6 +146,17 @@ class TitleState extends MusicBeatState
 		gfDance.antialiasing = true;
 		add(gfDance);
 		add(logoBl);
+
+		/*
+		logoEngine = new FlxSprite(0, 0).loadGraphic(Paths.image('MythsListEngineLogo', 'preload'), false);
+		logoEngine.antialiasing = true;
+		logoEngine.updateHitbox();
+		add(logoEngine);
+		logoEngine.width *= 1.5;
+		logoEngine.height *= 1.5;
+		logoEngine.x = logoBl.x + logoBl.width - logoEngine.width;
+		logoEngine.y = logoBl.y + logoBl.height - (logoEngine.height + (logoBl.height / 4));
+		*/
 
 		titleText = new FlxSprite(100, FlxG.height * 0.8);
 		titleText.frames = Paths.getSparrowAtlas('titleEnter');
