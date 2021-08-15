@@ -8,8 +8,8 @@ class MythsListEngineData
 {
     // VERSION
 
-    public static var engineVersion:String = "V.1 - WIP BUILD";
-    public static var modVersion:String = "V.1 - DEMO";
+    public static var engineVersion:String = "V.1";
+    public static var modVersion:String = " ";
 
     // KEYBINDS
 
