@@ -18,6 +18,10 @@ import flixel.FlxSubState;
 
 using StringTools;
 
+/*
+UNUSED FILE
+*/
+
 class FpsSubState extends MusicBeatSubstate
 {
 	var textMenuItems:Array<String> = ['FPS Cap'];

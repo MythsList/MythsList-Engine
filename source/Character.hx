@@ -511,6 +511,46 @@ class Character extends FlxSprite
 				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
+
+			case 'brody-foxx':
+				healthBarColor = colorPrefix + 'FFA8C8';
+	
+				tex = Paths.getSparrowAtlas('characters/brody-foxx', 'shared');
+				frames = tex;
+				animation.addByPrefix('idle', 'BrodyIdle', 24, false);
+				animation.addByPrefix('singUP', 'brodyup', 24, false);
+				animation.addByPrefix('singRIGHT', 'BrodyRight', 24, false);
+				animation.addByPrefix('singDOWN', 'YO', 24, false);
+				animation.addByPrefix('singLEFT', 'BrodyLeft', 24, false);
+				animation.addByPrefix('singUPmiss', 'brodyup', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'BrodyLeft', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'BrodyRight', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'YO', 24, false);
+	
+				loadOffsetFile(curCharacter);
+	
+				playAnim('idle');
+			
+			case 'template':
+				healthBarColor = colorPrefix + 'A1A1A1';
+		
+				tex = Paths.getSparrowAtlas('characters/template', 'shared');
+				frames = tex;
+				animation.addByPrefix('idle', 'Pico Idle Dance', 24, false);
+				animation.addByPrefix('singUP', 'pico Up note', 24, false);
+				animation.addByPrefix('singRIGHT', 'Pico Note Right', 24, false);
+				animation.addByPrefix('singDOWN', 'Pico Down Note', 24, false);
+				animation.addByPrefix('singLEFT', 'Pico NOTE LEFT', 24, false);
+				animation.addByPrefix('singUPmiss', 'pico Up note', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'Pico NOTE LEFT', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'Pico Note Right', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'Pico Down Note', 24, false);
+		
+				loadOffsetFile(curCharacter);
+		
+				playAnim('idle');
+
+				flipX = true;
 		}
 
 		dance();
@@ -519,7 +559,7 @@ class Character extends FlxSprite
 		{
 			flipX = !flipX;
 
-			if (!curCharacter.startsWith('bf'))
+			if (!curCharacter.startsWith('bf') || curCharacter != 'brody-foxx' || curCharacter != 'template')
 			{
 				var oldRight = animation.getByName('singRIGHT').frames;
 				animation.getByName('singRIGHT').frames = animation.getByName('singLEFT').frames;

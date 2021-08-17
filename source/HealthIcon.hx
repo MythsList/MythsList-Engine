@@ -26,8 +26,8 @@ class HealthIcon extends FlxSprite
 				newchar = 'monster';
 			case 'senpai-angry':
 				newchar = 'senpai';
-			case 'sl-a0-red':
-				newchar = 'sl-a0';
+			case 'template':
+				newchar = 'face';
 		}
 
 		loadGraphic(Paths.image('healthicons/icon-' + newchar, 'preload'), true, 150, 150);

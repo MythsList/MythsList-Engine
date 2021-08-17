@@ -2,6 +2,8 @@ bf
 bf-minus
 bf-old
 bf-veryold
+brody-foxx
+template
 dad
 gf
 spooky

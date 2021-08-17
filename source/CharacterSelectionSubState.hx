@@ -34,14 +34,18 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		'Boyfriend',
 		'Minus Boyfriend',
 		'Beta Boyfriend',
-		'Old Boyfriend'
+		'Old Boyfriend',
+		'Brody Foxx',
+		'Template'
 	];
 
 	var Icons:Array<String> = [
 		'bf',
 		'bf-minus',
 		'bf-old',
-		'bf-veryold'
+		'bf-veryold',
+		'brody-foxx',
+		'template'
 	];
 
 	var selector:FlxSprite;
@@ -99,7 +103,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		curIcon.y = curBGtext.y + curBGtext.height;
 		add(curIcon);
 
-		// ADD YOUR CHARACTER NAME IN A NEW CASE AND REPLACE THE NUMBER IN 'textMenuItems[0]' BY 4
+		// ADD YOUR CHARACTER NAME IN A NEW CASE AND REPLACE THE NUMBER IN 'textMenuItems[0]' BY WHATS AFTER THE LAST NUMBER
 
 		switch(MythsListEngineData.characterSkin)
 		{
@@ -111,6 +115,10 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 				curIconText = new FlxText(0, 0, 0, textMenuItems[2], 16);
 			case 'bf-veryold':
 				curIconText = new FlxText(0, 0, 0, textMenuItems[3], 16);
+			case 'brody-foxx':
+				curIconText = new FlxText(0, 0, 0, textMenuItems[4], 16);
+			case 'template':
+				curIconText = new FlxText(0, 0, 0, textMenuItems[5], 16);
 		}
 
 		curIconText.x = curBGtext.x;
@@ -175,8 +183,6 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 
 			remove(curIconText);
 
-			// ADD YOUR CHARACTER NAME IN A NEW CASE AND REPLACE THE NUMBER IN 'textMenuItems[0]' BY 4
-
 			switch(MythsListEngineData.characterSkin)
 			{
 				case 'bf':
@@ -187,6 +193,10 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 					curIconText = new FlxText(0, 0, 0, textMenuItems[2], 16);
 				case 'bf-veryold':
 					curIconText = new FlxText(0, 0, 0, textMenuItems[3], 16);
+				case 'brody-foxx':
+					curIconText = new FlxText(0, 0, 0, textMenuItems[4], 16);
+				case 'template':
+					curIconText = new FlxText(0, 0, 0, textMenuItems[5], 16);
 			}
 
 			curIconText.x = curBGtext.x;

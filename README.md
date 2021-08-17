@@ -91,9 +91,9 @@ Once it is done, have fun with the engine!
 ## Contact
 
 - Discord - 52#9242
+
 - [Twitter](https://twitter.com/mythslist)
 - [GameBanana](https://gamebanana.com/members/1947708)
-- [Roblox](https://www.roblox.com/users/851155547/profile) (why not?)
 - [E-mail](mailto:mythslistofficial@gmail.com)
 
 ## Credits

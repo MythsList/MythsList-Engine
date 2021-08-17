@@ -138,6 +138,8 @@ class PlayState extends MusicBeatState
 	var engineversion:FlxText;
 	var version:FlxText;
 
+	var doof:DialogueBox;
+
 	public static var campaignScore:Int = 0;
 
 	var defaultCamZoom:Float = 1.05;
@@ -643,6 +645,27 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		switch(SONG.song.toLowerCase())
+		{
+			case 'senpai' | 'roses' | 'thorns':
+			{
+				boyfriend.y += 0;
+			}
+			default:
+			{
+				switch(MythsListEngineData.characterSkin)
+				{
+					case 'bf-veryold':
+						boyfriend.y += 30;
+					case 'brody-foxx':
+						boyfriend.y -= 200;
+					case 'template':
+						boyfriend.y -= 60;
+						boyfriend.x -= 10;
+				}
+			}
+		}
+
 		if (curStage == 'limo')
 		{
 			add(gf);
@@ -657,9 +680,12 @@ class PlayState extends MusicBeatState
 			add(boyfriend);
 		}
 
-		var doof:DialogueBox = new DialogueBox(false, dialogue);
-		doof.scrollFactor.set();
-		doof.finishThing = startCountdown;
+		if (dialogue != null)
+		{
+			doof = new DialogueBox(false, dialogue);
+			doof.scrollFactor.set();
+			doof.finishThing = startCountdown;
+		}
 
 		Conductor.songPosition = -5000;
 
@@ -823,7 +849,9 @@ class PlayState extends MusicBeatState
 		weekTxt.cameras = [camHUD];
 		engineversion.cameras = [camHUD];
 		version.cameras = [camHUD];
-		doof.cameras = [camHUD];
+
+		if (dialogue != null)
+			doof.cameras = [camHUD];
 
 		startingSong = true;
 
@@ -869,7 +897,8 @@ class PlayState extends MusicBeatState
 					if (curSong.toLowerCase() == 'roses')
 						FlxG.sound.play(Paths.sound('ANGRY'));
 
-					schoolIntro(doof);
+					if (dialogue != null)
+						schoolIntro(doof);
 				};
 				default:
 					startCountdown();
@@ -1486,14 +1515,6 @@ class PlayState extends MusicBeatState
 		perfectMode = false;
 		#end
 
-		if (FlxG.keys.justPressed.NINE)
-		{
-			if (iconP1.animation.curAnim.name == 'bf-old')
-				iconP1.animation.play(SONG.player1);
-			else
-				iconP1.animation.play('bf-old');
-		}
-
 		switch (curStage)
 		{
 			case 'philly':
@@ -1800,6 +1821,8 @@ class PlayState extends MusicBeatState
 
 				if (MythsListEngineData.middleScroll && daNote.x <= (FlxG.width / 4))
 					daNote.alpha = 0;
+				else
+					daNote.alpha = 1;
 
 				if (MythsListEngineData.downScroll)
 				{
@@ -1810,11 +1833,8 @@ class PlayState extends MusicBeatState
 
 						if((!daNote.mustPress || daNote.wasGoodHit || daNote.prevNote.wasGoodHit && !daNote.canBeHit) && daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= (strumLine.y + Note.swagWidth / 2))
 						{
-								// var swagRect = new FlxRect(0, 0, daNote.frameWidth * 2, daNote.frameHeight * 2);
 								var swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
-								// swagRect.y = daNote.frameHeight - swagRect.height;
 								swagRect.y /= daNote.scale.y;
-								// swagRect.height = (strumLineNotes.members[Math.floor(Math.abs(daNote.noteData))].y + Note.swagWidth / 2 - daNote.y) / daNote.scale.y;
 								swagRect.height -= swagRect.y;
 	
 								daNote.clipRect = swagRect;
@@ -2342,7 +2362,6 @@ class PlayState extends MusicBeatState
 				{
 					if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate)
 					{
-						// totalNotesHit += 1;
 						goodNoteHit(daNote);
 					}
 					else if (!daNote.canBeHit && daNote.tooLate)
@@ -2590,7 +2609,9 @@ class PlayState extends MusicBeatState
 		lightningStrikeBeat = curBeat;
 		lightningOffset = FlxG.random.int(8, 24);
 
-		boyfriend.playAnim('scared', true);
+		if (boyfriend.animOffsets.exists('scared'))
+			boyfriend.playAnim('scared', true);
+
 		gf.playAnim('scared', true);
 	}
 
