@@ -36,75 +36,11 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
-		/*
-		Added that shit so it doesn't crash saying "null object reference".
-		Basically set any null data to the default value.
-
-		Only will work the first time you launch the game 
-		Or after you clicked on the "Reset data" button in the Options menu.
-
-		if (FlxG.save.data.keyBinds == null)
-			FlxG.save.data.keyBinds = 'SDKL';
-
-		if (FlxG.save.data.middleScroll == null)
-			FlxG.save.data.downScroll = false;
-		if (FlxG.save.data.middleScroll == null)
-			FlxG.save.data.middleScroll = false;
-		if (FlxG.save.data.statsDisplay == null)
-			FlxG.save.data.statsDisplay = true;
-		if (FlxG.save.data.songinfosDisplay == null)
-			FlxG.save.data.songinfosDisplay = true;
-		if (FlxG.save.data.versionDisplay == null)
-			FlxG.save.data.versionDisplay = true;
-
-		if (FlxG.save.data.characterSkin == null)
-			FlxG.save.data.characterSkin = 'bf';
-
-		if (FlxG.save.data.dataCategoryOne == null)
-			FlxG.save.data.dataCategoryOne = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryTwo == null)
-			FlxG.save.data.dataCategoryTwo = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryThree == null)
-			FlxG.save.data.dataCategoryThree = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryThree == null)
-			FlxG.save.data.dataCategoryThree = [false, false, false, false, false];
-
-		if (FlxG.save.data.fcAmount == null)
-			FlxG.save.data.fcAmount = 0;
-		if (FlxG.save.data.playAmount == null)
-			FlxG.save.data.playAmount = 0;
-		if (FlxG.save.data.deathAmount == null)
-			FlxG.save.data.deathAmount = 0;
-
-		MythsListEngineData.keyBinds = FlxG.save.data.keyBinds;
-
-		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
-		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
-		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
-		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
-		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
-
-		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
-
-		MythsListEngineData.dataCategoryOne = FlxG.save.data.dataCategoryOne;
-		MythsListEngineData.dataCategoryTwo = FlxG.save.data.dataCategoryTwo;
-		MythsListEngineData.dataCategoryThree = FlxG.save.data.dataCategoryThree;
-
-		MythsListEngineData.fcAmount = FlxG.save.data.fcAmount;
-		MythsListEngineData.playAmount = FlxG.save.data.playAmount;
-		MythsListEngineData.deathAmount = FlxG.save.data.deathAmount;
-
-
-		FlxG.save.flush();
-
-		End of the data saving mess
-		*/
-
 		MythsListEngineData.dataLoad();
 
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Main Menu", null);
+		DiscordClient.changePresence("In the Main Menus", null);
 		#end
 
 		transIn = FlxTransitionableState.defaultTransIn;

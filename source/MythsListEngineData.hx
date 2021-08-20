@@ -8,7 +8,7 @@ class MythsListEngineData
 {
     // VERSION
 
-    public static var engineVersion:String = "V.1.0.1";
+    public static var engineVersion:String = "V.1.0.2";
     public static var modVersion:String = " ";
 
     // KEYBINDS
@@ -26,6 +26,7 @@ class MythsListEngineData
     public static var statsDisplay:Bool;
     public static var songinfosDisplay:Bool;
     public static var versionDisplay:Bool;
+	public static var botPlay:Bool;
 
     // CHARACTER SELECTION
 
@@ -62,6 +63,8 @@ class MythsListEngineData
 			FlxG.save.data.songinfosDisplay = true;
 		if (FlxG.save.data.versionDisplay == null)
 			FlxG.save.data.versionDisplay = true;
+		if (FlxG.save.data.botPlay == null)
+			FlxG.save.data.botPlay = false;
 
 		if (FlxG.save.data.characterSkin == null)
 			FlxG.save.data.characterSkin = 'bf';
@@ -97,6 +100,7 @@ class MythsListEngineData
 		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
+		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
 
@@ -124,6 +128,7 @@ class MythsListEngineData
 		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
+		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
 
@@ -155,6 +160,8 @@ class MythsListEngineData
 			FlxG.save.data.songinfosDisplay = true;
 		if (FlxG.save.data.versionDisplay != null)
 			FlxG.save.data.versionDisplay = true;
+		if (FlxG.save.data.botPlay != null)
+			FlxG.save.data.botPlay = false;
 
 		if (FlxG.save.data.characterSkin != null)
 			FlxG.save.data.characterSkin = 'bf';
@@ -190,6 +197,7 @@ class MythsListEngineData
 		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
+		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
 

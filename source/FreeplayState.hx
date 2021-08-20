@@ -163,8 +163,8 @@ class FreeplayState extends MusicBeatState
 		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(modversionText);
 
-		changeSelection();
-		changeDiff();
+		changeSelection(0);
+		changeDiff(0);
 
 		super.create();
 	}
@@ -177,7 +177,7 @@ class FreeplayState extends MusicBeatState
 	public function addWeek(songs:Array<String>, weekNum:Int, ?songCharacters:Array<String>)
 	{
 		if (songCharacters == null)
-			songCharacters = [MythsListEngineData.characterSkin];
+			songCharacters = ['face'];
 
 		var num:Int = 0;
 		
@@ -206,17 +206,15 @@ class FreeplayState extends MusicBeatState
 
 		scoreText.text = "HIGHSCORE:" + lerpScore;
 
-		var upP = controls.UP_P;
-		var downP = controls.DOWN_P;
-		var accepted = controls.ACCEPT;
-
-		if (upP)
+		if (controls.UP_P)
 			changeSelection(-1);
-		if (downP)
+
+		if (controls.DOWN_P)
 			changeSelection(1);
 
 		if (controls.LEFT_P)
 			changeDiff(-1);
+
 		if (controls.RIGHT_P)
 			changeDiff(1);
 
@@ -225,7 +223,7 @@ class FreeplayState extends MusicBeatState
 			FlxG.switchState(new WeekselectState());
 		}
 
-		if (accepted)
+		if (controls.ACCEPT)
 		{
 			FlxG.sound.play(Paths.sound('confirmMenu'));
 
@@ -236,7 +234,7 @@ class FreeplayState extends MusicBeatState
 			PlayState.storyDifficulty = curDifficulty;
 
 			PlayState.storyWeek = songs[curSelected].week;
-			LoadingState.loadAndSwitchState(new PlayState());
+			LoadingState.loadAndSwitchState(new PlayState(), false);
 		}
 	}
 

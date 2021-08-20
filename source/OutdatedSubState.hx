@@ -28,11 +28,11 @@ class OutdatedSubState extends MusicBeatState
 		thx.setFormat("VCR OSD Mono", 50, FlxColor.WHITE, CENTER);
 		add(thx);
 
-		var notetxt:FlxText = new FlxText(0, (FlxG.height / 2), FlxG.width, "Note : Supported keybinds are only the Current Presets and Arrow Keys.", 28);
+		var notetxt:FlxText = new FlxText(0, thx.y + thx.height, FlxG.width, "Note : Supported keybinds are only the Current Presets and Arrow Keys.", 28);
 		notetxt.setFormat("VCR OSD Mono", 28, FlxColor.WHITE, CENTER);
 		add(notetxt);
 
-		var entertxt:FlxText = new FlxText(0, (FlxG.height / 2) + 33, FlxG.width, "Please press [ENTER] to close the menu.", 38);
+		var entertxt:FlxText = new FlxText(0, notetxt.y + notetxt.height, FlxG.width, "Please press [ENTER] to close the menu.", 38);
 		entertxt.setFormat("VCR OSD Mono", 38, FlxColor.WHITE, CENTER);
 		add(entertxt);
 

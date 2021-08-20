@@ -21,7 +21,7 @@ using StringTools;
 class StoryMenuState extends MusicBeatState
 {
 	// song names (in uppercase because why not)
-	var weekData:Array<Dynamic> = [
+	public static var weekData:Array<Dynamic> = [
 		['TUTORIAL'],
 		['BOPEEBO', 'FRESH', 'DADBATTLE'],
 		['SPOOKEEZ', 'SOUTH', "MONSTER"],
@@ -50,7 +50,18 @@ class StoryMenuState extends MusicBeatState
 		"NEWGROUNDS SHOWDOWN",
 		"VS DOUBLE M",
 		"UNHOLY XMAS",
-		"HATING SIMULATOR",
+		"HATING SIMULATOR"
+	];
+
+	// background color, set it to 0x00000000 so it uses the default yellow color
+	var weekColors:Array<FlxColor> = [
+		0xFFd60064,
+		0xFFaf66ce,
+		0xFFd56a00,
+		0xFFb7d855,
+		0xFFd8558e,
+		0xFFf3ff6e,
+		0xFFffaa6f
 	];
 
 	/*
@@ -89,11 +100,6 @@ class StoryMenuState extends MusicBeatState
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 		}
 
-		for (i in 0...weekData.length)
-		{
-			weekUnlocked.push(true);
-		}
-
 		persistentUpdate = persistentDraw = true;
 
 		scoreText = new FlxText(10, 10, 0, "SCORE: 0", 36);
@@ -113,30 +119,7 @@ class StoryMenuState extends MusicBeatState
 		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(modversionText);
 
-		var ui_tex = Paths.getSparrowAtlas('mainmenu/campaign_menu_UI_assets');
-
-		// If you want a custom bg color like the tutorial week, change it here!
-		// Do NOT forget the other switch function that basically does the same thing but it updates!
-
-		switch (curWeek)
-		{
-			default:
-				BG.color = 0xFFfde871;
-			case 0:
-				BG.color = 0xFFd60064;
-			case 1:
-				BG.color = 0xFFaf66ce;
-			case 2:
-				BG.color = 0xFFd56a00;
-			case 3:
-				BG.color = 0xFFb7d855;
-			case 4:
-				BG.color = 0xFFd8558e;
-			case 5:
-				BG.color = 0xFFf3ff6e;
-			case 6:
-				BG.color = 0xFFffaa6f;
-		}
+		var ui_tex = Paths.getSparrowAtlas('mainmenu/campaign_menu_UI_assets', 'preload');
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
 		add(grpWeekText);
@@ -245,6 +228,7 @@ class StoryMenuState extends MusicBeatState
 		add(scoreText);
 		add(txtWeekTitle);
 
+		changeWeek(0);
 		updateText();
 
 		super.create();
@@ -285,6 +269,7 @@ class StoryMenuState extends MusicBeatState
 
 			if (controls.LEFT_P)
 				changeDifficulty(-1);
+
 			if (controls.RIGHT_P)
 				changeDifficulty(1);
 		}
@@ -414,27 +399,10 @@ class StoryMenuState extends MusicBeatState
 			bullShit++;
 		}
 
-		// Hello, I make "complex" codes.
-
-		switch (curWeek)
-		{
-			default:
-				BG.color = 0xFFfde871;
-			case 0:
-				BG.color = 0xFFd60064;
-			case 1:
-				BG.color = 0xFFaf66ce;
-			case 2:
-				BG.color = 0xFFd56a00;
-			case 3:
-				BG.color = 0xFFb7d855;
-			case 4:
-				BG.color = 0xFFd8558e;
-			case 5:
-				BG.color = 0xFFf3ff6e;
-			case 6:
-				BG.color = 0xFFffaa6f;
-		}
+		if (weekColors[curWeek] != 0x00000000)
+			BG.color = weekColors[curWeek];
+		else
+			BG.color = 0xFFfde871;
 
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 
@@ -473,7 +441,7 @@ class StoryMenuState extends MusicBeatState
 			txtTracklist.text += "\n" + stringThing[i].toUpperCase();
 		}
 
-		// in case because shit bug
+		// in case, because shit bug
 		
 		if (txtTracklist.text == "TRACKS:\n")
 		{
@@ -486,13 +454,21 @@ class StoryMenuState extends MusicBeatState
 		txtTracklist.screenCenter(X);
 		txtTracklist.x -= FlxG.width * 0.35;
 
-		if (curWeek != 0)
-			grpWeekCharacters.members[0].alpha = 1;
-		else
+		if (curWeek == 0 && grpWeekCharacters.members[0].animation.curAnim.name == 'dad')
 			grpWeekCharacters.members[0].alpha = 0;
+		else
+			grpWeekCharacters.members[0].alpha = 1;
 
 		#if !switch
 		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
 		#end
+	}
+
+	public static function updateWeekUnlocked()
+	{
+		for (i in 0...weekData.length)
+		{
+			weekUnlocked.push(true);
+		}
 	}
 }

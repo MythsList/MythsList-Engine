@@ -24,8 +24,6 @@ class HealthIcon extends FlxSprite
 				newchar = 'parents';
 			case 'monster-christmas':
 				newchar = 'monster';
-			case 'senpai-angry':
-				newchar = 'senpai';
 			case 'template':
 				newchar = 'face';
 		}
@@ -33,7 +31,7 @@ class HealthIcon extends FlxSprite
 		loadGraphic(Paths.image('healthicons/icon-' + newchar, 'preload'), true, 150, 150);
 		antialiasing = true;
 
-		animation.add(newchar, [0, 1], 0, false, isPlayer);
+		animation.add(newchar, [0, 1, 2], 0, false, isPlayer);
 
 		animation.play(newchar);
 		scrollFactor.set();

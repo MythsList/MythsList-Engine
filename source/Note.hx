@@ -33,6 +33,8 @@ class Note extends FlxSprite
 	public static var BLUE_NOTE:Int = 1;
 	public static var RED_NOTE:Int = 3;
 
+	public var rating:String = 'sick';
+
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
 	{
 		super();
@@ -146,8 +148,8 @@ class Note extends FlxSprite
 
 			x -= width / 2;
 
-			if (MythsListEngineData.downScroll && sustainNote) 
-			    flipY = true;
+			if (MythsListEngineData.downScroll)
+				flipY = true;
 
 			if (PlayState.curStage.startsWith('school'))
 				x += 30;
@@ -167,6 +169,7 @@ class Note extends FlxSprite
 				}
 
 				prevNote.scale.y *= (Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed);
+
 				prevNote.updateHitbox();
 			}
 		}

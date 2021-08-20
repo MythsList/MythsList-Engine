@@ -26,7 +26,8 @@ class GameplaySubState extends MusicBeatSubstate
 		'Middlescroll',
 		'Stats display',
 		'Song infos display',
-		'Version display'
+		'Version display',
+		'Fullscreen'
 	];
 
 	var selector:FlxSprite;
@@ -81,6 +82,16 @@ class GameplaySubState extends MusicBeatSubstate
 					if (FlxG.save.data.versionDisplay)
 						optionText.color = FlxColor.GREEN;
 					else if (!FlxG.save.data.versionDisplay)
+						optionText.color = FlxColor.RED;
+				case 'Bot play':
+					if (FlxG.save.data.botPlay)
+						optionText.color = FlxColor.GREEN;
+					else if (!FlxG.save.data.botPlay)
+						optionText.color = FlxColor.RED;
+				case 'Fullscreen':
+					if (FlxG.fullscreen)
+						optionText.color = FlxColor.GREEN;
+					else if (!FlxG.fullscreen)
 						optionText.color = FlxColor.RED;
 			}
 
@@ -178,6 +189,28 @@ class GameplaySubState extends MusicBeatSubstate
 						interact(true, curSelected);
 						grpOptions.members[curSelected].color = FlxColor.GREEN;
 					}
+				case "Bot play":
+					if (FlxG.save.data.botPlay)
+					{
+						interact(false, curSelected);
+						grpOptions.members[curSelected].color = FlxColor.RED;
+					}
+					else if (!FlxG.save.data.botPlay)
+					{
+						interact(true, curSelected);
+						grpOptions.members[curSelected].color = FlxColor.GREEN;
+					}
+				case 'Fullscreen':
+					if (!FlxG.fullscreen)
+					{
+						FlxG.fullscreen = true;
+						grpOptions.members[curSelected].color = FlxColor.GREEN;
+					}
+					else if (FlxG.fullscreen)
+					{
+						FlxG.fullscreen = false;
+						grpOptions.members[curSelected].color = FlxColor.RED;
+					}
 			}
 		}
 	}
@@ -228,6 +261,8 @@ class GameplaySubState extends MusicBeatSubstate
 						FlxG.save.data.songinfosDisplay = true;
 					case 4:
 						FlxG.save.data.versionDisplay = true;
+					case 5:
+						FlxG.save.data.botPlay = true;
 				}
 			case false:
 				switch(selected)
@@ -242,6 +277,8 @@ class GameplaySubState extends MusicBeatSubstate
 						FlxG.save.data.songinfosDisplay = false;
 					case 4:
 						FlxG.save.data.versionDisplay = false;
+					case 5:
+						FlxG.save.data.botPlay = false;
 				}
 		}
 

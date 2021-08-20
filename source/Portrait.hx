@@ -27,14 +27,12 @@ class Portrait extends FlxSprite
 		{
 			case 'bf-pixel' | 'senpai' | 'senpai-angry' | 'spirit':
 				antiAliasing = false;
+				loadGraphic(Paths.image('portraits/portrait-' + newchar, 'shared'), true, 100, 100);
 			default:
 				antiAliasing = true;
+				loadGraphic(Paths.image('portraits/portrait-' + newchar, 'shared'), true, 540, 540);
 		}
-
-		// Yeah portraits are not very HD, it was just to test the week 6 portraits which are small portraits
-		// Might be changed in V.1.0.2
-
-		loadGraphic(Paths.image('portraits/portrait-' + newchar, 'shared'), true, 100, 100);
+		
 		antialiasing = antiAliasing;
 
 		animation.add(newchar, [0], 0, false, flipped);

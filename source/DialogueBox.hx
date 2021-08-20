@@ -101,10 +101,11 @@ class DialogueBox extends FlxSpriteGroup
 			{
 				hasDialog = true;
 
-				box.frames = Paths.getSparrowAtlas('speech_bubble_talking', 'shared');
-				box.animation.addByPrefix('normalOpen', 'speech bubble normal', 24, false);
-				box.animation.addByIndices('normal', 'speech bubble normal', [0], "", 24);
-				// box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
+				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-evil', 'week6');
+				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
+				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
+				box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
+				box.y -= 2 * PlayState.daPixelZoom * 0.9;
 			}
 		}
 
@@ -121,6 +122,8 @@ class DialogueBox extends FlxSpriteGroup
 				portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
 				portraitLeft.updateHitbox();
 				portraitLeft.scrollFactor.set();
+
+				portraitLeft.x = box.x + 250;
 				portraitLeft.y = -100;
 
 				add(portraitLeft);
@@ -131,6 +134,32 @@ class DialogueBox extends FlxSpriteGroup
 				portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
 				portraitRight.updateHitbox();
 				portraitRight.scrollFactor.set();
+
+				portraitRight.x = box.x + box.width - portraitRight.width - 250;
+				portraitRight.y = -100;
+
+				add(portraitRight);
+
+				portraitRight.visible = false;
+			}
+			default:
+			{
+				portraitLeft = new Portrait('bf', false);
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+
+				portraitLeft.x = box.x + 250;
+				portraitLeft.y = -100;
+
+				add(portraitLeft);
+
+				portraitLeft.visible = false;
+	
+				portraitRight = new Portrait('bf', true);
+				portraitRight.updateHitbox();
+				portraitRight.scrollFactor.set();
+
+				portraitRight.x = box.x + box.width - portraitRight.width - 250;
 				portraitRight.y = -100;
 
 				add(portraitRight);
@@ -147,8 +176,8 @@ class DialogueBox extends FlxSpriteGroup
 
 		box.screenCenter(X);
 
-		portraitLeft.x = box.x + (portraitLeft.width / 4) + 100;
-		portraitRight.x = box.x + box.width - (portraitRight.width + (portraitRight.width / 4) + 100);
+		portraitLeft.y = box.y;
+		portraitRight.y = box.y;
 
 		switch(PlayState.SONG.song.toLowerCase())
 		{
@@ -166,7 +195,22 @@ class DialogueBox extends FlxSpriteGroup
 				add(dropText);
 				add(swagDialogue);
 			}
+			default:
+			{
+				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
+				dropText.font = 'Pixel Arial 11 Bold';
+				dropText.color = 0x00FFFFFF;
+				
+				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
+				swagDialogue.font = 'Pixel Arial 11 Bold';
+				swagDialogue.color = 0xFFFFFFFF;
+
+				add(dropText);
+				add(swagDialogue);
+			}
 		}
+
 		dialogue = new Alphabet(0, 80, "", false, true);
 	}
 
@@ -276,7 +320,7 @@ class DialogueBox extends FlxSpriteGroup
 				portraitLeft.updateHitbox();
 				portraitLeft.scrollFactor.set();
 				portraitLeft.y = -100;
-				portraitLeft.x = box.x + (portraitLeft.width / 4) + 100;
+				portraitLeft.x = box.x + 250;
 				add(portraitLeft);
 			}
 			case 'right':
@@ -294,8 +338,7 @@ class DialogueBox extends FlxSpriteGroup
 				portraitRight.updateHitbox();
 				portraitRight.scrollFactor.set();
 				portraitRight.y = -100;
-				portraitRight.x = box.x + box.width - (portraitRight.width + (portraitRight.width / 4) + 100);
-				// portraitRight.x = box.x + (portraitRight.width / 4);
+				portraitRight.x = box.x + box.width - portraitRight.width - 250;
 				add(portraitRight);
 			}
 		}

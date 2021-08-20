@@ -66,15 +66,17 @@ class TitleState extends MusicBeatState
 		var ng:NGio = new NGio(APIStuff.API, APIStuff.EncKey);
 		#end
 
-		// FlxG.save.bind('funkin', 'ninjamuffin99');
-
 		Highscore.load();
 
+		/*
 		if (FlxG.save.data.weekUnlocked != null)
 		{
 			if (!StoryMenuState.weekUnlocked[0])
 				StoryMenuState.weekUnlocked[0] = true;
 		}
+		*/
+
+		StoryMenuState.updateWeekUnlocked();
 
 		#if FREEPLAY
 		FlxG.switchState(new FreeplayState());
@@ -92,7 +94,7 @@ class TitleState extends MusicBeatState
 		
 		Application.current.onExit.add (function (exitCode) {
 			DiscordClient.shutdown();
-		 });
+		});
 
 		#end
 	}
@@ -254,13 +256,6 @@ class TitleState extends MusicBeatState
 
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
-			#if !switch
-			NGio.unlockMedal(60960);
-
-			if (Date.now().getDay() == 5)
-				NGio.unlockMedal(61034);
-			#end
-
 			titleText.animation.play('press');
 
 			FlxG.camera.flash(FlxColor.WHITE, 1);

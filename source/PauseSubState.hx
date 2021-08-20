@@ -28,9 +28,9 @@ class PauseSubState extends MusicBeatSubstate
 		super();
 
 		if (PlayState.isStoryMode)
-			menuItems = ['Resume', 'Restart song', 'Exit to story menu', 'Exit to main menu'];
+			menuItems = ['Resume', 'Restart song', 'Exit to story menu', 'Exit to main menu', 'Exit to options menu'];
 		else
-			menuItems = ['Resume', 'Restart song', 'Exit to freeplay menu', 'Exit to main menu'];
+			menuItems = ['Resume', 'Restart song', 'Exit to freeplay menu', 'Exit to main menu', 'Exit to options menu'];
 
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
@@ -90,12 +90,6 @@ class PauseSubState extends MusicBeatSubstate
 
 		super.update(elapsed);
 
-		/*
-		var upP = controls.UP_P;
-		var downP = controls.DOWN_P;
-		var accepted = controls.ACCEPT;
-		*/
-
 		if (controls.UP_P)
 			changeSelection(-1);
 		if (controls.DOWN_P)
@@ -107,16 +101,18 @@ class PauseSubState extends MusicBeatSubstate
 
 			switch (daSelected)
 			{
-				case "Resume":
+				case 'Resume':
 					close();
-				case "Restart song":
+				case 'Restart song':
 					FlxG.resetState();
-				case "Exit to main menu":
+				case 'Exit to main menu':
 					FlxG.switchState(new MainMenuState());
-				case "Exit to story menu":
+				case 'Exit to story menu':
 					FlxG.switchState(new StoryMenuState());
-				case "Exit to freeplay menu":
+				case 'Exit to freeplay menu':
 					FlxG.switchState(new FreeplayState());
+				case 'Exit to options menu':
+					FlxG.switchState(new OptionsSubState());
 			}
 		}
 	}

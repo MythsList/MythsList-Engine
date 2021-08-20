@@ -75,6 +75,9 @@ class OptionsSubState extends MusicBeatState
 	{
 		super.update(elapsed);
 
+		if (!FlxG.sound.music.playing)
+			FlxG.sound.playMusic(Paths.music('freakyMenu'));
+
 		if (controls.UP_P)
 			changeSelection(-1);
 

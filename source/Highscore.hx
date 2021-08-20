@@ -46,9 +46,12 @@ class Highscore
 
 	static function setScore(song:String, score:Int):Void
 	{
-		songScores.set(song, score);
-		FlxG.save.data.songScores = songScores;
-		FlxG.save.flush();
+		if (!MythsListEngineData.botPlay)
+		{
+			songScores.set(song, score);
+			FlxG.save.data.songScores = songScores;
+			FlxG.save.flush();
+		}
 	}
 
 	public static function formatSong(song:String, diff:Int):String

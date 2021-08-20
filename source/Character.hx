@@ -24,6 +24,8 @@ class Character extends FlxSprite
 	var colorPrefix:String = '0xFF';
 	public var healthBarColor:String;
 
+	var flipAnimations = false;
+
 	public function new(x:Float, y:Float, ?character:String = 'bf', ?isPlayer:Bool = false)
 	{
 		super(x, y);
@@ -514,6 +516,8 @@ class Character extends FlxSprite
 
 			case 'brody-foxx':
 				healthBarColor = colorPrefix + 'FFA8C8';
+
+				flipAnimations = true;
 	
 				tex = Paths.getSparrowAtlas('characters/brody-foxx', 'shared');
 				frames = tex;
@@ -533,6 +537,8 @@ class Character extends FlxSprite
 			
 			case 'template':
 				healthBarColor = colorPrefix + 'A1A1A1';
+
+				// flipAnimations = true;
 		
 				tex = Paths.getSparrowAtlas('characters/template', 'shared');
 				frames = tex;
@@ -559,7 +565,7 @@ class Character extends FlxSprite
 		{
 			flipX = !flipX;
 
-			if (!curCharacter.startsWith('bf') || curCharacter != 'brody-foxx' || curCharacter != 'template')
+			if ((!curCharacter.startsWith('bf') && flipAnimations) || flipAnimations)
 			{
 				var oldRight = animation.getByName('singRIGHT').frames;
 				animation.getByName('singRIGHT').frames = animation.getByName('singLEFT').frames;

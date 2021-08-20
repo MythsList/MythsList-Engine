@@ -120,14 +120,10 @@ class WeekselectState extends MusicBeatState
 	public function addWeek(weekNum:Int, songCharacters:String, weekName:String)
 	{
 		if (songCharacters == null)
-		{
-			songCharacters = 'bf';
-		}
+			songCharacters = 'face';
 
 		if (weekName == null)
-		{
-			weekName = 'WEEK';
-		}
+			weekName = 'TEST';
 
 		weeks.push(new WeekMetadata(weekNum, songCharacters, weekName));
 	}
@@ -137,20 +133,14 @@ class WeekselectState extends MusicBeatState
 		super.update(elapsed);
 
 		if (FlxG.sound.music.volume < 0.7)
-		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
-		}
 
-		var upP = controls.UP_P;
-		var downP = controls.DOWN_P;
-		var accepted = controls.ACCEPT;
-
-		if (upP)
+		if (controls.UP_P)
 		{
 			changeSelection(-1);
 		}
 
-		if (downP)
+		if (controls.DOWN_P)
 		{
 			changeSelection(1);
 		}
@@ -160,7 +150,7 @@ class WeekselectState extends MusicBeatState
 			FlxG.switchState(new MainMenuState());
 		}
 
-		if (accepted)
+		if (controls.ACCEPT)
 		{
 			FlxG.sound.play(Paths.sound('confirmMenu'));
 			curWeek = curSelected;

@@ -1,1 +1,1 @@
-introText is unused for this mod, cry about it.
+introText is unused for the moment, cry about it.
