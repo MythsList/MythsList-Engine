@@ -226,6 +226,7 @@ class AnimationDebug extends FlxState
 
 		var holdShift = FlxG.keys.pressed.SHIFT;
 		var multiplier = 1;
+
 		if (holdShift)
 			multiplier = 10;
 
@@ -244,6 +245,11 @@ class AnimationDebug extends FlxState
 			updateTexts();
 			genBoyOffsets(false);
 			char.playAnim(animList[curAnim]);
+		}
+
+		if (FlxG.keys.justPressed.BACKSPACE || FlxG.keys.justPressed.ESCAPE)
+		{
+			FlxG.switchState(new MainMenuState());
 		}
 
 		super.update(elapsed);

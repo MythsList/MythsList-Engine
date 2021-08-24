@@ -78,7 +78,7 @@ class WeekselectState extends MusicBeatState
 		{
 			var weekText:Alphabet = null;
 
-			weekText = new Alphabet(0, (70 * i) + 30, "WEEK " + weeks[i].weekName, true, false);
+			weekText = new Alphabet(0, (70 * i) + 30, weeks[i].weekName, true, false);
 
 			weekText.isMenuItem = true;
 			weekText.targetY = i;
@@ -90,13 +90,12 @@ class WeekselectState extends MusicBeatState
 			add(icon);
 		}
 
-		var scoreBG:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int((FlxG.width * 0.215) + 20), 42, 0xFF000000);
+		var scoreBG:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, 42, 0xFF000000);
 		scoreBG.alpha = 0.25;
-		scoreBG.screenCenter(X);
 		scoreBG.scrollFactor.set();
 		add(scoreBG);
 
-		var titleText:FlxText = new FlxText(scoreBG.x, scoreBG.y + 5, 0, "WEEK SELECTION", 32);
+		var titleText:FlxText = new FlxText(0, scoreBG.y + 5, 0, "WEEK SELECTION", 32);
 		titleText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
 		titleText.screenCenter(X);
 		titleText.scrollFactor.set();
@@ -123,7 +122,7 @@ class WeekselectState extends MusicBeatState
 			songCharacters = 'face';
 
 		if (weekName == null)
-			weekName = 'TEST';
+			weekName = 'PLACEHOLDER';
 
 		weeks.push(new WeekMetadata(weekNum, songCharacters, weekName));
 	}

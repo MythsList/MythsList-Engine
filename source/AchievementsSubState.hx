@@ -54,7 +54,10 @@ class AchievementsSubState extends MusicBeatSubstate
 	var descList = CoolUtil.coolTextFile(Paths.txt('achievementDescriptions'));
 
 	var curtext:FlxText;
+	var curName:FlxText;
 	var curProgress:FlxText;
+
+	var achievementInfos:Array<String>;
 
 	/*
 	I DO NOT RECOMMEND ADDING YOUR OWN ACHIEVEMENTS UNLESS YOU KNOW WHAT YOU ARE DOING
@@ -221,7 +224,15 @@ class AchievementsSubState extends MusicBeatSubstate
 
 		curBG.x = FlxG.width - curBG.width;
 
-		curtext = new FlxText(curBG.x + 5, curBG.y + 5, 0, descList[curDesc], 26);
+		achievementInfos = descList[curDesc].split('|');
+
+		curName = new FlxText(curBG.x + 5, curBG.y + 5, 0, achievementInfos[0], 26);
+		curName.scrollFactor.set();
+		curName.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT);
+		curName.antialiasing = true;
+		add(curName);
+
+		curtext = new FlxText(curBG.x + 5, (curBG.height / 2) - 13, 0, achievementInfos[1], 26);
 		curtext.scrollFactor.set();
 		curtext.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT);
 		curtext.antialiasing = true;
@@ -296,7 +307,10 @@ class AchievementsSubState extends MusicBeatSubstate
 						curselectBG.x = (grpIconsOne.members[i].getGraphicMidpoint().x) - 74/2;
 						curselectBG.y = (grpIconsOne.members[i].getGraphicMidpoint().y) - 74/2;
 				
-						curtext.text = descList[curDesc];
+						achievementInfos = descList[curDesc].split('|');
+
+						curName.text = achievementInfos[0];
+						curtext.text = achievementInfos[1];
 					}
 				}
 			}
@@ -317,7 +331,10 @@ class AchievementsSubState extends MusicBeatSubstate
 						curselectBG.x = (grpIconsTwo.members[i].getGraphicMidpoint().x) - 74/2;
 						curselectBG.y = (grpIconsTwo.members[i].getGraphicMidpoint().y) - 74/2;
 				
-						curtext.text = descList[curDesc];
+						achievementInfos = descList[curDesc].split('|');
+
+						curName.text = achievementInfos[0];
+						curtext.text = achievementInfos[1];
 					}
 				}
 			}
@@ -338,7 +355,10 @@ class AchievementsSubState extends MusicBeatSubstate
 						curselectBG.x = (grpIconsThree.members[i].getGraphicMidpoint().x) - 74/2;
 						curselectBG.y = (grpIconsThree.members[i].getGraphicMidpoint().y) - 74/2;
 				
-						curtext.text = descList[curDesc];
+						achievementInfos = descList[curDesc].split('|');
+
+						curName.text = achievementInfos[0];
+						curtext.text = achievementInfos[1];
 					}
 				}
 			}
@@ -359,7 +379,10 @@ class AchievementsSubState extends MusicBeatSubstate
 						curselectBG.x = (grpIconsFour.members[i].getGraphicMidpoint().x) - 74/2;
 						curselectBG.y = (grpIconsFour.members[i].getGraphicMidpoint().y) - 74/2;
 				
-						curtext.text = descList[curDesc];
+						achievementInfos = descList[curDesc].split('|');
+
+						curName.text = achievementInfos[0];
+						curtext.text = achievementInfos[1];
 					}
 				}
 			}

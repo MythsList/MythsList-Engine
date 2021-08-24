@@ -1,18 +1,18 @@
-Full combo 1 song
-Full combo 5 songs
-Full combo 10 songs
-Full combo 25 songs
-Full combo 50 songs
-Play 1 song
-Play 10 songs
-Play 25 songs
-Play 50 songs
-Play 100 songs
-Die once
-Die 15 times
-Die 25 times
-Die 50 times
-Die 80 times
-Play a song using upscroll
-Play a song using downscroll
-Play a song using middlescroll
+FC novice|Full combo 1 song
+FC amateur|Full combo 5 songs
+FC professional|Full combo 10 songs
+FC master|Full combo 25 songs
+FC legend|Full combo 50 songs
+The journey starts.|Play 1 song
+Level up!|Play 10 songs
+The journey continues.|Play 25 songs
+Half way there...|Play 50 songs
+The journey ends.|Play 100 songs
+Death is inevitable!|Die once
+15th time the charm|Die 15 times
+Death is still inevitable, unfortunately.|Die 25 times
+It's so sad to be true...|Die 50 times
+Too good to live.|Die 80 times
+Play the game normally...I guess?|Play a song using upscroll
+Average rhythm game player.|Play a song using downscroll
+Can't look on both sides.|Play a song using middlescroll

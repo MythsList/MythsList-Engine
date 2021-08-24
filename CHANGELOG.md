@@ -2,6 +2,22 @@
 
 All notable changes will be documented in this file.
 
+## [V.1.0.3]
+### Addition
+- Added an option to enable/disable the song position bar
+- Added an option to enable/disable ghost tapping
+- Added an option to enable/disable antialiasing (Only affects the gameplay, not menus)
+
+### Tweak
+- FPS cap got increased to 90
+- Changed the UI of the week selection
+- Achievements now have a name
+- You can now press backspace or esc to exit the animation debug menu
+
+### Removal
+- Pressing F while being on the title screen no longer fullscreen
+- Removed some Newgrounds related stuff because it's useless 
+
 ## [V.1.0.2]
 ### Addition
 - Almost all characters now have a winning icon and some characters now have a losing icon (Thanks zPablo)

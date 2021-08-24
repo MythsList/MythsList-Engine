@@ -24,9 +24,12 @@ class GameplaySubState extends MusicBeatSubstate
 	var textMenuItems:Array<String> = [
 		'Downscroll',
 		'Middlescroll',
+		'Ghost tapping',
 		'Stats display',
 		'Song infos display',
 		'Version display',
+		'Song position display',
+		'Antialiasing',
 		'Fullscreen'
 	];
 
@@ -39,7 +42,7 @@ class GameplaySubState extends MusicBeatSubstate
 	{
 		super();
 
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
 		menuBG.color = 0xFF71fd89;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
@@ -68,6 +71,11 @@ class GameplaySubState extends MusicBeatSubstate
 						optionText.color = FlxColor.GREEN;
 					else if (!FlxG.save.data.middleScroll)
 						optionText.color = FlxColor.RED;
+				case 'Ghost tapping':
+					if (FlxG.save.data.ghostTapping)
+						optionText.color = FlxColor.GREEN;
+					else if (!FlxG.save.data.ghostTapping)
+						optionText.color = FlxColor.RED;
 				case 'Stats display':
 					if (FlxG.save.data.statsDisplay)
 						optionText.color = FlxColor.GREEN;
@@ -83,10 +91,15 @@ class GameplaySubState extends MusicBeatSubstate
 						optionText.color = FlxColor.GREEN;
 					else if (!FlxG.save.data.versionDisplay)
 						optionText.color = FlxColor.RED;
-				case 'Bot play':
-					if (FlxG.save.data.botPlay)
+				case 'Song position display':
+					if (FlxG.save.data.songpositionDisplay)
 						optionText.color = FlxColor.GREEN;
-					else if (!FlxG.save.data.botPlay)
+					else if (!FlxG.save.data.songpositionDisplay)
+						optionText.color = FlxColor.RED;
+				case 'Antialiasing':
+					if (FlxG.save.data.antiAliasing)
+						optionText.color = FlxColor.GREEN;
+					else if (!FlxG.save.data.antiAliasing)
 						optionText.color = FlxColor.RED;
 				case 'Fullscreen':
 					if (FlxG.fullscreen)
@@ -156,6 +169,17 @@ class GameplaySubState extends MusicBeatSubstate
 						interact(true, curSelected);
 						grpOptions.members[curSelected].color = FlxColor.GREEN;
 					}
+				case "Ghost tapping":
+					if (FlxG.save.data.ghostTapping)
+					{
+						interact(false, curSelected);
+						grpOptions.members[curSelected].color = FlxColor.RED;
+					}
+					else if (!FlxG.save.data.ghostTapping)
+					{
+						interact(true, curSelected);
+						grpOptions.members[curSelected].color = FlxColor.GREEN;
+					}
 				case "Stats display":
 					if (FlxG.save.data.statsDisplay)
 					{
@@ -189,13 +213,24 @@ class GameplaySubState extends MusicBeatSubstate
 						interact(true, curSelected);
 						grpOptions.members[curSelected].color = FlxColor.GREEN;
 					}
-				case "Bot play":
-					if (FlxG.save.data.botPlay)
+				case "Song position display":
+					if (FlxG.save.data.songpositionDisplay)
 					{
 						interact(false, curSelected);
 						grpOptions.members[curSelected].color = FlxColor.RED;
 					}
-					else if (!FlxG.save.data.botPlay)
+					else if (!FlxG.save.data.songpositionDisplay)
+					{
+						interact(true, curSelected);
+						grpOptions.members[curSelected].color = FlxColor.GREEN;
+					}
+				case "Antialiasing":
+					if (FlxG.save.data.antiAliasing)
+					{
+						interact(false, curSelected);
+						grpOptions.members[curSelected].color = FlxColor.RED;
+					}
+					else if (!FlxG.save.data.antiAliasing)
 					{
 						interact(true, curSelected);
 						grpOptions.members[curSelected].color = FlxColor.GREEN;
@@ -256,13 +291,17 @@ class GameplaySubState extends MusicBeatSubstate
 					case 1:
 						FlxG.save.data.middleScroll = true;
 					case 2:
-						FlxG.save.data.statsDisplay = true;
+						FlxG.save.data.ghostTapping = true;
 					case 3:
-						FlxG.save.data.songinfosDisplay = true;
+						FlxG.save.data.statsDisplay = true;
 					case 4:
-						FlxG.save.data.versionDisplay = true;
+						FlxG.save.data.songinfosDisplay = true;
 					case 5:
-						FlxG.save.data.botPlay = true;
+						FlxG.save.data.versionDisplay = true;
+					case 6:
+						FlxG.save.data.songpositionDisplay = true;
+					case 7:
+						FlxG.save.data.antiAliasing = true;
 				}
 			case false:
 				switch(selected)
@@ -272,13 +311,17 @@ class GameplaySubState extends MusicBeatSubstate
 					case 1:
 						FlxG.save.data.middleScroll = false;
 					case 2:
-						FlxG.save.data.statsDisplay = false;
+						FlxG.save.data.ghostTapping = false;
 					case 3:
-						FlxG.save.data.songinfosDisplay = false;
+						FlxG.save.data.statsDisplay = false;
 					case 4:
-						FlxG.save.data.versionDisplay = false;
+						FlxG.save.data.songinfosDisplay = false;
 					case 5:
-						FlxG.save.data.botPlay = false;
+						FlxG.save.data.versionDisplay = false;
+					case 6:
+						FlxG.save.data.songpositionDisplay = false;
+					case 7:
+						FlxG.save.data.antiAliasing = false;
 				}
 		}
 

@@ -8,7 +8,7 @@ class MythsListEngineData
 {
     // VERSION
 
-    public static var engineVersion:String = "V.1.0.2";
+    public static var engineVersion:String = "V.1.0.3";
     public static var modVersion:String = " ";
 
     // KEYBINDS
@@ -23,9 +23,12 @@ class MythsListEngineData
 
     public static var downScroll:Bool;
     public static var middleScroll:Bool;
+	public static var ghostTapping:Bool;
     public static var statsDisplay:Bool;
     public static var songinfosDisplay:Bool;
     public static var versionDisplay:Bool;
+	public static var songpositionDisplay:Bool;
+	public static var antiAliasing:Bool;
 	public static var botPlay:Bool;
 
     // CHARACTER SELECTION
@@ -48,6 +51,8 @@ class MythsListEngineData
 	public static var playDownscroll:Bool;
 	public static var playMiddlescroll:Bool;
 
+	// FUNCTIONS
+
     static public function dataLoad():Void
     {
         if (FlxG.save.data.keyBinds == null)
@@ -57,12 +62,18 @@ class MythsListEngineData
 			FlxG.save.data.downScroll = false;
 		if (FlxG.save.data.middleScroll == null)
 			FlxG.save.data.middleScroll = false;
+		if (FlxG.save.data.ghostTapping == null)
+			FlxG.save.data.ghostTapping = false;
 		if (FlxG.save.data.statsDisplay == null)
 			FlxG.save.data.statsDisplay = true;
 		if (FlxG.save.data.songinfosDisplay == null)
 			FlxG.save.data.songinfosDisplay = true;
 		if (FlxG.save.data.versionDisplay == null)
 			FlxG.save.data.versionDisplay = true;
+		if (FlxG.save.data.songpositionDisplay == null)
+			FlxG.save.data.songpositionDisplay = false;
+		if (FlxG.save.data.antiAliasing == null)
+			FlxG.save.data.antiAliasing = true;
 		if (FlxG.save.data.botPlay == null)
 			FlxG.save.data.botPlay = false;
 
@@ -97,9 +108,12 @@ class MythsListEngineData
 
 		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
 		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
+		MythsListEngineData.ghostTapping = FlxG.save.data.ghostTapping;
 		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
+		MythsListEngineData.songpositionDisplay = FlxG.save.data.songpositionDisplay;
+		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
 		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
@@ -125,9 +139,12 @@ class MythsListEngineData
 
 		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
 		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
+		MythsListEngineData.ghostTapping = FlxG.save.data.ghostTapping;
 		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
+		MythsListEngineData.songpositionDisplay = FlxG.save.data.songpositionDisplay;
+		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
 		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
@@ -154,12 +171,18 @@ class MythsListEngineData
 			FlxG.save.data.downScroll = false;
 		if (FlxG.save.data.middleScroll != null)
 			FlxG.save.data.middleScroll = false;
+		if (FlxG.save.data.ghostTapping != null)
+			FlxG.save.data.ghostTapping = false;
 		if (FlxG.save.data.statsDisplay != null)
 			FlxG.save.data.statsDisplay = true;
 		if (FlxG.save.data.songinfosDisplay != null)
 			FlxG.save.data.songinfosDisplay = true;
 		if (FlxG.save.data.versionDisplay != null)
 			FlxG.save.data.versionDisplay = true;
+		if (FlxG.save.data.songpositionDisplay != null)
+			FlxG.save.data.songpositionDisplay = false;
+		if (FlxG.save.data.antiAliasing != null)
+			FlxG.save.data.antiAliasing = true;
 		if (FlxG.save.data.botPlay != null)
 			FlxG.save.data.botPlay = false;
 
@@ -194,9 +217,12 @@ class MythsListEngineData
 
 		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
 		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
+		MythsListEngineData.ghostTapping = FlxG.save.data.ghostTapping;
 		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
+		MythsListEngineData.songpositionDisplay = FlxG.save.data.songpositionDisplay;
+		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
 		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;

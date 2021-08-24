@@ -29,7 +29,9 @@ class HealthIcon extends FlxSprite
 		}
 
 		loadGraphic(Paths.image('healthicons/icon-' + newchar, 'preload'), true, 150, 150);
-		antialiasing = true;
+
+		if (MythsListEngineData.antiAliasing)
+			antialiasing = true;
 
 		animation.add(newchar, [0, 1, 2], 0, false, isPlayer);
 

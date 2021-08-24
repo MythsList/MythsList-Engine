@@ -60,6 +60,11 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'gf-christmas':
 				healthBarColor = colorPrefix + 'A5004D';
 
@@ -81,6 +86,11 @@ class Character extends FlxSprite
 
 				playAnim('danceRight');
 
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'gf-car':
 				healthBarColor = colorPrefix + 'A5004D';
 
@@ -93,6 +103,11 @@ class Character extends FlxSprite
 				loadOffsetFile(curCharacter);
 
 				playAnim('danceRight');
+
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
 
 			case 'gf-pixel':
 				healthBarColor = colorPrefix + 'A5004D';
@@ -109,6 +124,7 @@ class Character extends FlxSprite
 
 				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 				updateHitbox();
+
 				antialiasing = false;
 
 			case 'dad':
@@ -126,6 +142,11 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'spooky':
 				healthBarColor = colorPrefix + 'D57E00';
 
@@ -141,6 +162,11 @@ class Character extends FlxSprite
 				loadOffsetFile(curCharacter);
 
 				playAnim('danceRight');
+
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
 
 			case 'mom':
 				healthBarColor = colorPrefix + 'D8558E';
@@ -158,6 +184,11 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'mom-car':
 				healthBarColor = colorPrefix + 'D8558E';
 
@@ -174,6 +205,11 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'monster':
 				healthBarColor = colorPrefix + 'F3FF6E';
 
@@ -189,6 +225,11 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'monster-christmas':
 				healthBarColor = colorPrefix + 'F3FF6E';
 
@@ -203,6 +244,11 @@ class Character extends FlxSprite
 				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
+
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
 
 			case 'pico':
 				healthBarColor = colorPrefix + 'B7D855';
@@ -236,6 +282,11 @@ class Character extends FlxSprite
 
 				flipX = true;
 
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'bf':
 				healthBarColor = colorPrefix + '31B0D1';
 
@@ -264,6 +315,11 @@ class Character extends FlxSprite
 
 				flipX = true;
 
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'bf-christmas':
 				healthBarColor = colorPrefix + '31B0D1';
 
@@ -286,6 +342,11 @@ class Character extends FlxSprite
 
 				flipX = true;
 
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'bf-car':
 				healthBarColor = colorPrefix + '31B0D1';
 
@@ -306,6 +367,11 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				flipX = true;
+
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
 
 			case 'bf-minus':
 				healthBarColor = colorPrefix + '31B0D1';
@@ -335,6 +401,11 @@ class Character extends FlxSprite
 
 				flipX = true;
 
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'bf-old':
 				healthBarColor = colorPrefix + 'E9FF48';
 
@@ -363,6 +434,11 @@ class Character extends FlxSprite
 
 				flipX = true;
 
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'bf-veryold':
 				healthBarColor = colorPrefix + '5FB6F1';
 
@@ -390,6 +466,11 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				flipX = true;
+
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
 
 			case 'bf-pixel':
 				healthBarColor = colorPrefix + '7BD6F6';
@@ -435,7 +516,9 @@ class Character extends FlxSprite
 
 				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
+
 				antialiasing = false;
+
 				flipX = true;
 
 			case 'senpai':
@@ -514,6 +597,11 @@ class Character extends FlxSprite
 
 				playAnim('idle');
 
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'brody-foxx':
 				healthBarColor = colorPrefix + 'FFA8C8';
 
@@ -534,6 +622,11 @@ class Character extends FlxSprite
 				loadOffsetFile(curCharacter);
 	
 				playAnim('idle');
+
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
 			
 			case 'template':
 				healthBarColor = colorPrefix + 'A1A1A1';
@@ -557,6 +650,11 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 				flipX = true;
+
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
 		}
 
 		dance();

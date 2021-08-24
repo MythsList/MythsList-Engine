@@ -57,6 +57,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 	var curSelected:Int = 0;
 
 	var grpOptions:FlxTypedGroup<Alphabet>;
+	var iconArray:Array<HealthIcon> = [];
 
 	public function new()
 	{
@@ -85,6 +86,12 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 				optionText.color = FlxColor.RED;
 
 			grpOptions.add(optionText);
+
+			var icon:HealthIcon = new HealthIcon(Icons[i]);
+			icon.sprTracker = optionText;
+
+			iconArray.push(icon);
+			add(icon);
 		}
 
 		var curBG:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width / 4), 10 + 26 + 150 + 16, 0xFF000000);
