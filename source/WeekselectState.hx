@@ -68,7 +68,7 @@ class WeekselectState extends MusicBeatState
 		if (StoryMenuState.weekUnlocked[6] || isDebug)
 			addWeek(6, 'senpai', 'HATING SIMULATOR');
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue', 'preload'));
 		add(bg);
 
 		grpWeeks = new FlxTypedGroup<Alphabet>();
@@ -151,7 +151,7 @@ class WeekselectState extends MusicBeatState
 
 		if (controls.ACCEPT)
 		{
-			FlxG.sound.play(Paths.sound('confirmMenu'));
+			FlxG.sound.play(Paths.sound('confirmMenu', 'preload'));
 			curWeek = curSelected;
 			FlxG.switchState(new FreeplayState());
 		}
@@ -159,7 +159,7 @@ class WeekselectState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 		curSelected += change;
 

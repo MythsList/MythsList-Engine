@@ -36,7 +36,7 @@ class ControlsSubState extends MusicBeatSubstate
 	{
 		super();
 
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
 		menuBG.color = 0xFF71fd89;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
@@ -172,7 +172,7 @@ class ControlsSubState extends MusicBeatSubstate
 
 	function changeSelection(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 		curSelected += change;
 
@@ -199,7 +199,7 @@ class ControlsSubState extends MusicBeatSubstate
 
 	function interact(selected:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 		switch(selected)
 		{

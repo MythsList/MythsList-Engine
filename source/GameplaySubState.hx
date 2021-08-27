@@ -143,7 +143,7 @@ class GameplaySubState extends MusicBeatSubstate
 
 		if (controls.ACCEPT)
 		{
-			FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+			FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 			switch (textMenuItems[curSelected])
 			{
@@ -252,7 +252,7 @@ class GameplaySubState extends MusicBeatSubstate
 
 	function changeSelection(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 		curSelected += change;
 
@@ -279,7 +279,7 @@ class GameplaySubState extends MusicBeatSubstate
 
 	function interact(change:Bool = true, selected:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 		switch(change)
 		{

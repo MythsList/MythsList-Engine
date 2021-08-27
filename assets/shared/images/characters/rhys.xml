@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="rhys.png">
+<SubTexture name="rhys idle0000" x="0" y="0" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0001" x="433" y="0" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0002" x="866" y="0" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0003" x="1299" y="0" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0004" x="0" y="771" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0005" x="433" y="771" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0006" x="866" y="771" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0007" x="1299" y="771" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0008" x="0" y="1542" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0009" x="433" y="1542" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0010" x="866" y="1542" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0011" x="1299" y="1542" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0012" x="0" y="2313" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0013" x="433" y="2313" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0014" x="866" y="2313" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys idle0015" x="1299" y="2313" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys down0000" x="0" y="3084" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys down0001" x="433" y="3084" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys down0002" x="866" y="3084" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys down0003" x="1299" y="3084" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys down0004" x="0" y="3855" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys down0005" x="433" y="3855" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys down0006" x="866" y="3855" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys left0000" x="1299" y="3855" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys left0001" x="0" y="4626" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys left0002" x="433" y="4626" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys left0003" x="866" y="4626" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys left0004" x="1299" y="4626" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys left0005" x="0" y="5397" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys left0006" x="433" y="5397" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys right0000" x="866" y="5397" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys right0001" x="1299" y="5397" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys right0002" x="0" y="6168" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys right0003" x="433" y="6168" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys right0004" x="866" y="6168" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys right0005" x="1299" y="6168" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys right0006" x="0" y="6939" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys up0000" x="433" y="6939" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys up0001" x="866" y="6939" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys up0002" x="1299" y="6939" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys up0003" x="0" y="7710" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys up0004" x="433" y="7710" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys up0005" x="866" y="7710" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+<SubTexture name="rhys up0006" x="1299" y="7710" width="433" height="771" frameX="0" frameY="0" frameWidth="433" frameHeight="771" />
+</TextureAtlas>

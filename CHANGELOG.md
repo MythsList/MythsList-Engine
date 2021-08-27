@@ -2,6 +2,18 @@
 
 All notable changes will be documented in this file.
 
+## [V.1.0.4]
+### Addition
+- Added WEBM cutscene support (Haven't really tested it, let me know if there're bugs with it (Watch bbpanzu's tutorial to know how to use it))
+- The dialogue system now supports the "middle" option, it will basically show both left and right portrait (How to use it : in the txt file add "bf/bf" instead of "bf", the / separates the character portraits)
+- Added "rhys" into the Character Selection menu
+
+### Tweak
+- README.md now have the new informations to help you compile the engine with WEBM support
+
+### Bugfix
+- Added the library to pretty much all current assets mentioned in the code so it doesn't show the funny HaxeFlixel placeholder logo
+
 ## [V.1.0.3]
 ### Addition
 - Added an option to enable/disable the song position bar

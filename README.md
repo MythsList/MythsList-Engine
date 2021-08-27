@@ -22,9 +22,12 @@ haxelib install flixel
 haxelib install flixel-addons
 haxelib install flixel-ui
 haxelib install hscript
+haxelib install actuate
 haxelib install newgrounds
 haxelib git polymod https://github.com/larsiusprime/polymod.git
 haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
+haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm
+lime rebuild extension-webm [windows / mac / linux]
 ```
 
 You should have everything ready for compiling the game, you can continue your building now!

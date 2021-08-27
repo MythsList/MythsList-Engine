@@ -655,6 +655,32 @@ class Character extends FlxSprite
 					antialiasing = true;
 				else
 					antialiasing = false;
+
+			case 'rhys':
+				healthBarColor = colorPrefix + '7C6E89';
+
+				flipAnimations = true;
+	
+				tex = Paths.getSparrowAtlas('characters/rhys', 'shared');
+				frames = tex;
+				animation.addByPrefix('idle', 'rhys idle', 24, false);
+				animation.addByPrefix('singUP', 'rhys up', 24, false);
+				animation.addByPrefix('singRIGHT', 'rhys right', 24, false);
+				animation.addByPrefix('singDOWN', 'rhys down', 24, false);
+				animation.addByPrefix('singLEFT', 'rhys left', 24, false);
+				animation.addByPrefix('singUPmiss', 'rhys up', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'rhys left', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'rhys right', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'rhys down', 24, false);
+	
+				loadOffsetFile(curCharacter);
+	
+				playAnim('idle');
+
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
 		}
 
 		dance();

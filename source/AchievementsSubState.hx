@@ -68,7 +68,7 @@ class AchievementsSubState extends MusicBeatSubstate
 	{
 		super();
 
-		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
 		menuBG.color = 0xFF71fd89;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
 		menuBG.updateHitbox();
@@ -104,7 +104,7 @@ class AchievementsSubState extends MusicBeatSubstate
 
 		for (i in 0...achievementsCategoryOne.length)
 		{
-			var achievementIcon:FlxSprite = new FlxSprite(0, 100).loadGraphic(Paths.image('achievementassets/icons/icon-' + achievementsCategoryOne[i]), false, 50, 50);
+			var achievementIcon:FlxSprite = new FlxSprite(0, 100).loadGraphic(Paths.image('achievementassets/icons/icon-' + achievementsCategoryOne[i], 'preload'), false, 50, 50);
 			achievementIcon.antialiasing = true;
 			achievementIcon.updateHitbox();
 			grpIconsOne.add(achievementIcon);
@@ -114,7 +114,7 @@ class AchievementsSubState extends MusicBeatSubstate
 			else if (i > 0)
 				achievementIcon.x = grpIconsOne.members[0].x + (100 * i);
 
-			var achievementFrame:FlxSprite = new FlxSprite((achievementIcon.getGraphicMidpoint().x) - 64/2, (achievementIcon.getGraphicMidpoint().y) - 64/2).loadGraphic(Paths.image('achievementassets/frames/frame-' + framesCategoryOne[i]), false, 65, 65);
+			var achievementFrame:FlxSprite = new FlxSprite((achievementIcon.getGraphicMidpoint().x) - 64/2, (achievementIcon.getGraphicMidpoint().y) - 64/2).loadGraphic(Paths.image('achievementassets/frames/frame-' + framesCategoryOne[i], 'preload'), false, 65, 65);
 			achievementFrame.antialiasing = true;
 			achievementFrame.updateHitbox();
 			grpFramesOne.add(achievementFrame);
@@ -133,7 +133,7 @@ class AchievementsSubState extends MusicBeatSubstate
 
 		for (i in 0...achievementsCategoryTwo.length)
 		{
-			var achievementIcon:FlxSprite = new FlxSprite(0, 200).loadGraphic(Paths.image('achievementassets/icons/icon-' + achievementsCategoryTwo[i]), false, 50, 50);
+			var achievementIcon:FlxSprite = new FlxSprite(0, 200).loadGraphic(Paths.image('achievementassets/icons/icon-' + achievementsCategoryTwo[i], 'preload'), false, 50, 50);
 			achievementIcon.antialiasing = true;
 			achievementIcon.updateHitbox();
 			grpIconsTwo.add(achievementIcon);
@@ -143,7 +143,7 @@ class AchievementsSubState extends MusicBeatSubstate
 			else if (i > 0)
 				achievementIcon.x = grpIconsTwo.members[0].x + (100 * i);
 
-			var achievementFrame:FlxSprite = new FlxSprite((achievementIcon.getGraphicMidpoint().x) - 64/2, (achievementIcon.getGraphicMidpoint().y) - 64/2).loadGraphic(Paths.image('achievementassets/frames/frame-' + framesCategoryTwo[i]), false, 65, 65);
+			var achievementFrame:FlxSprite = new FlxSprite((achievementIcon.getGraphicMidpoint().x) - 64/2, (achievementIcon.getGraphicMidpoint().y) - 64/2).loadGraphic(Paths.image('achievementassets/frames/frame-' + framesCategoryTwo[i], 'preload'), false, 65, 65);
 			achievementFrame.antialiasing = true;
 			achievementFrame.updateHitbox();
 			grpFramesTwo.add(achievementFrame);
@@ -162,7 +162,7 @@ class AchievementsSubState extends MusicBeatSubstate
 
 		for (i in 0...achievementsCategoryThree.length)
 		{
-			var achievementIcon:FlxSprite = new FlxSprite(0, 300).loadGraphic(Paths.image('achievementassets/icons/icon-' + achievementsCategoryThree[i]), false, 50, 50);
+			var achievementIcon:FlxSprite = new FlxSprite(0, 300).loadGraphic(Paths.image('achievementassets/icons/icon-' + achievementsCategoryThree[i], 'preload'), false, 50, 50);
 			achievementIcon.antialiasing = true;
 			achievementIcon.updateHitbox();
 			grpIconsThree.add(achievementIcon);
@@ -172,7 +172,7 @@ class AchievementsSubState extends MusicBeatSubstate
 			else if (i > 0)
 				achievementIcon.x = grpIconsThree.members[0].x + (100 * i);
 	
-			var achievementFrame:FlxSprite = new FlxSprite((achievementIcon.getGraphicMidpoint().x) - 64/2, (achievementIcon.getGraphicMidpoint().y) - 64/2).loadGraphic(Paths.image('achievementassets/frames/frame-' + framesCategoryThree[i]), false, 65, 65);
+			var achievementFrame:FlxSprite = new FlxSprite((achievementIcon.getGraphicMidpoint().x) - 64/2, (achievementIcon.getGraphicMidpoint().y) - 64/2).loadGraphic(Paths.image('achievementassets/frames/frame-' + framesCategoryThree[i], 'preload'), false, 65, 65);
 			achievementFrame.antialiasing = true;
 			achievementFrame.updateHitbox();
 			grpFramesThree.add(achievementFrame);
@@ -191,7 +191,7 @@ class AchievementsSubState extends MusicBeatSubstate
 
 		for (i in 0...achievementsCategoryFour.length)
 		{
-			var achievementIcon:FlxSprite = new FlxSprite(0, 400).loadGraphic(Paths.image('achievementassets/icons/icon-' + achievementsCategoryFour[i]), false, 50, 50);
+			var achievementIcon:FlxSprite = new FlxSprite(0, 400).loadGraphic(Paths.image('achievementassets/icons/icon-' + achievementsCategoryFour[i], 'preload'), false, 50, 50);
 			achievementIcon.antialiasing = true;
 			achievementIcon.updateHitbox();
 			grpIconsFour.add(achievementIcon);
@@ -201,7 +201,7 @@ class AchievementsSubState extends MusicBeatSubstate
 			else if (i > 0)
 				achievementIcon.x = grpIconsFour.members[0].x + (100 * i);
 		
-			var achievementFrame:FlxSprite = new FlxSprite((achievementIcon.getGraphicMidpoint().x) - 64/2, (achievementIcon.getGraphicMidpoint().y) - 64/2).loadGraphic(Paths.image('achievementassets/frames/frame-' + framesCategoryFour[i]), false, 65, 65);
+			var achievementFrame:FlxSprite = new FlxSprite((achievementIcon.getGraphicMidpoint().x) - 64/2, (achievementIcon.getGraphicMidpoint().y) - 64/2).loadGraphic(Paths.image('achievementassets/frames/frame-' + framesCategoryFour[i], 'preload'), false, 65, 65);
 			achievementFrame.antialiasing = true;
 			achievementFrame.updateHitbox();
 			grpFramesFour.add(achievementFrame);
@@ -281,7 +281,7 @@ class AchievementsSubState extends MusicBeatSubstate
 
 	function changeSelection(change:Int = 0, reset:Bool = false)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 		if (reset)
 			curSelected = 0;
@@ -407,7 +407,7 @@ class AchievementsSubState extends MusicBeatSubstate
 
 	function changeCategory(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
+		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 		curCatSelected += change;
 

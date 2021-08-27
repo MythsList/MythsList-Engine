@@ -80,7 +80,7 @@ class DialogueBox extends FlxSpriteGroup
 				hasDialog = true;
 
 				if (PlayState.SONG.song.toLowerCase() == 'roses')
-					FlxG.sound.play(Paths.sound('ANGRY_TEXT_BOX'));
+					FlxG.sound.play(Paths.sound('ANGRY_TEXT_BOX', 'shared'));
 
 				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-pixel', 'week6');
 				box.animation.addByPrefix('normalOpen', 'Text Box Appear', 24, false);
@@ -188,7 +188,7 @@ class DialogueBox extends FlxSpriteGroup
 				dropText.color = 0xFFD89494;
 				
 				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText', 'shared'), 0.6)];
 				swagDialogue.font = 'Pixel Arial 11 Bold';
 				swagDialogue.color = 0xFF3F2021;
 
@@ -202,7 +202,7 @@ class DialogueBox extends FlxSpriteGroup
 				dropText.color = 0x00FFFFFF;
 				
 				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
-				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText'), 0.6)];
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText', 'shared'), 0.6)];
 				swagDialogue.font = 'Pixel Arial 11 Bold';
 				swagDialogue.color = 0xFFFFFFFF;
 
@@ -249,7 +249,7 @@ class DialogueBox extends FlxSpriteGroup
 		{
 			remove(dialogue);
 				
-			FlxG.sound.play(Paths.sound('clickText'), 0.75);
+			FlxG.sound.play(Paths.sound('clickText', 'shared'), 0.75);
 
 			if (dialogueList[0] != null && dialogueList[1] == null)
 			{
@@ -339,6 +339,45 @@ class DialogueBox extends FlxSpriteGroup
 				portraitRight.scrollFactor.set();
 				portraitRight.y = -100;
 				portraitRight.x = box.x + box.width - portraitRight.width - 250;
+				add(portraitRight);
+			}
+			case 'middle':
+			{
+				var splitPortrait:Array<String> = curCharacter.split('/');
+				var portrait1:String = splitPortrait[0];
+				var portrait2:String = splitPortrait[1];
+
+				portraitLeft = updatePortraits(portrait1, false);
+				portraitRight = updatePortraits(portrait2, true);
+
+				portraitRight.alpha = 1;
+				portraitLeft.alpha = 1;
+
+				switch(portrait1)
+				{
+					case 'bf-pixel':
+						portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
+					case 'senpai' | 'senpai-angry' | 'spirit':
+						portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
+				}
+				portraitLeft.updateHitbox();
+				portraitLeft.scrollFactor.set();
+				portraitLeft.y = -100;
+				portraitLeft.x = box.x + 250;
+
+				switch(portrait2)
+				{
+					case 'bf-pixel':
+						portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
+					case 'senpai' | 'senpai-angry' | 'spirit':
+						portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
+				}
+				portraitRight.updateHitbox();
+				portraitRight.scrollFactor.set();
+				portraitRight.y = -100;
+				portraitRight.x = box.x + box.width - portraitRight.width - 250;
+
+				add(portraitLeft);
 				add(portraitRight);
 			}
 		}
