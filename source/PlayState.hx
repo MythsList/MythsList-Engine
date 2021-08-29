@@ -654,9 +654,6 @@ class PlayState extends MusicBeatState
 			}
 			case 'spirit':
 			{
-				var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
-				add(evilTrail);
-
 				dad.x -= 150;
 				dad.y += 100;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
