@@ -23,6 +23,7 @@ class Character extends FlxSprite
 	// Thanks Bob and Bosip source code
 	var colorPrefix:String = '0xFF';
 	public var healthBarColor:String;
+	public var hasTrail:Bool = false;
 
 	var flipAnimations = false;
 
@@ -568,6 +569,9 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', "right_", 24, false);
 				animation.addByPrefix('singLEFT', "left_", 24, false);
 				animation.addByPrefix('singDOWN', "spirit down_", 24, false);
+				
+				if (PlayState.curStage == 'schoolEvil')
+					hasTrail = true;
 
 				loadOffsetFile(curCharacter);
 
