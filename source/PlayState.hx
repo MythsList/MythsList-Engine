@@ -663,6 +663,12 @@ class PlayState extends MusicBeatState
 			}
 		}
 
+		if (dad.hasTrail)
+		{
+			var trail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
+			add(trail);
+		}
+
 		switch(SONG.song.toLowerCase())
 		{
 			// For songs that do not use the original BF
@@ -736,6 +742,12 @@ class PlayState extends MusicBeatState
 						boyfriend.y -= 380;
 				}
 			}
+		}
+
+		if (boyfriend.hasTrail)
+		{
+			var trail = new FlxTrail(boyfriend, null, 4, 24, 0.3, 0.069);
+			add(trail);
 		}
 
 		switch(curStage)

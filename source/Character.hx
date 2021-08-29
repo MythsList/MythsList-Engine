@@ -23,6 +23,8 @@ class Character extends FlxSprite
 	// Thanks Bob and Bosip source code
 	var colorPrefix:String = '0xFF';
 	public var healthBarColor:String;
+	
+	public var hasTrail:Bool = false;
 
 	var flipAnimations = false;
 
@@ -561,6 +563,7 @@ class Character extends FlxSprite
 
 			case 'spirit':
 				healthBarColor = colorPrefix + 'FF3C6E';
+				hasTrail = true;
 
 				frames = Paths.getPackerAtlas('weeb/spirit', 'week6');
 				animation.addByPrefix('idle', "idle spirit_", 24, false);
