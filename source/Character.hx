@@ -570,8 +570,7 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFT', "left_", 24, false);
 				animation.addByPrefix('singDOWN', "spirit down_", 24, false);
 				
-				if (PlayState.curStage == 'schoolEvil')
-					hasTrail = true;
+				hasTrail = true;
 
 				loadOffsetFile(curCharacter);
 
