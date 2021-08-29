@@ -2,6 +2,29 @@
 
 All notable changes will be documented in this file.
 
+## [V.1.0.5]
+### Overhaul
+- Better chart debug menu
+
+### Tweak
+- GF now has an actual losing icon
+- Discord rich presence now tells exactly on which menu you are (now other people can spy on you haha)
+- You can now press ESCAPE while being in-game to enable/disable the fullscreen (It's a bit meh but it works)
+
+### Bugfix
+- Pixel arrows now use a XML to avoid the "no animation called..." errors
+- Made it so after an animated dialogue box open they don't make an error "no animation called..." pop up
+- Main menu song stops playing when entering a cutscene so it still doesn't play after the cutscene finishes playing
+
+### Improvement
+- PlayState code has been a bit improved
+- CharacterSelectionSubState code has been a bit improved (It is now Modder friendly)
+
+### Removal
+- Removed OptionsMenu.hx because it was unused, we already have OptionsSubState.hx for that
+- Removed GitarooPause.hx because it was also unused
+- Removed ButtonRemapSubstate because it was also unused
+
 ## [V.1.0.4]
 ### Addition
 - Added WEBM cutscene support (Haven't really tested it, let me know if there're bugs with it (Watch bbpanzu's tutorial to know how to use it))
@@ -61,6 +84,6 @@ All notable changes will be documented in this file.
 ### Improvement
 - Some code improvements for the gameplay
 
-## [V.1]
+## [V.1.0.0]
 ### Addition
 - The whole ass engine with all it's changes.

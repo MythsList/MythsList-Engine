@@ -41,18 +41,9 @@ class FreeplayState extends MusicBeatState
 
 	override function create()
 	{
-		var initSonglist = CoolUtil.coolTextFile(Paths.txt('freeplaySonglist'));
-
-		/*
-		for (i in 0...initSonglist.length)
-		{
-			songs.push(new SongMetadata(initSonglist[i], 1, 'gf'));
-		}
-		*/
-
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In The Main Menus", null);
+		DiscordClient.changePresence("In The Freeplay Menu", null);
 		#end
 
 		var isDebug:Bool = false;

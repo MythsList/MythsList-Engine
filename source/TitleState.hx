@@ -52,6 +52,10 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
+		#if desktop
+			DiscordClient.changePresence("In The Title Screen", null);
+		#end
+
 		#if polymod
 		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
 		#end
@@ -332,7 +336,7 @@ class TitleState extends MusicBeatState
 				ngSpr.visible = true;
 			case 5:
 				deleteCoolText();
-				ngSpr.visible = false;
+				remove(ngSpr);
 			case 6:
 				createCoolText(['Engine made by', 'MythsList']);
 			case 7:

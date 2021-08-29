@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import Controls.Control;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -35,6 +38,10 @@ class OptionsSubState extends MusicBeatState
 	public function new()
 	{
 		super();
+
+		#if desktop
+			DiscordClient.changePresence("In The Options Menu", null);
+		#end
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
 		menuBG.color = 0xFF71fd89;

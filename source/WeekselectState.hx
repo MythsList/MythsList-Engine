@@ -31,7 +31,7 @@ class WeekselectState extends MusicBeatState
 	override function create()
 	{
 		#if desktop
-			DiscordClient.changePresence("In The Main Menus", null);
+			DiscordClient.changePresence("In The Week Selection Menu", null);
 		#end
 
 		var isDebug:Bool = false;
@@ -135,19 +135,13 @@ class WeekselectState extends MusicBeatState
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 
 		if (controls.UP_P)
-		{
 			changeSelection(-1);
-		}
 
 		if (controls.DOWN_P)
-		{
 			changeSelection(1);
-		}
 
 		if (controls.BACK)
-		{
 			FlxG.switchState(new MainMenuState());
-		}
 
 		if (controls.ACCEPT)
 		{

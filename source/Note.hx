@@ -60,29 +60,22 @@ class Note extends FlxSprite
 		switch (daStage)
 		{
 			case 'school' | 'schoolEvil':
-				if (isSustainNote)
-				{
-					loadGraphic(Paths.image('weeb/pixelUI/arrowEnds', 'week6'), true, 7, 6);
+				frames = Paths.getSparrowAtlas('weeb/pixelUI/arrows-pixels', 'week6');
 
-					animation.add('purpleholdend', [4]);
-					animation.add('greenholdend', [6]);
-					animation.add('redholdend', [7]);
-					animation.add('blueholdend', [5]);
+				animation.addByPrefix('purpleScroll', 'arrows-pixels arrowleft');
+				animation.addByPrefix('blueScroll', 'arrows-pixels arrowdown');
+				animation.addByPrefix('greenScroll', 'arrows-pixels arrowup');
+				animation.addByPrefix('redScroll', 'arrows-pixels arrowright');
 
-					animation.add('purplehold', [0]);
-					animation.add('greenhold', [2]);
-					animation.add('redhold', [3]);
-					animation.add('bluehold', [1]);
-				}
-				else
-				{
-					loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels', 'week6'), true, 17, 17);
+				animation.addByPrefix('purplehold', 'arrows-pixels holdleft');
+				animation.addByPrefix('bluehold', 'arrows-pixels holddown');
+				animation.addByPrefix('greenhold', 'arrows-pixels holdup');
+				animation.addByPrefix('redhold', 'arrows-pixels holdright');
 
-					animation.add('greenScroll', [6]);
-					animation.add('redScroll', [7]);
-					animation.add('blueScroll', [5]);
-					animation.add('purpleScroll', [4]);	
-				}
+				animation.addByPrefix('purpleholdend', 'arrows-pixels holdendleft');
+				animation.addByPrefix('blueholdend', 'arrows-pixels holdenddown');
+				animation.addByPrefix('greenholdend', 'arrows-pixels holdendup');
+				animation.addByPrefix('redholdend', 'arrows-pixels holdendright');
 
 				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 				updateHitbox();
@@ -151,10 +144,14 @@ class Note extends FlxSprite
 			x -= width / 2;
 
 			if (MythsListEngineData.downScroll)
+			{
 				flipY = true;
+			}
 
+			/*
 			if (PlayState.curStage.startsWith('school'))
 				x += 30;
+			*/
 
 			if (prevNote.isSustainNote)
 			{

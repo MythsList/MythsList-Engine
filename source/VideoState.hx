@@ -53,8 +53,11 @@ class VideoState extends MusicBeatState
 	{
 		super.create();
 
-		FlxG.autoPause = false;
+		FlxG.autoPause = true;
 		doShit = false;
+
+		if (FlxG.sound.music != null && FlxG.sound.music.playing)
+			FlxG.sound.music.stop();
 		
 		if (GlobalVideo.isWebm)
 			videoFrames = Std.parseInt(Assets.getText(leSource.replace(".webm", ".txt")));

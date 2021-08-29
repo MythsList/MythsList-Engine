@@ -727,15 +727,14 @@ class Character extends FlxSprite
 	{
 		if (!isPlayer)
 		{
-			if (curCharacter != 'gf-pixel' || curCharacter != 'gf-christmas' || curCharacter != 'gf-car')
-			{
-				holdTimer += elapsed;
-			}
-
 			var dadVar:Float = 4;
+
+			if (curCharacter != 'gf-pixel' || curCharacter != 'gf-christmas' || curCharacter != 'gf-car')
+				holdTimer += elapsed;
 
 			if (curCharacter == 'dad')
 				dadVar = 6.1;
+
 			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
 			{
 				dance();
@@ -817,26 +816,20 @@ class Character extends FlxSprite
 		var daOffset = animOffsets.get(AnimName);
 
 		if (animOffsets.exists(AnimName))
-		{
 			offset.set(daOffset[0], daOffset[1]);
-		}
 		else
 			offset.set(0, 0);
 
 		if (curCharacter == 'gf')
 		{
-			if (AnimName == 'singLEFT')
+			switch(AnimName)
 			{
-				danced = true;
-			}
-			else if (AnimName == 'singRIGHT')
-			{
-				danced = false;
-			}
-
-			if (AnimName == 'singUP' || AnimName == 'singDOWN')
-			{
-				danced = !danced;
+				case 'singLEFT':
+					danced = true;
+				case 'singRIGHT':
+					danced = false;
+				case 'singUP' | 'singDOWN':
+					danced = !danced;
 			}
 		}
 	}

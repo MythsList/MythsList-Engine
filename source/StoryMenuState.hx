@@ -94,6 +94,10 @@ class StoryMenuState extends MusicBeatState
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
+		#if desktop
+			DiscordClient.changePresence("In The Story Menu", null);
+		#end
+
 		if (FlxG.sound.music != null)
 		{
 			if (!FlxG.sound.music.playing)
@@ -131,11 +135,6 @@ class StoryMenuState extends MusicBeatState
 
 		grpLocks = new FlxTypedGroup<FlxSprite>();
 		add(grpLocks);
-		
-		#if desktop
-		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In The Main Menus", null);
-		#end
 
 		for (i in 0...weekData.length)
 		{

@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import Controls;
 import Controls.Control;
 import flixel.FlxG;
@@ -65,6 +68,10 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 	{
 		super();
 
+		#if desktop
+			DiscordClient.changePresence("In The Character Selection Menu", null);
+		#end
+
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
 		menuBG.color = 0xFF71fd89;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
@@ -112,24 +119,10 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		curIcon.y = curBGtext.y + curBGtext.height;
 		add(curIcon);
 
-		// ADD YOUR CHARACTER NAME IN A NEW CASE AND REPLACE THE NUMBER IN 'textMenuItems[0]' BY WHATS AFTER THE LAST NUMBER
-
-		switch(MythsListEngineData.characterSkin)
+		for (i in 0...textMenuItems.length)
 		{
-			case 'bf':
-				curIconText = new FlxText(0, 0, 0, textMenuItems[0], 16);
-			case 'bf-minus':
-				curIconText = new FlxText(0, 0, 0, textMenuItems[1], 16);
-			case 'bf-old':
-				curIconText = new FlxText(0, 0, 0, textMenuItems[2], 16);
-			case 'bf-veryold':
-				curIconText = new FlxText(0, 0, 0, textMenuItems[3], 16);
-			case 'brody-foxx':
-				curIconText = new FlxText(0, 0, 0, textMenuItems[4], 16);
-			case 'template':
-				curIconText = new FlxText(0, 0, 0, textMenuItems[5], 16);
-			case 'rhys':
-				curIconText = new FlxText(0, 0, 0, textMenuItems[6], 16);
+			if (MythsListEngineData.characterSkin == Icons[i])
+				curIconText = new FlxText(0, 0, 0, textMenuItems[i], 16);
 		}
 
 		curIconText.x = curBGtext.x;
@@ -194,24 +187,10 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 
 			remove(curIconText);
 
-			// ADD YOUR CHARACTER NAME IN A NEW CASE AND REPLACE THE NUMBER IN 'textMenuItems[0]' BY WHATS AFTER THE LAST NUMBER
-
-			switch(MythsListEngineData.characterSkin)
+			for (i in 0...textMenuItems.length)
 			{
-				case 'bf':
-					curIconText = new FlxText(0, 0, 0, textMenuItems[0], 16);
-				case 'bf-minus':
-					curIconText = new FlxText(0, 0, 0, textMenuItems[1], 16);
-				case 'bf-old':
-					curIconText = new FlxText(0, 0, 0, textMenuItems[2], 16);
-				case 'bf-veryold':
-					curIconText = new FlxText(0, 0, 0, textMenuItems[3], 16);
-				case 'brody-foxx':
-					curIconText = new FlxText(0, 0, 0, textMenuItems[4], 16);
-				case 'template':
-					curIconText = new FlxText(0, 0, 0, textMenuItems[5], 16);
-				case 'rhys':
-					curIconText = new FlxText(0, 0, 0, textMenuItems[6], 16);
+				if (MythsListEngineData.characterSkin == Icons[i])
+					curIconText = new FlxText(0, 0, 0, textMenuItems[i], 16);
 			}
 
 			curIconText.x = curBGtext.x;

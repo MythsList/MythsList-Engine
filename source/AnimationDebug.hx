@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -39,6 +42,10 @@ class AnimationDebug extends FlxState
 	override function create()
 	{
 		FlxG.sound.music.stop();
+
+		#if desktop
+			DiscordClient.changePresence("In The Animation Debug Menu", null);
+		#end
 
 		var gridBG:FlxSprite = FlxGridOverlay.create(10, 10);
 		gridBG.scrollFactor.set(0.5, 0.5);

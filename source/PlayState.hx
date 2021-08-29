@@ -62,6 +62,8 @@ class PlayState extends MusicBeatState
 	private var dad:Character;
 	private var gf:Character;
 	private var boyfriend:Boyfriend;
+	
+	private var gfVersion:String = 'gf';
 
 	private var curPress:Array<String> = ['LEFT', 'DOWN', 'UP', 'RIGHT'];
 
@@ -599,9 +601,7 @@ class PlayState extends MusicBeatState
 		    }
         }
 
-		var gfVersion:String = 'gf';
-
-		switch (curStage)
+		switch(curStage)
 		{
 			case 'limo':
 				gfVersion = 'gf-car';
@@ -609,6 +609,8 @@ class PlayState extends MusicBeatState
 				gfVersion = 'gf-christmas';
 			case 'school' | 'schoolEvil':
 				gfVersion = 'gf-pixel';
+			default:
+				gfVersion = 'gf';
 		}
 
 		gf = new Character(400, 130, gfVersion);
@@ -736,18 +738,21 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (curStage == 'limo')
+		switch(curStage)
 		{
-			add(gf);
-			add(limo);
-			add(dad);
-			add(boyfriend);
-		}
-		else
-		{
-			add(gf);
-			add(dad);
-			add(boyfriend);
+			case 'limo':
+			{
+				add(gf);
+				add(limo);
+				add(dad);
+				add(boyfriend);
+			}
+			default:
+			{
+				add(gf);
+				add(dad);
+				add(boyfriend);
+			}
 		}
 
 		if (dialogue != null)
@@ -882,6 +887,7 @@ class PlayState extends MusicBeatState
 		botTxt.scrollFactor.set();
 		botTxt.updateHitbox();
 		add(botTxt);
+
 		botTxt.x = (FlxG.width / 2) - (botTxt.width / 2);
 
 		if (!MythsListEngineData.songinfosDisplay)
@@ -942,13 +948,6 @@ class PlayState extends MusicBeatState
 		notes.cameras = [camHUD];
 		healthBar.cameras = [camHUD];
 		healthBarBG.cameras = [camHUD];
-
-		if (MythsListEngineData.songpositionDisplay)
-		{
-			songBarBG.cameras = [camHUD];
-			songBar.cameras = [camHUD];
-		}
-
 		iconP1.cameras = [camHUD];
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
@@ -959,6 +958,12 @@ class PlayState extends MusicBeatState
 		engineversion.cameras = [camHUD];
 		version.cameras = [camHUD];
 
+		if (MythsListEngineData.songpositionDisplay)
+		{
+			songBarBG.cameras = [camHUD];
+			songBar.cameras = [camHUD];
+		}
+
 		if (dialogue != null)
 			doof.cameras = [camHUD];
 
@@ -968,7 +973,7 @@ class PlayState extends MusicBeatState
 		{
 			switch (curSong.toLowerCase())
 			{
-				case "winter-horrorland":
+				case 'winter-horrorland':
 					var blackScreen:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
 					add(blackScreen);
 
@@ -1008,6 +1013,8 @@ class PlayState extends MusicBeatState
 
 					if (dialogue != null)
 						schoolIntro(doof);
+					else
+						startCountdown();
 				}
 				default:
 				{
@@ -1049,12 +1056,15 @@ class PlayState extends MusicBeatState
 		senpaiEvil.updateHitbox();
 		senpaiEvil.screenCenter();
 
-		if (SONG.song.toLowerCase() == 'roses' || SONG.song.toLowerCase() == 'thorns')
+		switch(SONG.song.toLowerCase())
 		{
-			remove(black);
+			case 'roses' | 'thorns':
+			{
+				remove(black);
 
-			if (SONG.song.toLowerCase() == 'thorns')
-				add(red);
+				if (SONG.song.toLowerCase() == 'thorns')
+					add(red);
+			}
 		}
 
 		new FlxTimer().start(0.3, function(tmr:FlxTimer)
@@ -1145,23 +1155,25 @@ class PlayState extends MusicBeatState
 
 			var introAssets:Map<String, Array<String>> = new Map<String, Array<String>>();
 
-			introAssets.set('default', [
-				'ready',
-				'set', 
-				'go'
-			]);
-
-			introAssets.set('school', [
-				'weeb/pixelUI/ready-pixel',
-				'weeb/pixelUI/set-pixel',
-				'weeb/pixelUI/date-pixel'
-			]);
-
-			introAssets.set('schoolEvil', [
-				'weeb/pixelUI/ready-pixel',
-				'weeb/pixelUI/set-pixel',
-				'weeb/pixelUI/date-pixel'
-			]);
+			switch(curStage)
+			{
+				case 'school' | 'schoolEvil':
+				{
+					introAssets.set(curStage, [
+						'weeb/pixelUI/ready-pixel',
+						'weeb/pixelUI/set-pixel',
+						'weeb/pixelUI/date-pixel'
+					]);
+				}
+				default:
+				{
+					introAssets.set('default', [
+						'ready',
+						'set', 
+						'go'
+					]);
+				}
+			}
 
 			var introAlts:Array<String> = introAssets.get('default');
 			var altSuffix:String = '';
@@ -1428,11 +1440,12 @@ class PlayState extends MusicBeatState
 			switch (curStage)
 			{
 				case 'school' | 'schoolEvil':
-					babyArrow.loadGraphic(Paths.image('weeb/pixelUI/arrows-pixels', 'week6'), true, 17, 17);
-					babyArrow.animation.add('green', [6]);
-					babyArrow.animation.add('red', [7]);
-					babyArrow.animation.add('blue', [5]);
-					babyArrow.animation.add('purplel', [4]);
+					babyArrow.frames = Paths.getSparrowAtlas('weeb/pixelUI/arrows-pixels', 'week6');
+
+					babyArrow.animation.addByPrefix('purple', 'arrows-pixels greyleft');
+					babyArrow.animation.addByPrefix('blue', 'arrows-pixels greydown');
+					babyArrow.animation.addByPrefix('green', 'arrows-pixels greyup');
+					babyArrow.animation.addByPrefix('red', 'arrows-pixels greyright');
 
 					babyArrow.setGraphicSize(Std.int(babyArrow.width * daPixelZoom));
 					babyArrow.updateHitbox();
@@ -1442,25 +1455,26 @@ class PlayState extends MusicBeatState
 					{
 						case 0:
 							babyArrow.x += Note.swagWidth * 0;
-							babyArrow.animation.add('static', [0]);
-							babyArrow.animation.add('pressed', [4, 8], 12, false);
-							babyArrow.animation.add('confirm', [12, 16], 24, false);
+							babyArrow.animation.addByPrefix('static', 'arrows-pixels greyleft');
+							babyArrow.animation.addByPrefix('pressed', 'arrows-pixels pressleft', 12, false);
+							babyArrow.animation.addByPrefix('confirm', 'arrows-pixels confirmleft', 24, false);
 						case 1:
 							babyArrow.x += Note.swagWidth * 1;
-							babyArrow.animation.add('static', [1]);
-							babyArrow.animation.add('pressed', [5, 9], 12, false);
-							babyArrow.animation.add('confirm', [13, 17], 24, false);
+							babyArrow.animation.addByPrefix('static', 'arrows-pixels greydown');
+							babyArrow.animation.addByPrefix('pressed', 'arrows-pixels pressdown', 12, false);
+							babyArrow.animation.addByPrefix('confirm', 'arrows-pixels confirmdown', 24, false);
 						case 2:
 							babyArrow.x += Note.swagWidth * 2;
-							babyArrow.animation.add('static', [2]);
-							babyArrow.animation.add('pressed', [6, 10], 12, false);
-							babyArrow.animation.add('confirm', [14, 18], 12, false);
+							babyArrow.animation.addByPrefix('static', 'arrows-pixels greyup');
+							babyArrow.animation.addByPrefix('pressed', 'arrows-pixels pressup', 12, false);
+							babyArrow.animation.addByPrefix('confirm', 'arrows-pixels confirmup', 12, false);
 						case 3:
 							babyArrow.x += Note.swagWidth * 3;
-							babyArrow.animation.add('static', [3]);
-							babyArrow.animation.add('pressed', [7, 11], 12, false);
-							babyArrow.animation.add('confirm', [15, 19], 24, false);
+							babyArrow.animation.addByPrefix('static', 'arrows-pixels greyright');
+							babyArrow.animation.addByPrefix('pressed', 'arrows-pixels pressright', 12, false);
+							babyArrow.animation.addByPrefix('confirm', 'arrows-pixels confirmright', 24, false);
 					}
+
 				default:
 					babyArrow.frames = Paths.getSparrowAtlas('NOTE_assets', 'shared');
 					babyArrow.animation.addByPrefix('green', 'arrowUP');
@@ -1721,10 +1735,6 @@ class PlayState extends MusicBeatState
 		if (FlxG.keys.justPressed.SEVEN && !endingSong)
 		{
 			FlxG.switchState(new ChartingState());
-
-			#if desktop
-			DiscordClient.changePresence("In Charting Debug Menu", null, iconRPC, true);
-			#end
 		}
 
 		iconP1.setGraphicSize(Std.int(FlxMath.lerp(iconP2.width, 150, 0.25 / ((SONG.bpm / 0.65) / 60))));
@@ -1774,6 +1784,11 @@ class PlayState extends MusicBeatState
 				}
 			}
 		#end
+
+		if (FlxG.keys.justPressed.ESCAPE)
+		{
+			FlxG.fullscreen = !FlxG.fullscreen;
+		}
 
 		if (startingSong)
 		{

@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import Controls;
 import Controls.Control;
 import flixel.FlxG;
@@ -35,6 +38,10 @@ class ControlsSubState extends MusicBeatSubstate
 	public function new()
 	{
 		super();
+
+		#if desktop
+			DiscordClient.changePresence("In The Keybinds Options Menu", null);
+		#end
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
 		menuBG.color = 0xFF71fd89;

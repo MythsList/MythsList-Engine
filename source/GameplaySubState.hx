@@ -1,5 +1,8 @@
 package;
 
+#if desktop
+import Discord.DiscordClient;
+#end
 import lime.app.Application;
 import Controls.Control;
 import Main;
@@ -41,6 +44,10 @@ class GameplaySubState extends MusicBeatSubstate
 	public function new()
 	{
 		super();
+
+		#if desktop
+			DiscordClient.changePresence("In The Gameplay Options Menu", null);
+		#end
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
 		menuBG.color = 0xFF71fd89;
@@ -281,48 +288,24 @@ class GameplaySubState extends MusicBeatSubstate
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
-		switch(change)
+		switch(selected)
 		{
-			case true:
-				switch(selected)
-				{
-					case 0:
-						FlxG.save.data.downScroll = true;
-					case 1:
-						FlxG.save.data.middleScroll = true;
-					case 2:
-						FlxG.save.data.ghostTapping = true;
-					case 3:
-						FlxG.save.data.statsDisplay = true;
-					case 4:
-						FlxG.save.data.songinfosDisplay = true;
-					case 5:
-						FlxG.save.data.versionDisplay = true;
-					case 6:
-						FlxG.save.data.songpositionDisplay = true;
-					case 7:
-						FlxG.save.data.antiAliasing = true;
-				}
-			case false:
-				switch(selected)
-				{
-					case 0:
-						FlxG.save.data.downScroll = false;
-					case 1:
-						FlxG.save.data.middleScroll = false;
-					case 2:
-						FlxG.save.data.ghostTapping = false;
-					case 3:
-						FlxG.save.data.statsDisplay = false;
-					case 4:
-						FlxG.save.data.songinfosDisplay = false;
-					case 5:
-						FlxG.save.data.versionDisplay = false;
-					case 6:
-						FlxG.save.data.songpositionDisplay = false;
-					case 7:
-						FlxG.save.data.antiAliasing = false;
-				}
+			case 0:
+				FlxG.save.data.downScroll = change;
+			case 1:
+				FlxG.save.data.middleScroll = change;
+			case 2:
+				FlxG.save.data.ghostTapping = change;
+			case 3:
+				FlxG.save.data.statsDisplay = change;
+			case 4:
+				FlxG.save.data.songinfosDisplay = change;
+			case 5:
+				FlxG.save.data.versionDisplay = change;
+			case 6:
+				FlxG.save.data.songpositionDisplay = change;
+			case 7:
+				FlxG.save.data.antiAliasing = change;
 		}
 
 		FlxG.save.flush();

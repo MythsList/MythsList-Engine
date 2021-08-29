@@ -40,7 +40,7 @@ class MainMenuState extends MusicBeatState
 
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Main Menus", null);
+		DiscordClient.changePresence("In the Main Menu", null);
 		#end
 
 		transIn = FlxTransitionableState.defaultTransIn;

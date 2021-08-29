@@ -61,24 +61,17 @@ class NGio
 		NG.createAndCheckSession(api, sessionId);
 
 		NG.core.verbose = true;
-		// Set the encryption cipher/format to RC4/Base64. AES128 and Hex are not implemented yet
-		NG.core.initEncryption(encKey); // Found in you NG project view
+		NG.core.initEncryption(encKey);
 
 		trace(NG.core.attemptingLogin);
 
 		if (NG.core.attemptingLogin)
 		{
-			/* a session_id was found in the loadervars, this means the user is playing on newgrounds.com
-			 * and we should login shortly. lets wait for that to happen
-			 */
 			trace("attempting login");
 			NG.core.onLogin.add(onNGLogin);
 		}
 		else
 		{
-			/* They are NOT playing on newgrounds.com, no session id was found. We must start one manually, if we want to.
-			 * Note: This will cause a new browser window to pop up where they can log in to newgrounds
-			 */
 			NG.core.requestLogin(onNGLogin);
 		}
 	}
@@ -101,44 +94,13 @@ class NGio
 	// --- MEDALS
 	function onNGMedalFetch():Void
 	{
-		/*
-			// Reading medal info
-			for (id in NG.core.medals.keys())
-			{
-				var medal = NG.core.medals.get(id);
-				trace('loaded medal id:$id, name:${medal.name}, description:${medal.description}');
-			}
 
-			// Unlocking medals
-			var unlockingMedal = NG.core.medals.get(54352);// medal ids are listed in your NG project viewer
-			if (!unlockingMedal.unlocked)
-				unlockingMedal.sendUnlock();
-		 */
 	}
 
 	// --- SCOREBOARDS
 	function onNGBoardsFetch():Void
 	{
-		/*
-			// Reading medal info
-			for (id in NG.core.scoreBoards.keys())
-			{
-				var board = NG.core.scoreBoards.get(id);
-				trace('loaded scoreboard id:$id, name:${board.name}');
-			}
-		 */
-		// var board = NG.core.scoreBoards.get(8004);// ID found in NG project view
-
-		// Posting a score thats OVER 9000!
-		// board.postScore(FlxG.random.int(0, 1000));
-
-		// --- To view the scores you first need to select the range of scores you want to see ---
-
-		// add an update listener so we know when we get the new scores
-		// board.onUpdate.add(onNGScoresFetch);
 		trace("shoulda got score by NOW!");
-		// board.requestScores(20);// get the best 10 scores ever logged
-		// more info on scores --- http://www.newgrounds.io/help/components/#scoreboard-getscores
 	}
 
 	inline static public function postScore(score:Int = 0, song:String)
@@ -153,8 +115,6 @@ class NGio
 				{
 					board.postScore(score, "Uhh meow?");
 				}
-
-				// trace('loaded scoreboard id:$id, name:${board.name}');
 			}
 		}
 	}
@@ -164,18 +124,6 @@ class NGio
 		scoreboardsLoaded = true;
 
 		ngScoresLoaded.dispatch();
-		/* 
-			for (score in NG.core.scoreBoards.get(8737).scores)
-			{
-				trace('score loaded user:${score.user.name}, score:${score.formatted_value}');
-
-			}
-		 */
-
-		// var board = NG.core.scoreBoards.get(8004);// ID found in NG project view
-		// board.postScore(HighScore.score);
-
-		// NGio.scoreboardArray = NG.core.scoreBoards.get(8004).scores;
 	}
 
 	inline static public function logEvent(event:String)

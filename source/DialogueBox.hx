@@ -84,7 +84,6 @@ class DialogueBox extends FlxSpriteGroup
 
 				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-pixel', 'week6');
 				box.animation.addByPrefix('normalOpen', 'Text Box Appear', 24, false);
-				box.animation.addByIndices('normal', 'Text Box Appear', [4], "", 24);
 				box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 			}
 			case 'thorns':
@@ -93,7 +92,6 @@ class DialogueBox extends FlxSpriteGroup
 
 				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-evil', 'week6');
 				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
-				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
 				box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 				box.y -= 2 * PlayState.daPixelZoom * 0.9;
 			}
@@ -103,7 +101,6 @@ class DialogueBox extends FlxSpriteGroup
 
 				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-evil', 'week6');
 				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
-				box.animation.addByIndices('normal', 'Spirit Textbox spawn', [11], "", 24);
 				box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
 				box.y -= 2 * PlayState.daPixelZoom * 0.9;
 			}
@@ -233,11 +230,10 @@ class DialogueBox extends FlxSpriteGroup
 		if (box.animation.curAnim != null)
 		{
 			if (box.animation.curAnim.name == 'normalOpen' && box.animation.curAnim.finished)
-			{
-				box.animation.play('normal');
 				dialogueOpened = true;
-			}
 		}
+		else
+			dialogueOpened = true;
 
 		if (dialogueOpened && !dialogueStarted)
 		{
