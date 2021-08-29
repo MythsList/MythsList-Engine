@@ -619,6 +619,12 @@ class PlayState extends MusicBeatState
 		dad = new Character(100, 100, SONG.player2);
 
 		var camPos:FlxPoint = new FlxPoint(dad.getGraphicMidpoint().x, dad.getGraphicMidpoint().y);
+		
+		if (dad.hasTrail)
+		{
+			var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
+			add(evilTrail);
+		}
 
 		switch (SONG.player2)
 		{
@@ -654,9 +660,6 @@ class PlayState extends MusicBeatState
 			}
 			case 'spirit':
 			{
-				var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
-				add(evilTrail);
-
 				dad.x -= 150;
 				dad.y += 100;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
@@ -684,6 +687,12 @@ class PlayState extends MusicBeatState
 
 			default:
 				boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
+		}
+		
+		if (boyfriend.hasTrail)
+		{
+			var evilTrail = new FlxTrail(boyfriend, null, 4, 24, 0.3, 0.069);
+			add(evilTrail);
 		}
 
 		switch (curStage)
