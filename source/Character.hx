@@ -571,6 +571,8 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', "right_", 24, false);
 				animation.addByPrefix('singLEFT', "left_", 24, false);
 				animation.addByPrefix('singDOWN', "spirit down_", 24, false);
+				
+				hasTrail = true;
 
 				loadOffsetFile(curCharacter);
 
