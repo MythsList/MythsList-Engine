@@ -29,11 +29,11 @@ class AnimationDebug extends FlxState
 
 	var isDad:Bool = true;
 
-	var daAnim:String = 'spooky';
+	var daAnim:String = 'bf';
 
 	var camFollow:FlxObject;
 
-	public function new(daAnim:String = 'spooky')
+	public function new(daAnim:String = 'bf')
 	{
 		super();
 		this.daAnim = daAnim;
@@ -48,7 +48,7 @@ class AnimationDebug extends FlxState
 		#end
 
 		var gridBG:FlxSprite = FlxGridOverlay.create(10, 10);
-		gridBG.scrollFactor.set(0.5, 0.5);
+		gridBG.scrollFactor.set();
 		add(gridBG);
 
 		if (daAnim == 'bf')
@@ -58,11 +58,12 @@ class AnimationDebug extends FlxState
 		{
 			dad = new Character(0, 0, daAnim);
 			dad.screenCenter();
+			dad.scrollFactor.set();
 			dad.debugMode = true;
 
 			redgridBG = new FlxSprite(0, 0).makeGraphic(dad.frameWidth, dad.frameHeight, FlxColor.RED);
 			redgridBG.alpha = 0.25;
-			redgridBG.scrollFactor.set(0.5, 0.5);
+			redgridBG.scrollFactor.set();
 			add(redgridBG);
 
 			add(dad);
@@ -76,11 +77,12 @@ class AnimationDebug extends FlxState
 		{
 			bf = new Boyfriend(0, 0);
 			bf.screenCenter();
+			bf.scrollFactor.set();
 			bf.debugMode = true;
 
 			redgridBG = new FlxSprite(0, 0).makeGraphic(bf.frameWidth, bf.frameHeight, FlxColor.RED);
 			redgridBG.alpha = 0.25;
-			redgridBG.scrollFactor.set(0.5, 0.5);
+			redgridBG.scrollFactor.set();
 			add(redgridBG);
 
 			add(bf);
@@ -120,7 +122,7 @@ class AnimationDebug extends FlxState
 
 		for (anim => offsets in char.animOffsets)
 		{
-			var text:FlxText = new FlxText(10, 20 + (18 * daLoop), 0, anim + ": " + offsets, 15);
+			var text:FlxText = new FlxText(10, 20 + (18 * daLoop), 0, anim + ' : ' + offsets, 15);
 			text.scrollFactor.set();
 			text.color = FlxColor.BLUE;
 			dumbTexts.add(text);

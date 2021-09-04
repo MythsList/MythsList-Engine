@@ -22,7 +22,7 @@ using StringTools;
 
 class OptionsSubState extends MusicBeatState
 {
-	var textMenuItems:Array<String> = [
+	public static var textMenuItems:Array<String> = [
 		'Controls',
 		'Gameplay',
 		'Character selection',

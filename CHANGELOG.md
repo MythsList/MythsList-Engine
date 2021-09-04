@@ -2,6 +2,18 @@
 
 All notable changes will be documented in this file.
 
+## [V.1.0.5.1]
+### Addition
+- Added the Discord server on the GameBanana page
+
+### Tweak
+- Easier way to add trails to a character like "spirit" (Thanks Astr0verload)
+- Animation Debug minor changes
+
+### Bugfix
+- Removing character selection then playing a song while having data from that menu no longer causes crashes (Haven't tested but hopefully it works)
+- Mouse still appearing after closing the chart debug menu fixed
+
 ## [V.1.0.5]
 ### Overhaul
 - Better chart debug menu

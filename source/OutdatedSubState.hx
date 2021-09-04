@@ -53,7 +53,7 @@ class OutdatedSubState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (controls.ACCEPT)
+		if (controls.ACCEPT && !leftState)
 		{
 			leftState = true;
 			FlxG.switchState(new MainMenuState());

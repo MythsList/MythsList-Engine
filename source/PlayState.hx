@@ -163,16 +163,18 @@ class PlayState extends MusicBeatState
 	var inCutscene:Bool = false;
 
 	#if desktop
-	var storyDifficultyText:String = "";
-	var iconRPC:String = "";
-	var detailsText:String = "";
-	var detailsPausedText:String = "";
+		var storyDifficultyText:String = "";
+		var iconRPC:String = "";
+		var detailsText:String = "";
+		var detailsPausedText:String = "";
 	#end
 
 	override public function create()
 	{
 		if (FlxG.sound.music != null)
 			FlxG.sound.music.stop();
+
+		FlxG.mouse.visible = false;
 
 		camGame = new FlxCamera();
 		camHUD = new FlxCamera();
@@ -336,7 +338,7 @@ class PlayState extends MusicBeatState
 		    case 'high' | 'satin-panties' | 'milf':
 		    {
 				curStage = 'limo';
-		        defaultCamZoom = 0.90;
+		        defaultCamZoom = 0.9;
 
 		        var skyBG:FlxSprite = new FlxSprite(-120, -50).loadGraphic(Paths.image('limo/limoSunset', 'week4'));
 		        skyBG.scrollFactor.set(0.1, 0.1);
@@ -365,8 +367,9 @@ class PlayState extends MusicBeatState
 		        var limoTex = Paths.getSparrowAtlas('limo/limoDrive', 'week4');
 
 		        limo = new FlxSprite(-120, 550);
+
 		        limo.frames = limoTex;
-		        limo.animation.addByPrefix('drive', "Limo stage", 24);
+		        limo.animation.addByPrefix('drive', 'Limo stage', 24);
 		        limo.animation.play('drive');
 
 				if (MythsListEngineData.antiAliasing)
@@ -378,7 +381,7 @@ class PlayState extends MusicBeatState
 		    {
 				curStage = 'mall';
 
-		        defaultCamZoom = 0.80;
+		        defaultCamZoom = 0.8;
 
 		        var bg:FlxSprite = new FlxSprite(-1000, -500).loadGraphic(Paths.image('christmas/bgWalls', 'week5'));
 		        
@@ -454,6 +457,7 @@ class PlayState extends MusicBeatState
 		    case 'winter-horrorland':
 		    {
 		        curStage = 'mallEvil';
+
 		        var bg:FlxSprite = new FlxSprite(-400, -500).loadGraphic(Paths.image('christmas/evilBG', 'week5'));
 		        
 				if (MythsListEngineData.antiAliasing)
@@ -552,7 +556,7 @@ class PlayState extends MusicBeatState
 		        var waveEffectBG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
 		        var waveEffectFG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 5, 2);
 
-		        var posX = 400;
+		        var posX = 420;
 	            var posY = 200;
 
 		        var bg:FlxSprite = new FlxSprite(posX, posY);
@@ -567,6 +571,7 @@ class PlayState extends MusicBeatState
 		    {
 		        defaultCamZoom = 0.9;
 		        curStage = 'stage';
+
 		        var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback', 'tutorial'));
 		        
 				if (MythsListEngineData.antiAliasing)
@@ -639,9 +644,9 @@ class PlayState extends MusicBeatState
 					tweenCamIn();
 				}
 			}
-			case "spooky":
+			case 'spooky':
 				dad.y += 200;
-			case "monster":
+			case 'monster':
 				dad.y += 100;
 			case 'monster-christmas':
 				dad.y += 130;
@@ -653,17 +658,13 @@ class PlayState extends MusicBeatState
 			case 'parents-christmas':
 				dad.x -= 500;
 			case 'senpai' | 'senpai-angry':
-			{
 				dad.x += 150;
 				dad.y += 360;
 				camPos.set(dad.getGraphicMidpoint().x + 310, dad.getGraphicMidpoint().y);
-			}
 			case 'spirit':
-			{
 				dad.x -= 150;
 				dad.y += 100;
 				camPos.set(dad.getGraphicMidpoint().x + 300, dad.getGraphicMidpoint().y);
-			}
 		}
 
 		if (dad.hasTrail)
@@ -672,27 +673,36 @@ class PlayState extends MusicBeatState
 			add(trail);
 		}
 
-		switch(SONG.song.toLowerCase())
+		if (OptionsSubState.textMenuItems[2].toLowerCase() == 'character selection')
 		{
-			// For songs that do not use the original BF
+			switch(SONG.song.toLowerCase())
+			{
+				// For songs that do not use the original BF
 
-			case 'satin-panties' | 'high' | 'milf':
-				if (MythsListEngineData.characterSkin == 'bf')
+				case 'satin-panties' | 'high' | 'milf':
+					if (MythsListEngineData.characterSkin == 'bf')
+						boyfriend = new Boyfriend(770, 450, SONG.player1);
+					else
+						boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
+
+				case 'cocoa' | 'eggnog' | 'winter-horrorland':
+					if (MythsListEngineData.characterSkin == 'bf')
+						boyfriend = new Boyfriend(770, 450, SONG.player1);
+					else
+						boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
+
+				case 'senpai' | 'roses' | 'thorns':
 					boyfriend = new Boyfriend(770, 450, SONG.player1);
-				else
-					boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
-			case 'cocoa' | 'eggnog' | 'winter-horrorland':
-				if (MythsListEngineData.characterSkin == 'bf')
-					boyfriend = new Boyfriend(770, 450, SONG.player1);
-				else
-					boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
-			case 'senpai' | 'roses' | 'thorns':
-				boyfriend = new Boyfriend(770, 450, SONG.player1);
 
-			// If your song isn't mentioned then it will use the currently selected character
+				// If your song isn't mentioned then it will use the currently selected character
 
-			default:
-				boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
+				default:
+					boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
+			}
+		}
+		else
+		{
+			boyfriend = new Boyfriend(770, 450, SONG.player1);
 		}
 		
 		if (boyfriend.hasTrail)
@@ -704,51 +714,46 @@ class PlayState extends MusicBeatState
 		switch (curStage)
 		{
 			case 'limo':
-			{
 				boyfriend.y -= 220;
 				boyfriend.x += 260;
 
 				resetFastCar();
 				add(fastCar);
-			}
 			case 'mall':
-			{
 				boyfriend.x += 200;
-			}
 			case 'mallEvil':
-			{
 				boyfriend.x += 320;
 				dad.y -= 80;
-			}
 			case 'school' | 'schoolEvil':
-			{
 				boyfriend.x += 200;
 				boyfriend.y += 220;
 				gf.x += 180;
 				gf.y += 300;
-			}
 		}
 
-		switch(SONG.song.toLowerCase())
+		if (OptionsSubState.textMenuItems[2].toLowerCase() == 'character selection')
 		{
-			case 'senpai' | 'roses' | 'thorns':
+			switch(SONG.song.toLowerCase())
 			{
-				boyfriend.y += 0;
-			}
-			default:
-			{
-				switch(MythsListEngineData.characterSkin)
+				case 'senpai' | 'roses' | 'thorns':
 				{
-					case 'bf-veryold':
-						boyfriend.y += 30;
-					case 'brody-foxx':
-						boyfriend.y -= 220;
-					case 'template':
-						boyfriend.y -= 60;
-						boyfriend.x -= 10;
-					case 'rhys':
-						boyfriend.x += 40;
-						boyfriend.y -= 380;
+					boyfriend.y += 0;
+				}
+				default:
+				{
+					switch(MythsListEngineData.characterSkin)
+					{
+						case 'bf-veryold':
+							boyfriend.y += 30;
+						case 'brody-foxx':
+							boyfriend.y -= 220;
+						case 'template':
+							boyfriend.y -= 60;
+							boyfriend.x -= 10;
+						case 'rhys':
+							boyfriend.x += 40;
+							boyfriend.y -= 380;
+					}
 				}
 			}
 		}
@@ -953,10 +958,17 @@ class PlayState extends MusicBeatState
 			botTxt.alpha = 0;
 		}
 
-		if (SONG.player1 == 'bf-pixel')
-			iconP1 = new HealthIcon(SONG.player1, true);
+		if (OptionsSubState.textMenuItems[2].toLowerCase() == 'character selection')
+		{
+			if (SONG.player1 == 'bf-pixel')
+				iconP1 = new HealthIcon(SONG.player1, true);
+			else
+				iconP1 = new HealthIcon(MythsListEngineData.characterSkin, true);
+		}
 		else
-			iconP1 = new HealthIcon(MythsListEngineData.characterSkin, true);
+		{
+			iconP1 = new HealthIcon(SONG.player1, true);
+		}
 
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
@@ -1796,12 +1808,19 @@ class PlayState extends MusicBeatState
 		#if debug
 			if (FlxG.keys.justPressed.NINE && !endingSong)
 			{
-				switch(SONG.player1)
+				if (OptionsSubState.textMenuItems[2].toLowerCase() == 'character selection')
 				{
-					case 'bf-pixel' | 'bf-christmas' | 'bf-car':
-						FlxG.switchState(new AnimationDebug(SONG.player1));
-					default:
-						FlxG.switchState(new AnimationDebug(MythsListEngineData.characterSkin));
+					switch(SONG.player1)
+					{
+						case 'bf-pixel' | 'bf-christmas' | 'bf-car':
+							FlxG.switchState(new AnimationDebug(SONG.player1));
+						default:
+							FlxG.switchState(new AnimationDebug(MythsListEngineData.characterSkin));
+					}
+				}
+				else
+				{
+					FlxG.switchState(new AnimationDebug(SONG.player1));
 				}
 			}
 		#end

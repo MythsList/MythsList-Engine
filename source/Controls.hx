@@ -528,10 +528,10 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
 				inline bindKeys(Control.RESET, [R]);
 			case Duo(true):
-				inline bindKeys(Control.UP, [upkeybind]);
-				inline bindKeys(Control.DOWN, [downkeybind]);
-				inline bindKeys(Control.LEFT, [leftkeybind]);
-				inline bindKeys(Control.RIGHT, [rightkeybind]);
+				inline bindKeys(Control.UP, [W]);
+				inline bindKeys(Control.DOWN, [S]);
+				inline bindKeys(Control.LEFT, [Q]);
+				inline bindKeys(Control.RIGHT, [D]);
 				inline bindKeys(Control.ACCEPT, [G, Z]);
 				inline bindKeys(Control.BACK, [H, X]);
 				inline bindKeys(Control.PAUSE, [ONE]);

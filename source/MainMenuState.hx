@@ -36,6 +36,8 @@ class MainMenuState extends MusicBeatState
 
 	override function create()
 	{
+		FlxG.mouse.visible = false;
+
 		MythsListEngineData.dataLoad();
 
 		#if desktop

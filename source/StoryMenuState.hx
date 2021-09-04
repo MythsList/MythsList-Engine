@@ -300,7 +300,18 @@ class StoryMenuState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('confirmMenu', 'preload'));
 
 				grpWeekText.members[curWeek].startFlashing();
-				grpWeekCharacters.members[1].animation.play('bfConfirm');
+
+				var weekCharacterThing:MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * (1 + 1) - 150, 'bfConfirm');
+				weekCharacterThing.y += 70;
+				weekCharacterThing.antialiasing = true;
+				weekCharacterThing.alpha = 1;
+				weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.9));
+				weekCharacterThing.updateHitbox();
+				weekCharacterThing.x -= 80;
+
+				grpWeekCharacters.remove(grpWeekCharacters.members[1]);
+				add(weekCharacterThing);
+
 				stopspamming = true;
 			}
 
@@ -438,16 +449,6 @@ class StoryMenuState extends MusicBeatState
 		for (i in 0...stringThing.length + 1)
 		{
 			txtTracklist.text += "\n" + stringThing[i].toUpperCase();
-		}
-
-		// in case, because shit bug
-		
-		if (txtTracklist.text == "TRACKS:\n")
-		{
-			for (i in 0...stringThing.length + 1)
-			{
-				txtTracklist.text += "\n" + stringThing[i].toUpperCase();
-			}
 		}
 
 		txtTracklist.screenCenter(X);
