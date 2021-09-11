@@ -72,6 +72,11 @@ class ChartingState extends MusicBeatState
 	var curRenderedNotes:FlxTypedGroup<Note>;
 	var curRenderedSustains:FlxTypedGroup<FlxSprite>;
 
+	var noteType:Int = 0;
+	var noteTypeNames:Array<String> = ['default'];
+
+	var noteTypeText:FlxText = new FlxText(5, 5, 0, '', 24);
+
 	var gridBG:FlxSprite;
 
 	var _song:SwagSong;
@@ -126,10 +131,15 @@ class ChartingState extends MusicBeatState
 		gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 8, GRID_SIZE * 16);
 		add(gridBG);
 
-		var keybindTxt:FlxText = new FlxText(650, 440, 0,
+		noteTypeText.text = 'noteType: ' + noteTypeNames[noteType].toUpperCase();
+		noteTypeText.scrollFactor.set();
+		add(noteTypeText);
+
+		var keybindTxt:FlxText = new FlxText(650, 425, 0,
 		  'ENTER : Resume with the current changes\n'
 		+ 'ESCAPE : Exit to the Main Menu\n\n'
 		+ '1-8 : Place notes\n'
+		+ 'Z-X : Change the note type\n'
 		+ 'CTRL + Z : Undo\n'
 		+ 'SHIFT : Remove the grid temporarily\n\n'
 		+ 'MOUSE WHEEL : Scroll\n'
@@ -403,14 +413,14 @@ class ChartingState extends MusicBeatState
 		tab_group_note.name = 'Note';
 
 		writingNotesText = new FlxUIText(20, 100, 0, "");
-		writingNotesText.setFormat("Arial", 20, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		writingNotesText.setFormat('Arial', 20, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 
-		stepperSusLength = new FlxUINumericStepper(10, 10, Conductor.stepCrochet / 2, 0, 0, Conductor.stepCrochet * _song.notes[curSection].lengthInSteps * 4);
+		stepperSusLength = new FlxUINumericStepper(10, 25, Conductor.stepCrochet / 2, 0, 0, Conductor.stepCrochet * _song.notes[curSection].lengthInSteps * 4);
 		stepperSusLength.value = 0;
 		stepperSusLength.name = 'note_susLength';
 
-		var stepperSusLengthLabel = new FlxText(74, 10, 'Note Sustain Length');
-		var applyLength:FlxButton = new FlxButton(10, 100, 'Apply Data');
+		var stepperSusLengthLabel = new FlxText(10, 10, 'Note Sustain Length');
+		var applyLength:FlxButton = new FlxButton(10, 350, 'Apply Data');
 
 		tab_group_note.add(stepperSusLength);
 		tab_group_note.add(stepperSusLengthLabel);
@@ -589,7 +599,7 @@ class ChartingState extends MusicBeatState
 			var i = pressArray[p];
 
 			if (i)
-				addNote(new Note(Conductor.songPosition, p));
+				addNote(new Note(Conductor.songPosition, p, null, false, noteType));
 		}
 
 		strumLine.y = getYfromStrum((Conductor.songPosition - sectionStartTime()) % (Conductor.stepCrochet * _song.notes[curSection].lengthInSteps));
@@ -797,6 +807,26 @@ class ChartingState extends MusicBeatState
 					vocals.time = FlxG.sound.music.time;
 				}
 			}
+
+			if (!FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.Z)
+			{
+				this.noteType --;
+
+				if (noteType < 0)
+					noteType = noteTypeNames.length - 1;
+
+				noteTypeText.text = 'noteType: ' + noteTypeNames[noteType].toUpperCase();
+			}
+
+			if (!FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.X)
+			{
+				this.noteType ++;
+
+				if (noteType == noteTypeNames.length)
+					noteType = 0;
+
+				noteTypeText.text = 'noteType: ' + noteTypeNames[noteType].toUpperCase();
+			}
 		}
 
 		_song.bpm = tempBpm;
@@ -901,7 +931,7 @@ class ChartingState extends MusicBeatState
 		{
 			var strum = note[0] + Conductor.stepCrochet * (_song.notes[daSec].lengthInSteps * sectionNum);
 
-			var copiedNote:Array<Dynamic> = [strum, note[1], note[2]];
+			var copiedNote:Array<Dynamic> = [strum, note[1], note[2], note[3]];
 			_song.notes[daSec].sectionNotes.push(copiedNote);
 		}
 
@@ -990,11 +1020,12 @@ class ChartingState extends MusicBeatState
 
 		for (i in sectionInfo)
 		{
-			var daNoteInfo = i[1];
 			var daStrumTime = i[0];
+			var daNoteInfo = i[1];
 			var daSus = i[2];
+			var daType = i[3];
 
-			var note:Note = new Note(daStrumTime, daNoteInfo % 4);
+			var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, false, daType);
 			note.sustainLength = daSus;
 			note.setGraphicSize(GRID_SIZE, GRID_SIZE);
 			note.updateHitbox();
@@ -1082,13 +1113,18 @@ class ChartingState extends MusicBeatState
 	private function addNote(?n:Note):Void
 	{
 		var noteStrum = getStrumTime(dummyArrow.y) + sectionStartTime();
+
 		var noteData = Math.floor(FlxG.mouse.x / GRID_SIZE);
+
 		var noteSus = 0;
 
+		//var noteType = noteTypeNames[this.noteStyle];
+		var noteType = 0;
+
 		if (n != null)
-			_song.notes[curSection].sectionNotes.push([n.strumTime, n.noteData, n.sustainLength]);
+			_song.notes[curSection].sectionNotes.push([n.strumTime, n.noteData, n.sustainLength, n.noteType]);
 		else
-			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus]);
+			_song.notes[curSection].sectionNotes.push([noteStrum, noteData, noteSus, noteType]);
 
 		var thingy = _song.notes[curSection].sectionNotes[_song.notes[curSection].sectionNotes.length - 1];
 

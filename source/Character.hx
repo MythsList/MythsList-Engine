@@ -215,7 +215,7 @@ class Character extends FlxSprite
 			case 'monster':
 				healthBarColor = colorPrefix + 'F3FF6E';
 
-				tex = Paths.getSparrowAtlas('Monster_Assets', 'week2');
+				tex = Paths.getSparrowAtlas('NewMonster_Assets', 'week2');
 				frames = tex;
 				animation.addByPrefix('idle', 'monster idle', 24, false);
 				animation.addByPrefix('singUP', 'monster up note', 24, false);

@@ -38,6 +38,12 @@ class MainMenuState extends MusicBeatState
 	{
 		FlxG.mouse.visible = false;
 
+		if (Std.is(FlxG.save.data.keyBinds, String))
+		{
+			FlxG.save.data.keyBinds = null;
+			FlxG.save.flush();
+		}
+
 		MythsListEngineData.dataLoad();
 
 		#if desktop
@@ -112,7 +118,7 @@ class MainMenuState extends MusicBeatState
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
 
-		changeItem();
+		changeItem(0);
 
 		super.create();
 	}

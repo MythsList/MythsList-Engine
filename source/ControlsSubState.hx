@@ -13,6 +13,8 @@ import flixel.util.FlxColor;
 import flixel.addons.display.FlxGridOverlay;
 import flash.text.TextField;
 import flixel.input.keyboard.FlxKey;
+import flixel.input.FlxKeyManager;
+import flixel.input.FlxInput;
 import flixel.math.FlxMath;
 import lime.utils.Assets;
 import flixel.FlxState;
@@ -24,13 +26,34 @@ using StringTools;
 class ControlsSubState extends MusicBeatSubstate
 {
 	var textMenuItems:Array<String> = [
-		'SDKL',
-		'DFJK',
-		'ASWD',
-		'QSZD'
+		'LEFT KEY',
+		'DOWN KEY',
+		'UP KEY',
+		'RIGHT KEY',
+		'RESET KEY',
+		'PAUSE KEY'
 	];
 
-	var selector:FlxSprite;
+	var keybindBlacklist:Array<String> = [
+		'ESCAPE',
+		'ENTER',
+		'BACKSPACE',
+		'SPACE',
+		'TAB',
+		'SHIFT',
+		'CONTROL',
+		'ALT',
+		'UP',
+		'DOWN',
+		'LEFT',
+		'RIGHT'
+	];
+
+	var BG:FlxSprite;
+
+	var curKeybinds:FlxText;
+	var curBind:FlxText;
+
 	var curSelected:Int = 0;
 
 	var grpOptions:FlxTypedGroup<Alphabet>;
@@ -60,32 +83,30 @@ class ControlsSubState extends MusicBeatSubstate
 			optionText.isMenuItem = true;
 			optionText.targetY = i;
 
-			switch(textMenuItems[i])
-			{
-				case 'SDKL':
-					if (FlxG.save.data.keyBinds == 'SDKL')
-						optionText.color = FlxColor.GREEN;
-					else if (FlxG.save.data.keyBinds != 'SDKL')
-						optionText.color = FlxColor.RED;
-				case 'DFJK':
-					if (FlxG.save.data.keyBinds == 'DFJK')
-						optionText.color = FlxColor.GREEN;
-					else if (FlxG.save.data.keyBinds != 'DFJK')
-						optionText.color = FlxColor.RED;
-				case 'ASWD':
-					if (FlxG.save.data.keyBinds == 'ASWD')
-						optionText.color = FlxColor.GREEN;
-					else if (FlxG.save.data.keyBinds != 'ASWD')
-						optionText.color = FlxColor.RED;
-				case 'QSZD':
-					if (FlxG.save.data.keyBinds == 'QSZD')
-						optionText.color = FlxColor.GREEN;
-					else if (FlxG.save.data.keyBinds != 'QSZD')
-						optionText.color = FlxColor.RED;
-			}
-
 			grpOptions.add(optionText);
 		}
+
+		BG = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width / 4), 250, 0xFF000000);
+		BG.x = FlxG.width - BG.width;
+		BG.alpha = 0.25;
+		add(BG);
+
+		curKeybinds = new FlxText(BG.x + 5, BG.y + 5, 0, 
+		'Current keybinds:\n\n'
+		+ 'Left key: ' + MythsListEngineData.keyBinds[0] + '\n'
+		+ 'Down key: ' + MythsListEngineData.keyBinds[1] + '\n'
+		+ 'Up key: ' + MythsListEngineData.keyBinds[2] + '\n'
+		+ 'Right key: ' + MythsListEngineData.keyBinds[3] + '\n'
+		+ '\nReset key: ' + MythsListEngineData.keyBinds[4] + '\n'
+		+ 'Pause key: ' + MythsListEngineData.keyBinds[5],
+		16);
+		
+		add(curKeybinds);
+
+		curBind = new FlxText(0, 0, 0, '_', 200);
+		curBind.x = (BG.x + BG.width) - ((BG.width / 2) + (curBind.width / 2));
+		curBind.y = (FlxG.height / 2) - (curBind.height / 2) + 100;
+		add(curBind);
 
 		var engineversionText:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
 		engineversionText.scrollFactor.set();
@@ -100,81 +121,71 @@ class ControlsSubState extends MusicBeatSubstate
 		changeSelection(0);
 	}
 
+	var selected:Bool = false;
+
+	var keybindSelected:Bool = false;
+
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
-		if (controls.UP_P)
-			changeSelection(-1);
-
-		if (controls.DOWN_P)
-			changeSelection(1);
-
-		if (controls.BACK)
+		if (!selected)
 		{
-			FlxTransitionableState.skipNextTransIn = true;
-			FlxTransitionableState.skipNextTransOut = true;
-			FlxG.switchState(new OptionsSubState());
-		}
+			if (controls.UP_P && !keybindSelected)
+				changeSelection(-1);
 
-		if (controls.ACCEPT)
-		{
-			switch (textMenuItems[curSelected])
+			if (controls.DOWN_P && !keybindSelected)
+				changeSelection(1);
+
+			if (controls.BACK)
 			{
-				case "SDKL":
-					if (FlxG.save.data.keyBinds == 'SDKL')
-					{
-						interact(curSelected);
-					}
-					else if (FlxG.save.data.keyBinds != 'SDKL')
-					{
-						interact(curSelected);
-						grpOptions.members[1].color = FlxColor.RED;
-						grpOptions.members[2].color = FlxColor.RED;
-						grpOptions.members[3].color = FlxColor.RED;
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
-				case "DFJK":
-					if (FlxG.save.data.keyBinds == 'DFJK')
-					{
-						interact(curSelected);
-					}
-					else if (FlxG.save.data.keyBinds != 'DFJK')
-					{
-						interact(curSelected);
-						grpOptions.members[0].color = FlxColor.RED;
-						grpOptions.members[2].color = FlxColor.RED;
-						grpOptions.members[3].color = FlxColor.RED;
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
-				case "ASWD":
-					if (FlxG.save.data.keyBinds == 'ASWD')
-					{
-						interact(curSelected);
-					}
-					else if (FlxG.save.data.keyBinds != 'ASWD')
-					{
-						interact(curSelected);
-						grpOptions.members[0].color = FlxColor.RED;
-						grpOptions.members[1].color = FlxColor.RED;
-						grpOptions.members[3].color = FlxColor.RED;
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
-				case "QSZD":
-					if (FlxG.save.data.keyBinds == 'QSZD')
-					{
-						interact(curSelected);
-					}
-					else if (FlxG.save.data.keyBinds != 'QSZD')
-					{
-						interact(curSelected);
-						grpOptions.members[0].color = FlxColor.RED;
-						grpOptions.members[1].color = FlxColor.RED;
-						grpOptions.members[2].color = FlxColor.RED;
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
+				selected = true;
+
+				FlxTransitionableState.skipNextTransIn = true;
+				FlxTransitionableState.skipNextTransOut = true;
+				FlxG.switchState(new OptionsSubState());
+			}
+
+			if (controls.ACCEPT)
+			{
+				curBind.text = MythsListEngineData.keyBinds[curSelected].toUpperCase();
+
+				if (!keybindSelected)
+				{
+					curBind.color = FlxColor.YELLOW;
+
+					interact(true);
+					keybindSelected = true;
+				}
+				else
+				{
+					curBind.color = FlxColor.WHITE;
+
+					interact(false);
+					keybindSelected = false;
+				}
+			}
+
+			if (FlxG.keys.justPressed.ANY && !controls.ACCEPT && keybindSelected)
+			{
+				curBind.color = FlxColor.YELLOW;
+
+				interact(false, FlxG.keys.getIsDown()[0].ID.toString());
+				keybindSelected = false;
+
+				curBind.color = FlxColor.WHITE;
 			}
 		}
+
+		curKeybinds.text = 'Current keybinds:\n\n'
+		+ 'Left key: ' + MythsListEngineData.keyBinds[0] + '\n'
+		+ 'Down key: ' + MythsListEngineData.keyBinds[1] + '\n'
+		+ 'Up key: ' + MythsListEngineData.keyBinds[2] + '\n'
+		+ 'Right key: ' + MythsListEngineData.keyBinds[3] + '\n'
+		+ '\nReset key: ' + MythsListEngineData.keyBinds[4] + '\n'
+		+ 'Pause key: ' + MythsListEngineData.keyBinds[5];
+
+		curBind.x = (BG.x + BG.width) - ((BG.width / 2) + (curBind.width / 2));
 	}
 
 	function changeSelection(change:Int = 0)
@@ -188,42 +199,54 @@ class ControlsSubState extends MusicBeatSubstate
 		if (curSelected >= textMenuItems.length)
 			curSelected = 0;
 
-		var bullShit:Int = 0;
+		var stuff:Int = 0;
 
 		for (item in grpOptions.members)
 		{
-			item.targetY = bullShit - curSelected;
-			bullShit++;
+			item.targetY = stuff - curSelected;
+			stuff ++;
 
 			item.alpha = 0.6;
 
 			if (item.targetY == 0)
-			{
 				item.alpha = 1;
-			}
 		}
+
+		curBind.text = MythsListEngineData.keyBinds[curSelected].toUpperCase();
 	}
 
-	function interact(selected:Int = 0)
+	function interact(interaction:Bool = false, key:String = null)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
-
-		switch(selected)
-		{
-			case 0:
-				FlxG.save.data.keyBinds = 'SDKL';
-			case 1:
-				FlxG.save.data.keyBinds = 'DFJK';
-			case 2:
-				FlxG.save.data.keyBinds = 'ASWD';
-			case 3:
-				FlxG.save.data.keyBinds = 'QSZD';
-		}
+		FlxG.sound.play(Paths.sound('confirmMenu', 'preload'));
 		
-		controls.setKeyboardScheme(Solo, true);
+		if (interaction) // saves the keybind
+		{
+			curBind.text = MythsListEngineData.keyBinds[curSelected].toUpperCase();
 
-		FlxG.save.flush();
+			controls.setKeyboardScheme(Solo, true);
+			MythsListEngineData.dataSave();
+		}
+		else // currently being changed
+		{
+			var oldKey:String = MythsListEngineData.keyBinds[curSelected];
 
-		MythsListEngineData.dataSave();
+			curBind.text = oldKey.toUpperCase();
+
+			if (key != null && key != oldKey)
+			{
+				for (item in keybindBlacklist)
+				{
+					if (!keybindBlacklist.contains(key))
+					{
+						curBind.text = key.toUpperCase();
+
+						FlxG.save.data.keyBinds[curSelected] = key;
+						FlxG.save.flush();
+
+						interact(true);
+					}
+				}
+			}
+		}
 	}
 }

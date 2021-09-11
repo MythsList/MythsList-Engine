@@ -2,6 +2,20 @@
 
 All notable changes will be documented in this file.
 
+## [V.1.0.6]
+### Addition
+- Special arrows support (Feature hasn't been tested, please report bugs on the Discord server in #bug-reports or literally in my DMs)
+- Reworked the controls options menu : Custom keybinds (Same thing lol but I got to test it a bit atleast)
+- Added Stage.hx (Might be an useless feature but it's there)
+
+### Tweak
+- Replaced "old" monster with "new" monster (Using CVal's spritesheet)
+- Week 3's background lights now use white lights then change color using code instead of changing the asset (Was changed due to the Stage.hx addition)
+- Week 6's second song in the freeplay menu now uses the angry senpai health icon (I forgor 💀)
+
+### Improvement
+- Removed duplicated code and useless code
+
 ## [V.1.0.5.1]
 ### Addition
 - Added the Discord server on the GameBanana page

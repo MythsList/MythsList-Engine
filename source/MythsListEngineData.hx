@@ -8,12 +8,12 @@ class MythsListEngineData
 {
     // VERSION
 
-    public static var engineVersion:String = "V.1.0.5.1";
+    public static var engineVersion:String = "V.1.0.6";
     public static var modVersion:String = " ";
 
     // KEYBINDS
 
-    public static var keyBinds:String;
+    public static var keyBinds:Array<String> = ['A', 'S', 'W', 'D', 'R', 'P'];
 
     // FPS
 
@@ -56,7 +56,16 @@ class MythsListEngineData
     static public function dataLoad():Void
     {
         if (FlxG.save.data.keyBinds == null)
-			FlxG.save.data.keyBinds = 'SDKL';
+			FlxG.save.data.keyBinds = ['A', 'S', 'W', 'D', 'R', 'P'];
+
+		for (i in 0...Std.int(FlxG.save.data.keyBinds.length - 1))
+		{
+			if (FlxG.save.data.keyBinds[i] == null)
+			{
+				FlxG.save.data.keyBinds = ['A', 'S', 'W', 'D', 'R', 'P'];
+				FlxG.save.flush();
+			}
+		}
 
 		if (FlxG.save.data.middleScroll == null)
 			FlxG.save.data.downScroll = false;
@@ -104,7 +113,14 @@ class MythsListEngineData
 		if (FlxG.save.data.playMiddlescroll == null)
 			FlxG.save.data.playMiddlescroll = false;
 
-		MythsListEngineData.keyBinds = FlxG.save.data.keyBinds;
+		MythsListEngineData.keyBinds = [
+			FlxG.save.data.keyBinds[0],
+			FlxG.save.data.keyBinds[1],
+			FlxG.save.data.keyBinds[2],
+			FlxG.save.data.keyBinds[3],
+			FlxG.save.data.keyBinds[4],
+			FlxG.save.data.keyBinds[5],
+		];
 
 		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
 		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
@@ -165,7 +181,7 @@ class MythsListEngineData
     static public function dataReset():Void
     {
         if (FlxG.save.data.keyBinds != null)
-			FlxG.save.data.keyBinds = 'SDKL';
+			FlxG.save.data.keyBinds = ['A', 'S', 'W', 'D', 'R', 'P'];
 
 		if (FlxG.save.data.middleScroll != null)
 			FlxG.save.data.downScroll = false;
@@ -213,7 +229,14 @@ class MythsListEngineData
 		if (FlxG.save.data.playMiddlescroll != null)
 			FlxG.save.data.playMiddlescroll = false;
 
-		MythsListEngineData.keyBinds = FlxG.save.data.keyBinds;
+		MythsListEngineData.keyBinds = [
+			FlxG.save.data.keyBinds[0],
+			FlxG.save.data.keyBinds[1],
+			FlxG.save.data.keyBinds[2],
+			FlxG.save.data.keyBinds[3],
+			FlxG.save.data.keyBinds[4],
+			FlxG.save.data.keyBinds[5],
+		];
 
 		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
 		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;

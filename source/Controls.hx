@@ -11,6 +11,8 @@ import flixel.input.gamepad.FlxGamepadButton;
 import flixel.input.gamepad.FlxGamepadInputID;
 import flixel.input.keyboard.FlxKey;
 
+using StringTools;
+
 #if (haxe >= "4.0.0")
 enum abstract Action(String) to String from String
 {
@@ -492,21 +494,36 @@ class Controls extends FlxActionSet
 		if (reset)
 			removeKeyboard();
 
-		if (FlxG.save.data.keyBinds == null)
-			FlxG.save.data.keyBinds = 'SDKL';
-
-		MythsListEngineData.keyBinds = FlxG.save.data.keyBinds;
-
-		FlxG.save.flush();
-
 		keyboardScheme = scheme;
 
-		var kbData:String = MythsListEngineData.keyBinds;
+		if (FlxG.save.data.keyBinds == null)
+		{
+			FlxG.save.data.keyBinds = ['A', 'S', 'W', 'D', 'R', 'P'];
+			FlxG.save.flush();
+			MythsListEngineData.dataSave();
+		}
 
-		var leftkeybind:String = kbData.charAt(0);
-		var downkeybind:String = kbData.charAt(1);
-		var upkeybind:String = kbData.charAt(2);
-		var rightkeybind:String = kbData.charAt(3);
+		for (i in 0...Std.int(FlxG.save.data.keyBinds.length - 1))
+		{
+			if (FlxG.save.data.keyBinds[i] == null)
+			{
+				FlxG.save.data.keyBinds = ['A', 'S', 'W', 'D', 'R', 'P'];
+				FlxG.save.flush();
+				MythsListEngineData.dataSave();
+			}
+		}
+
+		MythsListEngineData.dataLoad();
+
+		var kbData:Array<String> = MythsListEngineData.keyBinds;
+
+		var leftkeybind:String = kbData[0];
+		var downkeybind:String = kbData[1];
+		var upkeybind:String = kbData[2];
+		var rightkeybind:String = kbData[3];
+
+		var resetkeybind:String = kbData[4];
+		var pausekeybind:String = kbData[5];
 		
 		// S - Left | D - Down | K - Up | L - Right
 		// D - Left | F - Down | J - Up | K - Right
@@ -523,14 +540,14 @@ class Controls extends FlxActionSet
 				inline bindKeys(Control.DOWN, [downkeybind, FlxKey.DOWN]);
 				inline bindKeys(Control.LEFT, [leftkeybind, FlxKey.LEFT]);
 				inline bindKeys(Control.RIGHT, [rightkeybind, FlxKey.RIGHT]);
-				inline bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
+				inline bindKeys(Control.ACCEPT, [SPACE, ENTER]);
 				inline bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
-				inline bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
-				inline bindKeys(Control.RESET, [R]);
+				inline bindKeys(Control.PAUSE, [pausekeybind, ENTER, ESCAPE]);
+				inline bindKeys(Control.RESET, [resetkeybind]);
 			case Duo(true):
 				inline bindKeys(Control.UP, [W]);
 				inline bindKeys(Control.DOWN, [S]);
-				inline bindKeys(Control.LEFT, [Q]);
+				inline bindKeys(Control.LEFT, [A]);
 				inline bindKeys(Control.RIGHT, [D]);
 				inline bindKeys(Control.ACCEPT, [G, Z]);
 				inline bindKeys(Control.BACK, [H, X]);
@@ -556,10 +573,10 @@ class Controls extends FlxActionSet
 				bindKeys(Control.DOWN, [downkeybind, FlxKey.DOWN]);
 				bindKeys(Control.LEFT, [leftkeybind, FlxKey.LEFT]);
 				bindKeys(Control.RIGHT, [rightkeybind, FlxKey.RIGHT]);
-				bindKeys(Control.ACCEPT, [Z, SPACE, ENTER]);
+				bindKeys(Control.ACCEPT, [SPACE, ENTER]);
 				bindKeys(Control.BACK, [BACKSPACE, ESCAPE]);
-				bindKeys(Control.PAUSE, [P, ENTER, ESCAPE]);
-				bindKeys(Control.RESET, [R]);
+				bindKeys(Control.PAUSE, [pausekeybind, ENTER, ESCAPE]);
+				bindKeys(Control.RESET, [resetkeybind]);
 			case Duo(true):
 				bindKeys(Control.UP, [upkeybind]);
 				bindKeys(Control.DOWN, [downkeybind]);

@@ -5,6 +5,7 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.math.FlxMath;
 import flixel.util.FlxColor;
 import flixel.FlxG;
+
 #if polymod
 import polymod.format.ParseRules.TargetSignatureElement;
 #end
@@ -17,6 +18,7 @@ class Note extends FlxSprite
 
 	public var mustPress:Bool = false;
 	public var noteData:Int = 0;
+	public var noteType:Int = 0;
 	public var canBeHit:Bool = false;
 	public var tooLate:Bool = false;
 	public var wasGoodHit:Bool = false;
@@ -35,9 +37,14 @@ class Note extends FlxSprite
 
 	public var rating:String = 'sick';
 
-	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false)
+	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, noteType:Int = 0)
 	{
 		super();
+
+		var daStage:String = PlayState.curStage;
+
+		var arrowPath:String = 'NOTE_assets';
+		var arrowLibrary:String = 'shared';
 
 		if (prevNote == null)
 			prevNote = this;
@@ -45,22 +52,30 @@ class Note extends FlxSprite
 		this.prevNote = prevNote;
 		isSustainNote = sustainNote;
 
-		if (MythsListEngineData.middleScroll)
-			x += (((FlxG.width / 2) * -0.42) + 50);
-		else if (!MythsListEngineData.middleScroll)
-			x += 96;
-
 		y -= 2000;
 
-		this.strumTime = strumTime;
-		this.noteData = noteData;
+		if (MythsListEngineData.middleScroll)
+			x += (((FlxG.width / 2) * -0.42) + 50);
+		else
+			x += 96;
 
-		var daStage:String = PlayState.curStage;
+		this.strumTime = strumTime;
+
+		this.noteData = noteData;
+		this.noteType = noteType;
 
 		switch (daStage)
 		{
 			case 'school' | 'schoolEvil':
-				frames = Paths.getSparrowAtlas('weeb/pixelUI/arrows-pixels', 'week6');
+			{
+				switch(noteType)
+				{
+					case 0:
+						arrowPath = 'weeb/pixelUI/arrows-pixels';
+						arrowLibrary = 'week6';
+				}
+
+				frames = Paths.getSparrowAtlas(arrowPath, arrowLibrary);
 
 				animation.addByPrefix('purpleScroll', 'arrows-pixels arrowleft');
 				animation.addByPrefix('blueScroll', 'arrows-pixels arrowdown');
@@ -79,8 +94,17 @@ class Note extends FlxSprite
 
 				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 				updateHitbox();
+			}
 			default:
-				frames = Paths.getSparrowAtlas('NOTE_assets', 'shared');
+			{
+				switch(noteType)
+				{
+					case 0:
+						arrowPath = 'NOTE_assets';
+						arrowLibrary = 'shared';
+				}
+
+				frames = Paths.getSparrowAtlas(arrowPath, arrowLibrary);
 
 				animation.addByPrefix('greenScroll', 'green0');
 				animation.addByPrefix('redScroll', 'red0');
@@ -102,6 +126,7 @@ class Note extends FlxSprite
 
 				if (MythsListEngineData.antiAliasing)
 					antialiasing = true;
+			}
 		}
 
 		switch (noteData)
@@ -129,14 +154,14 @@ class Note extends FlxSprite
 
 			switch (noteData)
 			{
+				case 0:
+					animation.play('purpleholdend');
+				case 1:
+					animation.play('blueholdend');
 				case 2:
 					animation.play('greenholdend');
 				case 3:
 					animation.play('redholdend');
-				case 1:
-					animation.play('blueholdend');
-				case 0:
-					animation.play('purpleholdend');
 			}
 
 			updateHitbox();
@@ -144,18 +169,11 @@ class Note extends FlxSprite
 			x -= width / 2;
 
 			if (MythsListEngineData.downScroll)
-			{
 				flipY = true;
-			}
-
-			/*
-			if (PlayState.curStage.startsWith('school'))
-				x += 30;
-			*/
 
 			if (prevNote.isSustainNote)
 			{
-				switch (prevNote.noteData)
+				switch(prevNote.noteData)
 				{
 					case 0:
 						prevNote.animation.play('purplehold');
@@ -167,7 +185,7 @@ class Note extends FlxSprite
 						prevNote.animation.play('redhold');
 				}
 
-				prevNote.scale.y *= (Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed);
+				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
 
 				prevNote.updateHitbox();
 			}
@@ -180,11 +198,19 @@ class Note extends FlxSprite
 
 		if (mustPress)
 		{
-			if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
-				canBeHit = true;
+			if (isSustainNote)
+			{
+				if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
+					canBeHit = true;
+				else
+					canBeHit = false;
+			}
 			else
 			{
-				canBeHit = false;
+				if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition + Conductor.safeZoneOffset)
+					canBeHit = true;
+				else
+					canBeHit = false;
 			}
 
 			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit)
@@ -198,7 +224,7 @@ class Note extends FlxSprite
 				wasGoodHit = true;
 		}
 
-		if (tooLate)
+		if (tooLate && !wasGoodHit)
 		{
 			if (alpha > 0.3)
 				alpha = 0.3;

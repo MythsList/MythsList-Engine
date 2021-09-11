@@ -99,7 +99,7 @@ class FreeplayState extends MusicBeatState
 				bg.color = 0xFFf3ff6e;
 			case 6: 
 				if (StoryMenuState.weekUnlocked[6] || isDebug)
-					addWeek(['SENPAI', 'ROSES', 'THORNS'], 6, ['senpai', 'senpai', 'spirit']);
+					addWeek(['SENPAI', 'ROSES', 'THORNS'], 6, ['senpai', 'senpai-angry', 'spirit']);
 
 				bg.color = 0xFFffaa6f;
 		}
