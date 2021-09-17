@@ -16,7 +16,6 @@ import flixel.util.FlxColor;
 class PauseSubState extends MusicBeatSubstate
 {
 	var curSelected:Int = 0;
-	var newDifficulty:Int = 1;
 
 	var pauseMusic:FlxSound;
 

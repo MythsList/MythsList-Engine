@@ -26,9 +26,11 @@ class Character extends FlxSprite
 	
 	public var hasTrail:Bool = false;
 
-	var flipAnimations = false;
+	var flipAnimations:Bool = true;
 
-	public function new(x:Float, y:Float, ?character:String = 'bf', ?isPlayer:Bool = false)
+	var ismenuchar:Bool = false;
+
+	public function new(x:Float, y:Float, ?character:String = 'bf', ?isPlayer:Bool = false, ?isMenuChar:Bool = false)
 	{
 		super(x, y);
 
@@ -292,6 +294,8 @@ class Character extends FlxSprite
 			case 'bf':
 				healthBarColor = colorPrefix + '31B0D1';
 
+				flipAnimations = false;
+
 				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
@@ -311,6 +315,12 @@ class Character extends FlxSprite
 
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
 
+				if (isMenuChar)
+				{
+					setGraphicSize(Std.int(width * 0.5));
+					updateHitbox();
+				}
+
 				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
@@ -324,6 +334,8 @@ class Character extends FlxSprite
 
 			case 'bf-christmas':
 				healthBarColor = colorPrefix + '31B0D1';
+
+				flipAnimations = false;
 
 				var tex = Paths.getSparrowAtlas('christmas/bfChristmas', 'week5');
 				frames = tex;
@@ -352,6 +364,8 @@ class Character extends FlxSprite
 			case 'bf-car':
 				healthBarColor = colorPrefix + '31B0D1';
 
+				flipAnimations = false;
+
 				var tex = Paths.getSparrowAtlas('bfCar', 'week4');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
@@ -378,6 +392,8 @@ class Character extends FlxSprite
 			case 'bf-minus':
 				healthBarColor = colorPrefix + '31B0D1';
 
+				flipAnimations = false;
+
 				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND_MINUS', 'shared');
 				frames = tex;
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
@@ -397,6 +413,12 @@ class Character extends FlxSprite
 
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
 
+				if (isMenuChar)
+				{
+					setGraphicSize(Std.int(width * 0.5));
+					updateHitbox();
+				}
+
 				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
@@ -410,6 +432,8 @@ class Character extends FlxSprite
 
 			case 'bf-old':
 				healthBarColor = colorPrefix + 'E9FF48';
+
+				flipAnimations = false;
 
 				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND_OLD', 'shared');
 				frames = tex;
@@ -430,6 +454,12 @@ class Character extends FlxSprite
 
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
 
+				if (isMenuChar)
+				{
+					setGraphicSize(Std.int(width * 0.5));
+					updateHitbox();
+				}
+
 				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
@@ -443,6 +473,8 @@ class Character extends FlxSprite
 
 			case 'bf-veryold':
 				healthBarColor = colorPrefix + '5FB6F1';
+
+				flipAnimations = false;
 
 				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND_VERYOLD', 'shared');
 				frames = tex;
@@ -463,6 +495,12 @@ class Character extends FlxSprite
 
 				animation.addByPrefix('scared', 'BF idle shaking', 24);
 
+				if (isMenuChar)
+				{
+					setGraphicSize(Std.int(width * 0.5));
+					updateHitbox();
+				}
+
 				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
@@ -476,6 +514,8 @@ class Character extends FlxSprite
 
 			case 'bf-pixel':
 				healthBarColor = colorPrefix + '7BD6F6';
+
+				flipAnimations = false;
 
 				frames = Paths.getSparrowAtlas('weeb/bfPixel', 'week6');
 				animation.addByPrefix('idle', 'BF IDLE', 24, false);
@@ -504,6 +544,8 @@ class Character extends FlxSprite
 
 			case 'bf-pixel-dead':
 				healthBarColor = colorPrefix + '7BD6F6';
+
+				flipAnimations = false;
 
 				frames = Paths.getSparrowAtlas('weeb/bfPixelsDEAD', 'week6');
 				animation.addByPrefix('singUP', "BF Dies pixel", 24, false);
@@ -609,8 +651,6 @@ class Character extends FlxSprite
 
 			case 'brody-foxx':
 				healthBarColor = colorPrefix + 'FFA8C8';
-
-				flipAnimations = true;
 	
 				tex = Paths.getSparrowAtlas('characters/brody-foxx', 'shared');
 				frames = tex;
@@ -623,6 +663,12 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFTmiss', 'BrodyLeft', 24, false);
 				animation.addByPrefix('singRIGHTmiss', 'BrodyRight', 24, false);
 				animation.addByPrefix('singDOWNmiss', 'YO', 24, false);
+
+				if (isMenuChar)
+				{
+					setGraphicSize(Std.int(width * 0.5));
+					updateHitbox();
+				}
 	
 				loadOffsetFile(curCharacter);
 	
@@ -635,8 +681,6 @@ class Character extends FlxSprite
 			
 			case 'template':
 				healthBarColor = colorPrefix + 'A1A1A1';
-
-				// flipAnimations = true;
 		
 				tex = Paths.getSparrowAtlas('characters/template', 'shared');
 				frames = tex;
@@ -649,6 +693,12 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFTmiss', 'Pico NOTE LEFT', 24, false);
 				animation.addByPrefix('singRIGHTmiss', 'Pico Note Right', 24, false);
 				animation.addByPrefix('singDOWNmiss', 'Pico Down Note', 24, false);
+
+				if (isMenuChar)
+				{
+					setGraphicSize(Std.int(width * 0.5));
+					updateHitbox();
+				}
 		
 				loadOffsetFile(curCharacter);
 		
@@ -663,8 +713,6 @@ class Character extends FlxSprite
 
 			case 'rhys':
 				healthBarColor = colorPrefix + '7C6E89';
-
-				flipAnimations = true;
 	
 				tex = Paths.getSparrowAtlas('characters/rhys', 'shared');
 				frames = tex;
@@ -677,6 +725,12 @@ class Character extends FlxSprite
 				animation.addByPrefix('singLEFTmiss', 'rhys left', 24, false);
 				animation.addByPrefix('singRIGHTmiss', 'rhys right', 24, false);
 				animation.addByPrefix('singDOWNmiss', 'rhys down', 24, false);
+
+				if (isMenuChar)
+				{
+					setGraphicSize(Std.int(width * 0.5));
+					updateHitbox();
+				}
 	
 				loadOffsetFile(curCharacter);
 	
@@ -687,6 +741,8 @@ class Character extends FlxSprite
 				else
 					antialiasing = false;
 		}
+
+		ismenuchar = isMenuChar;
 
 		dance();
 
@@ -724,7 +780,10 @@ class Character extends FlxSprite
 			if (data[2] == null)
 				data[2] = '0';
 
-			addOffset(data[0], Std.parseInt(data[1]), Std.parseInt(data[2]));
+			if (!ismenuchar)
+				addOffset(data[0], Std.parseInt(data[1]), Std.parseInt(data[2]));
+			else
+				addOffset(data[0], Std.parseInt(data[1]) * 0.5, Std.parseInt(data[2]) * 0.5);
 		}
 	}
 

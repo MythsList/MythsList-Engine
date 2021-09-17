@@ -53,16 +53,23 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		'rhys'
 	];
 
-	var selector:FlxSprite;
+	private var playerStrums:FlxTypedGroup<FlxSprite>;
+	var arrowsEnabled:Bool = false;
 
 	var curIcon:HealthIcon;
 	var curIconText:FlxText;
+
+	var curCharacter:Character;
+
+	var curBG:FlxSprite;
 	var curBGtext:FlxText;
 
 	var curSelected:Int = 0;
 
 	var grpOptions:FlxTypedGroup<Alphabet>;
 	var iconArray:Array<HealthIcon> = [];
+
+	var curPress:Array<String> = ['LEFT', 'DOWN', 'UP', 'RIGHT'];
 
 	public function new()
 	{
@@ -79,6 +86,8 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		menuBG.screenCenter();
 		menuBG.antialiasing = true;
 		add(menuBG);
+
+		playerStrums = new FlxTypedGroup<FlxSprite>();
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
@@ -103,16 +112,24 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 			add(icon);
 		}
 
-		var curBG:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width / 4), 10 + 26 + 150 + 16, 0xFF000000);
+		curBG = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width / 4), 10 + 26 + 150 + 16, 0xFF000000);
 		curBG.alpha = 0.25;
 		add(curBG);
 
 		curBG.x = FlxG.width - curBG.width;
 
-		curBGtext = new FlxText(curBG.x + 5, curBG.y + 5, 0, "Currently Selected :", 26);
+		curBGtext = new FlxText(curBG.x + 5, curBG.y + 5, 0, 'Currently Selected :', 26);
 		curBGtext.scrollFactor.set();
 		curBGtext.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT);
 		add(curBGtext);
+
+		var noteText:FlxText = new FlxText(0, 0, 0, 'Press ALT to enable/disable arrows', 26);
+		noteText.scrollFactor.set();
+		noteText.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(noteText);
+
+		noteText.x = FlxG.width - noteText.width - 5;
+		noteText.y = FlxG.height - noteText.height - 5;
 
 		curIcon = new HealthIcon(MythsListEngineData.characterSkin);
 		curIcon.x = curBGtext.x;
@@ -131,6 +148,17 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		curIconText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT);
 		add(curIconText);
 
+		curCharacter = new Character(curBGtext.x, curBG.y + curBG.height, MythsListEngineData.characterSkin, true, true);
+		curCharacter.scrollFactor.set();
+		curCharacter.antialiasing = true;
+		curCharacter.playAnim('idle');
+		add(curCharacter);
+
+		curCharacter.x = curBGtext.x + (curBG.width / 2) - (curCharacter.frameWidth / 2);
+		curCharacter.y = curBG.y + (curBG.height * 2) - (curCharacter.frameHeight / 2);
+
+		offsetChange();
+
 		var engineversionText:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
 		engineversionText.scrollFactor.set();
 		engineversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
@@ -142,16 +170,125 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		add(modversionText);
 
 		changeSelection(0);
+		generateArrows();
 	}
 
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
-		if (controls.UP_P)
+		var controlArray:Array<Bool> = [controls.LEFT, controls.DOWN, controls.UP, controls.RIGHT];
+		var controlArrayPress:Array<Bool> = [controls.LEFT_P, controls.DOWN_P, controls.UP_P, controls.RIGHT_P];
+		var controlArrayRelease:Array<Bool> = [controls.LEFT_R, controls.DOWN_R, controls.UP_R, controls.RIGHT_R];
+
+		if (curCharacter.animation.finished)
+			curCharacter.playAnim('idle');
+
+		if (arrowsEnabled && (controlArrayPress.contains(true) || controlArrayRelease.contains(true)))
+		{
+			playerStrums.forEach(function(spr:FlxSprite)
+			{
+				switch (spr.ID)
+				{
+					case 0:
+						if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
+						{
+							spr.animation.play('pressed');
+							curCharacter.playAnim('sing' + curPress[spr.ID], true);
+						}
+						if (controlArrayRelease[spr.ID])
+							spr.animation.play('static');
+					case 1:
+						if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
+						{
+							spr.animation.play('pressed');
+							curCharacter.playAnim('sing' + curPress[spr.ID], true);
+						}
+						if (controlArrayRelease[spr.ID])
+							spr.animation.play('static');
+					case 2:
+						if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
+						{
+							spr.animation.play('pressed');
+							curCharacter.playAnim('sing' + curPress[spr.ID], true);
+						}
+						if (controlArrayRelease[spr.ID])
+							spr.animation.play('static');
+					case 3:
+						if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
+						{
+							spr.animation.play('pressed');
+							curCharacter.playAnim('sing' + curPress[spr.ID], true);
+						}
+						if (controlArrayRelease[spr.ID])
+							spr.animation.play('static');
+				}
+			
+				if (spr.animation.curAnim.name == 'confirm')
+				{
+					spr.centerOffsets();
+					spr.offset.x -= 13;
+					spr.offset.y -= 13;
+				}
+			});
+		}
+
+		if (arrowsEnabled && controlArray.contains(true))
+		{
+			playerStrums.forEach(function(spr:FlxSprite)
+			{
+				switch (spr.ID)
+				{
+					case 0:
+						if (controlArray[spr.ID])
+						{
+							curCharacter.playAnim('sing' + curPress[spr.ID], true);
+						}
+					case 1:
+						if (controlArray[spr.ID])
+						{
+							curCharacter.playAnim('sing' + curPress[spr.ID], true);
+						}
+					case 2:
+						if (controlArray[spr.ID])
+						{
+							curCharacter.playAnim('sing' + curPress[spr.ID], true);
+						}
+					case 3:
+						if (controlArray[spr.ID])
+						{
+							curCharacter.playAnim('sing' + curPress[spr.ID], true);
+						}
+				}
+			});
+		}
+
+		if (FlxG.keys.justPressed.ALT)
+		{
+			if (!arrowsEnabled)
+			{
+				arrowsEnabled = true;
+
+				playerStrums.forEach(function(spr:FlxSprite)
+				{
+					spr.alpha = 1;
+				});
+			}
+			else
+			{
+				arrowsEnabled = false;
+
+				playerStrums.forEach(function(spr:FlxSprite)
+				{
+					spr.alpha = 0.6;
+				});
+			}
+		}
+
+		if (controls.UP_P && !arrowsEnabled)
 			changeSelection(-1);
 
-		if (controls.DOWN_P)
+		if (controls.DOWN_P && !arrowsEnabled)
 			changeSelection(1);
 
 		if (controls.BACK)
@@ -161,7 +298,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 			FlxG.switchState(new OptionsSubState());
 		}
 
-		if (controls.ACCEPT)
+		if (controls.ACCEPT && !arrowsEnabled)
 		{
 			interact(curSelected);
 
@@ -237,5 +374,84 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		FlxG.save.flush();
 
 		MythsListEngineData.dataSave();
+
+		remove(curCharacter);
+		curCharacter = new Character(curBGtext.x, curBG.y + curBG.height, MythsListEngineData.characterSkin, true, true);
+		curCharacter.scrollFactor.set();
+		curCharacter.antialiasing = true;
+		curCharacter.playAnim('idle');
+		add(curCharacter);
+
+		curCharacter.x = curBGtext.x + (curBG.width / 2) - (curCharacter.frameWidth / 2);
+		curCharacter.y = curBG.y + (curBG.height * 2) - (curCharacter.frameHeight / 2);
+
+		offsetChange();
+	}
+
+	function offsetChange()
+	{
+		switch (MythsListEngineData.characterSkin)
+		{
+			case 'bf' | 'bf-minus' | 'bf-old' | 'bf-veryold':
+				curCharacter.x -= 20;
+			case 'brody-foxx':
+				curCharacter.x -= 60;
+			case 'template':
+				curCharacter.x -= 100;
+		}
+	}
+
+	function generateArrows():Void
+	{
+		for (i in 0...4)
+		{
+			var greyArrow:FlxSprite = new FlxSprite(FlxG.width - 20 - ((160 * 0.7) * 4), FlxG.height - 145);
+
+			greyArrow.frames = Paths.getSparrowAtlas('NOTE_assets', 'shared');
+			greyArrow.animation.addByPrefix('green', 'arrowUP');
+			greyArrow.animation.addByPrefix('blue', 'arrowDOWN');
+			greyArrow.animation.addByPrefix('purple', 'arrowLEFT');
+			greyArrow.animation.addByPrefix('red', 'arrowRIGHT');
+
+			greyArrow.antialiasing = true;
+			greyArrow.alpha = 0.6;
+
+			greyArrow.setGraphicSize(Std.int(greyArrow.width * 0.7));
+
+			switch (Math.abs(i))
+			{
+				case 0:
+					greyArrow.x += Note.swagWidth * 0;
+					greyArrow.animation.addByPrefix('static', 'arrowLEFT');
+					greyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
+					greyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
+				case 1:
+					greyArrow.x += Note.swagWidth * 1;
+					greyArrow.animation.addByPrefix('static', 'arrowDOWN');
+					greyArrow.animation.addByPrefix('pressed', 'down press', 24, false);
+					greyArrow.animation.addByPrefix('confirm', 'down confirm', 24, false);
+				case 2:
+					greyArrow.x += Note.swagWidth * 2;
+					greyArrow.animation.addByPrefix('static', 'arrowUP');
+					greyArrow.animation.addByPrefix('pressed', 'up press', 24, false);
+					greyArrow.animation.addByPrefix('confirm', 'up confirm', 24, false);
+				case 3:
+					greyArrow.x += Note.swagWidth * 3;
+					greyArrow.animation.addByPrefix('static', 'arrowRIGHT');
+					greyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
+					greyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);
+			}
+
+			greyArrow.updateHitbox();
+			greyArrow.scrollFactor.set();
+
+			greyArrow.ID = i;
+
+			playerStrums.add(greyArrow);
+
+			greyArrow.animation.play('static');
+
+			add(playerStrums);
+		}
 	}
 }

@@ -8,12 +8,12 @@ class MythsListEngineData
 {
     // VERSION
 
-    public static var engineVersion:String = "V.1.0.6";
+    public static var engineVersion:String = "V.1.0.7";
     public static var modVersion:String = " ";
 
     // KEYBINDS
 
-    public static var keyBinds:Array<String> = ['A', 'S', 'W', 'D', 'R', 'P'];
+    public static var keyBinds:Array<String>;
 
     // FPS
 

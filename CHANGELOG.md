@@ -2,6 +2,35 @@
 
 All notable changes will be documented in this file.
 
+## [V.1.0.7]
+### Overhaul
+- You can now see the currently selected character (not just the health icon) inside of the Character Selection menu and you can check how the animations look like using the arrows
+
+### Addition
+- Added more portraits for you, modders
+
+### Improvement
+- Inputs have been improved once more
+- GameplaySubState.hx code isn't a big code mess anymore (modder friendly? idk)
+- "Better code" - MythsList
+
+### Tweak
+- In DialogueBox.hx, you can now choose how the BG will fade between a basic fade or a fade like the one from week 6, you can also add your custom fade if you know how to code
+- Forgot to remove the note in the Outdated screen because of custom keybinds being a thing so now I did
+- You can't choose the same keybind multiple times anymore in the Keybinds Options menu and added more keybinds in the blacklist
+
+### Bugfix
+- Combo now resets when you miss an arrow
+- Week 6 camera zoom fixed (maybe?)
+- Playing as other non-playable characters now flip the animations correctly
+- Playing as other non-playable characters will now have their health icon instead of the currently selected character's health icon
+- Week 2 monster up animation offset fixed
+- Fixed the confirm sound seizure in the Keybinds Options menu
+- Fixed story menu tracks not appearing after finishing a week
+
+### Removal
+- Removed unused txt files (Please don't tell me they are used somewhere, i deleted the code)
+
 ## [V.1.0.6]
 ### Addition
 - Special arrows support (Feature hasn't been tested, please report bugs on the Discord server in #bug-reports or literally in my DMs)

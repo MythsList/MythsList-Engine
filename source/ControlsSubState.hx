@@ -37,12 +37,19 @@ class ControlsSubState extends MusicBeatSubstate
 	var keybindBlacklist:Array<String> = [
 		'ESCAPE',
 		'ENTER',
+		'END',
+		'HOME',
+		'INSERT',
+		'PRINTSCREEN',
+		'QUOTE',
 		'BACKSPACE',
 		'SPACE',
 		'TAB',
 		'SHIFT',
 		'CONTROL',
+		'CAPSLOCK',
 		'ALT',
+		'DELETE',
 		'UP',
 		'DOWN',
 		'LEFT',
@@ -122,7 +129,6 @@ class ControlsSubState extends MusicBeatSubstate
 	}
 
 	var selected:Bool = false;
-
 	var keybindSelected:Bool = false;
 
 	override function update(elapsed:Float)
@@ -148,6 +154,8 @@ class ControlsSubState extends MusicBeatSubstate
 
 			if (controls.ACCEPT)
 			{
+				FlxG.sound.play(Paths.sound('confirmMenu', 'preload'));
+
 				curBind.text = MythsListEngineData.keyBinds[curSelected].toUpperCase();
 
 				if (!keybindSelected)
@@ -216,9 +224,7 @@ class ControlsSubState extends MusicBeatSubstate
 	}
 
 	function interact(interaction:Bool = false, key:String = null)
-	{
-		FlxG.sound.play(Paths.sound('confirmMenu', 'preload'));
-		
+	{	
 		if (interaction) // saves the keybind
 		{
 			curBind.text = MythsListEngineData.keyBinds[curSelected].toUpperCase();
@@ -230,22 +236,21 @@ class ControlsSubState extends MusicBeatSubstate
 		{
 			var oldKey:String = MythsListEngineData.keyBinds[curSelected];
 
-			curBind.text = oldKey.toUpperCase();
-
 			if (key != null && key != oldKey)
 			{
-				for (item in keybindBlacklist)
+				if (!keybindBlacklist.contains(key) && !MythsListEngineData.keyBinds.contains(key))
 				{
-					if (!keybindBlacklist.contains(key))
-					{
-						curBind.text = key.toUpperCase();
+					curBind.text = key.toUpperCase();
 
-						FlxG.save.data.keyBinds[curSelected] = key;
-						FlxG.save.flush();
+					FlxG.save.data.keyBinds[curSelected] = key;
+					FlxG.save.flush();
 
-						interact(true);
-					}
+					interact(true);
 				}
+			}
+			else
+			{
+				curBind.text = oldKey.toUpperCase();
 			}
 		}
 	}

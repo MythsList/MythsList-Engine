@@ -60,7 +60,8 @@ class FreeplayState extends MusicBeatState
 
 		format : (song names, week number, character names)
 
-		You can also change the background's color with 'bg.color = hex color code'
+		You can also change the background's color with 'bg.color = hex color code,
+		it will defaults to white if you didn't add a line to change the color
 		*/
 
 		bg.color = 0xFFFFFFFF;
@@ -210,9 +211,7 @@ class FreeplayState extends MusicBeatState
 			changeDiff(1);
 
 		if (controls.BACK)
-		{
 			FlxG.switchState(new WeekselectState());
-		}
 
 		if (controls.ACCEPT)
 		{

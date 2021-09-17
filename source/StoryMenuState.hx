@@ -139,8 +139,10 @@ class StoryMenuState extends MusicBeatState
 		for (i in 0...weekData.length)
 		{
 			var weekThing:MenuItem = new MenuItem(0, BG.y + BG.height + 10, i);
+			
 			weekThing.y += ((weekThing.height + 20) * i);
 			weekThing.targetY = i;
+
 			grpWeekText.add(weekThing);
 
 			weekThing.screenCenter(X);
@@ -181,6 +183,7 @@ class StoryMenuState extends MusicBeatState
 					weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.9));
 					weekCharacterThing.updateHitbox();
 			}
+
 			grpWeekCharacters.add(weekCharacterThing);
 		}
 
@@ -215,7 +218,7 @@ class StoryMenuState extends MusicBeatState
 		rightArrow.updateHitbox();
 		difficultySelectors.add(rightArrow);
 
-		txtTracklist = new FlxText(FlxG.width * 0.05, BG.x + BG.height + 100, 0, "TRACKS:", 32);
+		txtTracklist = new FlxText(FlxG.width * 0.05, BG.x + BG.height + 100, 0, 'TRACKS:', 32);
 		txtTracklist.alignment = CENTER;
 		txtTracklist.setFormat(Paths.font("vcr.ttf"), 32);
 		txtTracklist.color = 0xFFFFFFFF;
@@ -237,7 +240,7 @@ class StoryMenuState extends MusicBeatState
 	{
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, 0.5));
 
-		scoreText.text = "WEEK HIGHSCORE:" + lerpScore;
+		scoreText.text = 'WEEK HIGHSCORE:' + lerpScore;
 
 		txtWeekTitle.text = weekNames[curWeek].toUpperCase();
 		txtWeekTitle.x = FlxG.width - (txtWeekTitle.width + 10);
@@ -316,13 +319,13 @@ class StoryMenuState extends MusicBeatState
 				stopspamming = true;
 			}
 
-			PlayState.storyPlaylist = weekData[curWeek];
+			PlayState.storyPlaylist = weekData[curWeek].copy();
 			PlayState.isStoryMode = true;
 			selectedWeek = true;
 
-			var diffic = '';
+			var diffic:String = '';
 
-			switch (curDifficulty)
+			switch(curDifficulty)
 			{
 				case 0:
 					diffic = '-easy';
@@ -403,10 +406,12 @@ class StoryMenuState extends MusicBeatState
 		for (item in grpWeekText.members)
 		{
 			item.targetY = bullShit - curWeek;
+			
 			if (item.targetY == Std.int(0) && weekUnlocked[curWeek])
 				item.alpha = 1;
 			else
 				item.alpha = 0.6;
+
 			bullShit++;
 		}
 

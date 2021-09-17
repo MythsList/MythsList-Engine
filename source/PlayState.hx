@@ -145,7 +145,6 @@ class PlayState extends MusicBeatState
 	public static var campaignScore:Int = 0;
 
 	public static var defaultCamZoom:Float = 1.05;
-
 	public static var daPixelZoom:Float = 6;
 
 	var inCutscene:Bool = false;
@@ -220,7 +219,6 @@ class PlayState extends MusicBeatState
 			DiscordClient.changePresence(detailsText, SONG.song + storyDifficultyText + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% | " + "(FC)", iconRPC);
 		else
 			DiscordClient.changePresence(detailsText, SONG.song + storyDifficultyText + " | Score: " + songScore + " / Misses: " + misses + " / Accuracy: " + truncateFloat(accuracy, 2) + "% |", iconRPC);
-
 		#end
 
 		switch (SONG.song.toLowerCase())
@@ -258,45 +256,43 @@ class PlayState extends MusicBeatState
 
 				add(grpLimoDancers);
 		    }
-		    case 'cocoa' | 'eggnog':
+		    case 'cocoa' | 'eggnog' | 'winter-horrorland':
 		    {
 				curStage = 'mall';
 
+				if (SONG.song.toLowerCase() == 'winter-horrorland')
+				{
+					curStage += 'Evil';
+					FlxG.camera.zoom = 1.5;
+				}
+
 		        var newstage:Stage = new Stage(curStage, MythsListEngineData.antiAliasing);
 				add(Stage.background);
 		    }
-		    case 'winter-horrorland':
-		    {
-		        curStage = 'mallEvil';
-
-		        var newstage:Stage = new Stage(curStage, MythsListEngineData.antiAliasing);
-				add(Stage.background);
-
-				FlxG.camera.zoom = 1.5;
-            }
-		    case 'senpai' | 'roses':
+		    case 'senpai' | 'roses' | 'thorns':
 		    {
 		        curStage = 'school';
 
-				var newstage:Stage = new Stage(curStage, MythsListEngineData.antiAliasing);
-				add(Stage.background);
-
-		        bgGirls = new BackgroundGirls(-100, 190);
-		        bgGirls.scrollFactor.set(0.9, 0.9);
-
-		        if (SONG.song.toLowerCase() == 'roses')
-		            bgGirls.getScared();
-
-		        bgGirls.setGraphicSize(Std.int(bgGirls.width * daPixelZoom));
-		        bgGirls.updateHitbox();
-		        add(bgGirls);
-		    }
-		    case 'thorns':
-		    {
-		        curStage = 'schoolEvil';
+				if (SONG.song.toLowerCase() == 'thorns')
+					curStage += 'Evil';
 
 				var newstage:Stage = new Stage(curStage, MythsListEngineData.antiAliasing);
 				add(Stage.background);
+
+				if (SONG.song.toLowerCase() != 'thorns')
+				{
+		        	bgGirls = new BackgroundGirls(-100, 190);
+		        	bgGirls.scrollFactor.set(0.9, 0.9);
+
+		        	if (SONG.song.toLowerCase() == 'roses')
+		            	bgGirls.getScared();
+
+		        	bgGirls.setGraphicSize(Std.int(bgGirls.width * daPixelZoom));
+		        	bgGirls.updateHitbox();
+		        	add(bgGirls);
+				}
+
+				FlxG.camera.zoom = 1.5;
 		    }
 		    default:
 		    {
@@ -335,7 +331,6 @@ class PlayState extends MusicBeatState
 		switch (SONG.player2)
 		{
 			case 'gf':
-			{
 				dad.setPosition(gf.x, gf.y);
 				gf.visible = false;
 
@@ -344,7 +339,6 @@ class PlayState extends MusicBeatState
 					camPos.x += 600;
 					tweenCamIn();
 				}
-			}
 			case 'spooky':
 				dad.y += 200;
 			case 'monster':
@@ -372,19 +366,7 @@ class PlayState extends MusicBeatState
 		{
 			switch(SONG.song.toLowerCase())
 			{
-				// For songs that do not use the original BF
-
-				case 'satin-panties' | 'high' | 'milf':
-					if (MythsListEngineData.characterSkin == 'bf')
-						boyfriend = new Boyfriend(770, 450, SONG.player1);
-					else
-						boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
-
-				case 'cocoa' | 'eggnog' | 'winter-horrorland':
-					if (MythsListEngineData.characterSkin == 'bf')
-						boyfriend = new Boyfriend(770, 450, SONG.player1);
-					else
-						boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
+				// For songs that use a specific BF
 
 				case 'senpai' | 'roses' | 'thorns':
 					boyfriend = new Boyfriend(770, 450, SONG.player1);
@@ -392,7 +374,10 @@ class PlayState extends MusicBeatState
 				// If your song isn't mentioned then it will use the currently selected character
 
 				default:
-					boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
+					if (MythsListEngineData.characterSkin == 'bf')
+						boyfriend = new Boyfriend(770, 450, SONG.player1);
+					else
+						boyfriend = new Boyfriend(770, 450, MythsListEngineData.characterSkin);
 			}
 		}
 		else
@@ -594,6 +579,8 @@ class PlayState extends MusicBeatState
 		weekTxt.updateHitbox();
 		add(weekTxt);
 
+		// We all know bot play was planned trololo
+
 		botTxt = new FlxText(0, healthBarBG.y - 60, 0, "", 20);
 		botTxt.text = "BOT PLAY";
 		botTxt.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
@@ -643,20 +630,11 @@ class PlayState extends MusicBeatState
 		if (!MythsListEngineData.botPlay)
 			botTxt.alpha = 0;
 
-		if (OptionsSubState.textMenuItems[2].toLowerCase() == 'character selection')
-		{
-			if (SONG.player1 == 'bf-pixel')
-				iconP1 = new HealthIcon(SONG.player1, true);
-			else
-				iconP1 = new HealthIcon(MythsListEngineData.characterSkin, true);
-		}
-		else
-			iconP1 = new HealthIcon(SONG.player1, true);
-
+		iconP1 = new HealthIcon(boyfriend.curCharacter, true);
 		iconP1.y = healthBar.y - (iconP1.height / 2);
 		add(iconP1);
 
-		iconP2 = new HealthIcon(SONG.player2, false);
+		iconP2 = new HealthIcon(dad.curCharacter, false);
 		iconP2.y = healthBar.y - (iconP2.height / 2);
 		add(iconP2);
 
@@ -1498,6 +1476,7 @@ class PlayState extends MusicBeatState
 			if (startedCountdown)
 			{
 				Conductor.songPosition += FlxG.elapsed * 1000;
+
 				if (Conductor.songPosition >= 0)
 					startSong();
 			}
@@ -1773,8 +1752,13 @@ class PlayState extends MusicBeatState
 					{
 						if (!endingSong)
 						{
+							if (!daNote.isSustainNote)
+							{
+								combo = 0;
+								misses++;
+							}
+							
 							health -= 0.075;
-							misses += 1;
 						}
 
 						vocals.volume = 0;
@@ -1812,7 +1796,7 @@ class PlayState extends MusicBeatState
 			});
 		}
 
-		if (!inCutscene && !startingSong)
+		if (!inCutscene && !startingSong && !endingSong)
 			keyShit();
 
 		#if debug
@@ -2059,6 +2043,7 @@ class PlayState extends MusicBeatState
 		rating.acceleration.y = 550;
 		rating.velocity.y -= FlxG.random.int(140, 175);
 		rating.velocity.x -= FlxG.random.int(0, 10);
+		add(rating);
 
 		var comboSpr:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'combo' + pixelShitPart2, newLibrary));
 		comboSpr.screenCenter();
@@ -2066,7 +2051,6 @@ class PlayState extends MusicBeatState
 		comboSpr.acceleration.y = 600;
 		comboSpr.velocity.y -= 150;
 		comboSpr.velocity.x += FlxG.random.int(1, 10);
-		add(rating);
 
 		if (!curStage.startsWith('school'))
 		{
@@ -2090,7 +2074,7 @@ class PlayState extends MusicBeatState
 		rating.updateHitbox();
 
 		var seperatedScore:Array<Int> = [];
-		var comboSplit:Array<String> = (combo + "").split('');						  
+		var comboSplit:Array<String> = (combo + '').split('');						  
 
 		if (comboSplit.length == 1)
 		{
@@ -2107,6 +2091,7 @@ class PlayState extends MusicBeatState
 		}
 
 		var daLoop:Int = 0;
+
 		for (i in seperatedScore)
 		{
 			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image(pixelShitPart1 + 'num' + Std.int(i) + pixelShitPart2, newLibrary2));
@@ -2162,27 +2147,18 @@ class PlayState extends MusicBeatState
 
 	private function keyShit():Void
 	{
-		var up = controls.UP;
-		var right = controls.RIGHT;
-		var down = controls.DOWN;
-		var left = controls.LEFT;
-
-		var upP = controls.UP_P;
-		var rightP = controls.RIGHT_P;
-		var downP = controls.DOWN_P;
-		var leftP = controls.LEFT_P;
-
-		var upR = controls.UP_R;
-		var rightR = controls.RIGHT_R;
-		var downR = controls.DOWN_R;
-		var leftR = controls.LEFT_R;
-
-		var controlArray:Array<Bool> = [leftP, downP, upP, rightP];
+		var controlArray:Array<Bool> = [controls.LEFT, controls.DOWN, controls.UP, controls.RIGHT];
+		var controlArrayPress:Array<Bool> = [controls.LEFT_P, controls.DOWN_P, controls.UP_P, controls.RIGHT_P];
+		var controlArrayRelease:Array<Bool> = [controls.LEFT_R, controls.DOWN_R, controls.UP_R, controls.RIGHT_R];
 
 		if (MythsListEngineData.botPlay)
+		{
 			controlArray = [false, false, false, false];
+			controlArrayPress = [false, false, false, false];
+			controlArrayRelease = [false, false, false, false];
+		}
 
-		if ((upP || rightP || downP || leftP) && generatedMusic && !endingSong)
+		if (controlArrayPress.contains(true) && generatedMusic && !endingSong)
 		{
 			boyfriend.holdTimer = 0;
 
@@ -2210,14 +2186,14 @@ class PlayState extends MusicBeatState
 					{
 						for (coolNote in possibleNotes)
 						{
-							if (controlArray[coolNote.noteData])
+							if (controlArrayPress[coolNote.noteData])
 								goodNoteHit(coolNote);
 							else
 							{
 								var inIgnoreList:Bool = false;
 								for (shit in 0...ignoreList.length)
 								{
-									if (controlArray[ignoreList[shit]])
+									if (controlArrayPress[ignoreList[shit]])
 										inIgnoreList = true;
 								}
 								if (!inIgnoreList)
@@ -2227,19 +2203,19 @@ class PlayState extends MusicBeatState
 					}
 					else if (possibleNotes[0].noteData == possibleNotes[1].noteData)
 					{
-						noteCheck(controlArray, daNote);
+						noteCheck(controlArrayPress, daNote);
 					}
 					else
 					{
 						for (coolNote in possibleNotes)
 						{
-							noteCheck(controlArray, daNote);
+							noteCheck(controlArrayPress, daNote);
 						}
 					}
 				}
 				else
 				{
-					noteCheck(controlArray, daNote);
+					noteCheck(controlArrayPress, daNote);
 				}
 			}
 			else
@@ -2248,7 +2224,7 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if ((up || right || down || left) && !boyfriend.stunned && generatedMusic && !endingSong)
+		if (controlArray.contains(true) && !boyfriend.stunned && generatedMusic && !endingSong)
 		{
 			notes.forEachAlive(function(daNote:Note)
 			{
@@ -2262,7 +2238,7 @@ class PlayState extends MusicBeatState
 			});
 		}
 
-		if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && ((!up && !down && !right && !left) || MythsListEngineData.botPlay))
+		if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && (!controlArray.contains(true) || MythsListEngineData.botPlay))
 		{
 			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss'))
 				boyfriend.playAnim('idle');
@@ -2275,24 +2251,24 @@ class PlayState extends MusicBeatState
 				switch (spr.ID)
 				{
 					case 0:
-						if (leftP && spr.animation.curAnim.name != 'confirm')
+						if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
 							spr.animation.play('pressed');
-						if (leftR)
+						if (controlArrayRelease[spr.ID])
 							spr.animation.play('static');
 					case 1:
-						if (downP && spr.animation.curAnim.name != 'confirm')
+						if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
 							spr.animation.play('pressed');
-						if (downR)
+						if (controlArrayRelease[spr.ID])
 							spr.animation.play('static');
 					case 2:
-						if (upP && spr.animation.curAnim.name != 'confirm')
+						if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
 							spr.animation.play('pressed');
-						if (upR)
+						if (controlArrayRelease[spr.ID])
 							spr.animation.play('static');
 					case 3:
-						if (rightP && spr.animation.curAnim.name != 'confirm')
+						if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
 							spr.animation.play('pressed');
-						if (rightR)
+						if (controlArrayRelease[spr.ID])
 							spr.animation.play('static');
 				}
 			
@@ -2312,16 +2288,16 @@ class PlayState extends MusicBeatState
 	{
 		if (!boyfriend.stunned)
 		{
-			if (combo > 5 && gf.animOffsets.exists('sad'))
+			if (combo >= 5 && gf.animOffsets.exists('sad'))
 				gf.playAnim('sad');
 
 			switch(noteType)
 			{
 				case 0:
 				{
-					health -= 0.02;
-					misses += 1;
 					combo = 0;
+					misses++;
+					health -= 0.02;
 					songScore -= 10;
 
 					boyfriend.stunned = true;
@@ -2343,22 +2319,19 @@ class PlayState extends MusicBeatState
 
 	function badNoteCheck(daNote:Note):Void
 	{
-		var leftp = controls.LEFT_P;
-		var downp = controls.DOWN_P;
-		var upp = controls.UP_P;
-		var rightp = controls.RIGHT_P;
+		var controlArrayPress = [controls.LEFT_P, controls.DOWN_P, controls.UP_P, controls.RIGHT_P];
 
 		if (!MythsListEngineData.ghostTapping)
 		{
 			if (daNote == null)
 			{
-				if (leftp)
+				if (controlArrayPress[0])
 					noteMiss(0);
-				if (downp)
+				if (controlArrayPress[1])
 					noteMiss(1);
-				if (upp)
+				if (controlArrayPress[2])
 					noteMiss(2);
-				if(rightp)
+				if (controlArrayPress[3])
 					noteMiss(3);
 			}
 			else
@@ -2370,10 +2343,13 @@ class PlayState extends MusicBeatState
 
 	function noteCheck(controlArray:Array<Bool>, note:Note):Void
 	{
-		if (controlArray[note.noteData])
-			goodNoteHit(note);
-		else
-			badNoteCheck(note);
+		if (!endingSong)
+		{
+			if (controlArray[note.noteData])
+				goodNoteHit(note);
+			else
+				badNoteCheck(note);
+		}
 	}
 
 	function goodNoteHit(note:Note):Void
@@ -2382,8 +2358,8 @@ class PlayState extends MusicBeatState
 		{
 			if (!note.isSustainNote)
 			{
+				combo++;
 				popUpScore(note);
-				combo += 1;
 			}
 
 			switch(note.noteType)

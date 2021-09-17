@@ -36,7 +36,18 @@ class GameplaySubState extends MusicBeatSubstate
 		'Fullscreen'
 	];
 
-	var selector:FlxSprite;
+	var dataStuff:Array<Bool> = [
+		FlxG.save.data.downScroll,
+		FlxG.save.data.middleScroll,
+		FlxG.save.data.ghostTapping,
+		FlxG.save.data.statsDisplay,
+		FlxG.save.data.songinfosDisplay,
+		FlxG.save.data.versionDisplay,
+		FlxG.save.data.songpositionDisplay,
+		FlxG.save.data.antiAliasing,
+		FlxG.fullscreen
+	];
+
 	var curSelected:Int = 0;
 
 	var grpOptions:FlxTypedGroup<Alphabet>;
@@ -66,54 +77,10 @@ class GameplaySubState extends MusicBeatSubstate
 			optionText.isMenuItem = true;
 			optionText.targetY = i;
 
-			switch(textMenuItems[i])
-			{
-				case 'Downscroll':
-					if (FlxG.save.data.downScroll)
-						optionText.color = FlxColor.GREEN;
-					else if (!FlxG.save.data.downScroll)
-						optionText.color = FlxColor.RED;
-				case 'Middlescroll':
-					if (FlxG.save.data.middleScroll)
-						optionText.color = FlxColor.GREEN;
-					else if (!FlxG.save.data.middleScroll)
-						optionText.color = FlxColor.RED;
-				case 'Ghost tapping':
-					if (FlxG.save.data.ghostTapping)
-						optionText.color = FlxColor.GREEN;
-					else if (!FlxG.save.data.ghostTapping)
-						optionText.color = FlxColor.RED;
-				case 'Stats display':
-					if (FlxG.save.data.statsDisplay)
-						optionText.color = FlxColor.GREEN;
-					else if (!FlxG.save.data.statsDisplay)
-						optionText.color = FlxColor.RED;
-				case 'Song infos display':
-					if (FlxG.save.data.songinfosDisplay)
-						optionText.color = FlxColor.GREEN;
-					else if (!FlxG.save.data.songinfosDisplay)
-						optionText.color = FlxColor.RED;
-				case 'Version display':
-					if (FlxG.save.data.versionDisplay)
-						optionText.color = FlxColor.GREEN;
-					else if (!FlxG.save.data.versionDisplay)
-						optionText.color = FlxColor.RED;
-				case 'Song position display':
-					if (FlxG.save.data.songpositionDisplay)
-						optionText.color = FlxColor.GREEN;
-					else if (!FlxG.save.data.songpositionDisplay)
-						optionText.color = FlxColor.RED;
-				case 'Antialiasing':
-					if (FlxG.save.data.antiAliasing)
-						optionText.color = FlxColor.GREEN;
-					else if (!FlxG.save.data.antiAliasing)
-						optionText.color = FlxColor.RED;
-				case 'Fullscreen':
-					if (FlxG.fullscreen)
-						optionText.color = FlxColor.GREEN;
-					else if (!FlxG.fullscreen)
-						optionText.color = FlxColor.RED;
-			}
+			if (dataStuff[i])
+				optionText.color = FlxColor.GREEN;
+			else if (!dataStuff[i])
+				optionText.color = FlxColor.RED;
 
 			grpOptions.add(optionText);
 		}
@@ -152,107 +119,27 @@ class GameplaySubState extends MusicBeatSubstate
 		{
 			FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
-			switch (textMenuItems[curSelected])
+			dataStuff = [
+				FlxG.save.data.downScroll,
+				FlxG.save.data.middleScroll,
+				FlxG.save.data.ghostTapping,
+				FlxG.save.data.statsDisplay,
+				FlxG.save.data.songinfosDisplay,
+				FlxG.save.data.versionDisplay,
+				FlxG.save.data.songpositionDisplay,
+				FlxG.save.data.antiAliasing,
+				FlxG.fullscreen
+			];
+
+			if (dataStuff[curSelected])
 			{
-				case "Downscroll":
-					if (FlxG.save.data.downScroll)
-					{
-						interact(false, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.RED;
-					}
-					else if (!FlxG.save.data.downScroll)
-					{
-						interact(true, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
-				case "Middlescroll":
-					if (FlxG.save.data.middleScroll)
-					{
-						interact(false, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.RED;
-					}
-					else if (!FlxG.save.data.middleScroll)
-					{
-						interact(true, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
-				case "Ghost tapping":
-					if (FlxG.save.data.ghostTapping)
-					{
-						interact(false, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.RED;
-					}
-					else if (!FlxG.save.data.ghostTapping)
-					{
-						interact(true, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
-				case "Stats display":
-					if (FlxG.save.data.statsDisplay)
-					{
-						interact(false, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.RED;
-					}
-					else if (!FlxG.save.data.statsDisplay)
-					{
-						interact(true, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
-				case "Song infos display":
-					if (FlxG.save.data.songinfosDisplay)
-					{
-						interact(false, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.RED;
-					}
-					else if (!FlxG.save.data.songinfosDisplay)
-					{
-						interact(true, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
-				case "Version display":
-					if (FlxG.save.data.versionDisplay)
-					{
-						interact(false, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.RED;
-					}
-					else if (!FlxG.save.data.versionDisplay)
-					{
-						interact(true, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
-				case "Song position display":
-					if (FlxG.save.data.songpositionDisplay)
-					{
-						interact(false, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.RED;
-					}
-					else if (!FlxG.save.data.songpositionDisplay)
-					{
-						interact(true, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
-				case "Antialiasing":
-					if (FlxG.save.data.antiAliasing)
-					{
-						interact(false, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.RED;
-					}
-					else if (!FlxG.save.data.antiAliasing)
-					{
-						interact(true, curSelected);
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
-				case 'Fullscreen':
-					if (!FlxG.fullscreen)
-					{
-						FlxG.fullscreen = true;
-						grpOptions.members[curSelected].color = FlxColor.GREEN;
-					}
-					else if (FlxG.fullscreen)
-					{
-						FlxG.fullscreen = false;
-						grpOptions.members[curSelected].color = FlxColor.RED;
-					}
+				interact(false, curSelected);
+				grpOptions.members[curSelected].color = FlxColor.RED;
+			}
+			else if (!dataStuff[curSelected])
+			{
+				interact(true, curSelected);
+				grpOptions.members[curSelected].color = FlxColor.GREEN;
 			}
 		}
 	}
@@ -306,6 +193,8 @@ class GameplaySubState extends MusicBeatSubstate
 				FlxG.save.data.songpositionDisplay = change;
 			case 7:
 				FlxG.save.data.antiAliasing = change;
+			case 8:
+				FlxG.fullscreen = change;
 		}
 
 		FlxG.save.flush();

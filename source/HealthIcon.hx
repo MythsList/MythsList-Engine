@@ -7,6 +7,7 @@ class HealthIcon extends FlxSprite
 	public var sprTracker:FlxSprite;
 
 	var newchar:String;
+	var daAntialiasing:Bool = true;
 
 	public function new(char:String = 'bf', isPlayer:Bool = false)
 	{
@@ -18,6 +19,8 @@ class HealthIcon extends FlxSprite
 		{
 			case 'bf-car' | 'bf-christmas' | 'bf-minus' | null:
 				newchar = 'bf';
+			case 'bf-pixel':
+				daAntialiasing = false;
 			case 'mom-car':
 				newchar = 'mom';
 			case 'parents-christmas':
@@ -26,12 +29,16 @@ class HealthIcon extends FlxSprite
 				newchar = 'monster';
 			case 'template':
 				newchar = 'face';
+			case 'senpai' | 'senpai-angry' | 'spirit':
+				daAntialiasing = false;
 		}
 
 		loadGraphic(Paths.image('healthicons/icon-' + newchar, 'preload'), true, 150, 150);
 
-		if (MythsListEngineData.antiAliasing)
+		if (MythsListEngineData.antiAliasing && daAntialiasing)
 			antialiasing = true;
+		else
+			antialiasing = false;
 
 		animation.add(newchar, [0, 1, 2], 0, false, isPlayer);
 

@@ -9,6 +9,8 @@ import flixel.input.FlxKeyManager;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
+import flixel.tweens.FlxEase;
+import flixel.tweens.FlxTween;
 
 using StringTools;
 
@@ -32,6 +34,7 @@ class DialogueBox extends FlxSpriteGroup
 	var portraitRight:Portrait;
 
 	var bgFade:FlxSprite;
+	public static var fadeStyle:String = 'basic';
 
 	public function new(talkingRight:Bool = true, ?dialogueList:Array<String>)
 	{
@@ -43,10 +46,12 @@ class DialogueBox extends FlxSpriteGroup
 		{
 			case 'senpai' | 'roses' | 'thorns':
 			{
+				fadeStyle = 'pixel';
+
 				if (PlayState.SONG.song.toLowerCase() == 'senpai')
-					FlxG.sound.playMusic(Paths.music('Lunchbox'), 0);
+					FlxG.sound.playMusic(Paths.music('Lunchbox', 'week6'), 0);
 				else if (PlayState.SONG.song.toLowerCase() == 'thorns')
-					FlxG.sound.playMusic(Paths.music('LunchboxScary'), 0);
+					FlxG.sound.playMusic(Paths.music('LunchboxScary', 'week6'), 0);
 				
 				if (PlayState.SONG.song.toLowerCase() != 'roses')
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
@@ -54,6 +59,8 @@ class DialogueBox extends FlxSpriteGroup
 				bgFade.color = 0xFFB3DFd8;
 			}
 			default:
+				fadeStyle = 'basic';
+
 				bgFade.color = 0xFF000000;
 		}
 		
@@ -62,16 +69,27 @@ class DialogueBox extends FlxSpriteGroup
 		bgFade.screenCenter();
 		add(bgFade);
 
-		new FlxTimer().start(0.83, function(tmr:FlxTimer)
+		switch (fadeStyle)
 		{
-			bgFade.alpha += (1 / 5) * 0.7;
-			if (bgFade.alpha > 0.7)
-				bgFade.alpha = 0.7;
-		}, 5);
+			case 'pixel':
+			{
+				new FlxTimer().start(0.83, function(tmr:FlxTimer)
+				{
+					bgFade.alpha += (1 / 5) * 0.7;
+
+					if (bgFade.alpha > 0.7)
+						bgFade.alpha = 0.7;
+				}, 5);
+			}
+			case 'basic':
+			{
+				FlxTween.tween(bgFade, {alpha: 0.7}, 0.8);
+			}
+		}
 
 		box = new FlxSprite(-20, 45);
 		
-		var hasDialog = false;
+		var hasDialog:Bool = false;
 
 		switch (PlayState.SONG.song.toLowerCase())
 		{
@@ -259,17 +277,34 @@ class DialogueBox extends FlxSpriteGroup
 							FlxG.sound.music.fadeOut(2.2, 0);
 					}
 
-					new FlxTimer().start(0.2, function(tmr:FlxTimer)
+					switch (fadeStyle)
 					{
-						box.alpha -= 1 / 5;
-						bgFade.alpha -= 1 / 5 * 0.7;
-						portraitLeft.visible = false;
-						portraitLeft.alpha = 0;
-						portraitRight.visible = false;
-						portraitRight.alpha = 0;
-						swagDialogue.alpha -= 1 / 5;
-						dropText.alpha = swagDialogue.alpha;
-					}, 5);
+						case 'pixel':
+						{
+							new FlxTimer().start(0.2, function(tmr:FlxTimer)
+							{
+								box.alpha -= 1 / 5;
+								bgFade.alpha -= 1 / 5 * 0.7;
+								portraitLeft.visible = false;
+								portraitLeft.alpha = 0;
+								portraitRight.visible = false;
+								portraitRight.alpha = 0;
+								swagDialogue.alpha -= 1 / 5;
+								dropText.alpha = swagDialogue.alpha;
+							}, 5);
+						}
+						case 'basic':
+						{
+							FlxTween.tween(box, {alpha: 0}, 0.2);
+							FlxTween.tween(bgFade, {alpha: 0}, 0.2);
+							FlxTween.tween(portraitLeft, {alpha: 0}, 0.2);
+							portraitLeft.visible = false;
+							FlxTween.tween(portraitRight, {alpha: 0}, 0.2);
+							portraitRight.visible = false;
+							FlxTween.tween(swagDialogue, {alpha: 0}, 0.2);
+							FlxTween.tween(dropText, {alpha: 0}, 0.2);
+						}
+					}
 
 					new FlxTimer().start(1.2, function(tmr:FlxTimer)
 					{
