@@ -512,6 +512,43 @@ class Character extends FlxSprite
 				else
 					antialiasing = false;
 
+			case 'bf-corrupted':
+				healthBarColor = colorPrefix + '31B0D1';
+	
+				flipAnimations = false;
+	
+				var tex = Paths.getSparrowAtlas('characters/BOYFRIEND_CORRUPTED', 'shared');
+				frames = tex;
+				animation.addByPrefix('idle', 'BF idle dance', 24, false);
+				animation.addByPrefix('singUP', 'BF NOTE UP', 24, false);
+				animation.addByPrefix('singLEFT', 'BF NOTE LEFT', 24, false);
+				animation.addByPrefix('singRIGHT', 'BF NOTE RIGHT', 24, false);
+				animation.addByPrefix('singDOWN', 'BF NOTE DOWN', 24, false);
+				animation.addByPrefix('singUPmiss', 'BF NOTE UP MISS', 24, false);
+				animation.addByPrefix('singLEFTmiss', 'BF NOTE LEFT MISS', 24, false);
+				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS', 24, false);
+				animation.addByPrefix('singDOWNmiss', 'BF NOTE DOWN MISS', 24, false);
+
+				animation.addByPrefix('hey', 'BF HEY', 24, false);
+				animation.addByPrefix('scared', 'BF idle shaking', 24);
+	
+				if (isMenuChar)
+				{
+					setGraphicSize(Std.int(width * 0.5));
+					updateHitbox();
+				}
+	
+				loadOffsetFile(curCharacter);
+	
+				playAnim('idle');
+	
+				flipX = true;
+	
+				if (MythsListEngineData.antiAliasing)
+					antialiasing = true;
+				else
+					antialiasing = false;
+
 			case 'bf-pixel':
 				healthBarColor = colorPrefix + '7BD6F6';
 
@@ -819,29 +856,23 @@ class Character extends FlxSprite
 			{
 				case 'gf' | 'gf-christmas' | 'gf-car' | 'gf-pixel':
 				{
-					if (animation.curAnim.name.startsWith('sing') && curCharacter == 'gf')
+					if (animation.curAnim.name.startsWith('sing') && animation.finished)
 					{
-						if (animation.finished)
-						{
-							danced = !danced;
+						danced = !danced;
 			
-							if (danced)
-								playAnim('danceRight');
-							else
-								playAnim('danceLeft');
-						}
+						if (danced)
+							playAnim('danceRight');
+						else
+							playAnim('danceLeft');
 					}
-					else
+					else if (animation.curAnim.name.startsWith('scared') || animation.curAnim.name.startsWith('sad') || animation.finished)
 					{
-						if (animation.curAnim.name.startsWith('scared') || animation.curAnim.name.startsWith('sad') || animation.finished)
-						{
-							danced = !danced;
+						danced = !danced;
 				
-							if (danced)
-								playAnim('danceRight');
-							else
-								playAnim('danceLeft');
-						}
+						if (danced)
+							playAnim('danceRight');
+						else
+							playAnim('danceLeft');
 					}
 				}
 				case 'spooky':
@@ -867,7 +898,8 @@ class Character extends FlxSprite
 				}
 				default:
 				{
-					playAnim('idle');
+					if (curCharacter != 'bf-pixel-dead')
+						playAnim('idle');
 				}
 			}
 		}

@@ -38,7 +38,7 @@ class MainMenuState extends MusicBeatState
 	{
 		FlxG.mouse.visible = false;
 
-		if (Std.is(FlxG.save.data.keyBinds, String))
+		if (Std.is(FlxG.save.data.keyBinds, String) || !Std.is(FlxG.save.data.keyBinds, Array))
 		{
 			FlxG.save.data.keyBinds = null;
 			FlxG.save.flush();
@@ -176,7 +176,7 @@ class MainMenuState extends MusicBeatState
 								case 'donate':
 								{
 									#if linux
-									Sys.command('/usr/bin/xdg-open', ["https://ninja-muffin24.itch.io/funkin", "&"]);
+									Sys.command('/usr/bin/xdg-open', ['https://ninja-muffin24.itch.io/funkin', '&']);
 									#else
 									FlxG.openURL('https://ninja-muffin24.itch.io/funkin');
 									#end

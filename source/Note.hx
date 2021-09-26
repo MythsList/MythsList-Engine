@@ -15,21 +15,22 @@ using StringTools;
 class Note extends FlxSprite
 {
 	public var strumTime:Float = 0;
+	public var sustainLength:Float = 0;
+	public var noteScore:Float = 1;
 
 	public var mustPress:Bool = false;
-	public var noteData:Int = 0;
-	public var noteType:Int = 0;
 	public var canBeHit:Bool = false;
 	public var tooLate:Bool = false;
 	public var wasGoodHit:Bool = false;
-	public var prevNote:Note;
-
-	public var sustainLength:Float = 0;
 	public var isSustainNote:Bool = false;
 
-	public var noteScore:Float = 1;
+	public var noteData:Int = 0;
+	public var noteType:Int = 0;
 
-	public static var swagWidth:Float = 160 * 0.7;
+	public var prevNote:Note;
+
+	public static var swagWidth:Float = 112;
+
 	public static var PURP_NOTE:Int = 0;
 	public static var GREEN_NOTE:Int = 2;
 	public static var BLUE_NOTE:Int = 1;
@@ -60,7 +61,6 @@ class Note extends FlxSprite
 			x += 96;
 
 		this.strumTime = strumTime;
-
 		this.noteData = noteData;
 		this.noteType = noteType;
 

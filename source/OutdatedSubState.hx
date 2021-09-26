@@ -24,7 +24,7 @@ class OutdatedSubState extends MusicBeatState
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		add(bg);
 
-		var thx:FlxText = new FlxText(0, FlxG.height / 2, FlxG.width, "THANKS FOR DOWNLOADING AND PLAYING THE MOD!", 50);
+		var thx:FlxText = new FlxText(0, (FlxG.height / 2) - 38, FlxG.width, "THANKS FOR DOWNLOADING AND PLAYING THE MOD!", 50);
 		thx.setFormat("VCR OSD Mono", 50, FlxColor.WHITE, CENTER);
 		add(thx);
 

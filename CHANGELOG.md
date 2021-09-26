@@ -2,6 +2,38 @@
 
 All notable changes will be documented in this file.
 
+## [V.1.0.8]
+### Addition
+- ADDED A WIKI ON THE GITHUB PAGE
+
+- New rating system
+- Inputs counter (Can be enabled via the Options menu)
+- Readded the reset keybind and made the pause keybind work
+- New folders so the game data is organized
+- Week names and week colors are now in `assets/preload/data/WEEKDATA`
+- (Not added) New character "corrupted boyfriend" in the character selection menu made by Artistmaybe (Will not be credited for now, will be when actually used)
+
+### Tweak
+- Dialogues, portraits and dialogue boxes are easier to use
+- No separate menu characters yet but better MenuCharacter.hx code
+- Made the charting debug menu a debug only feature to avoid people cheating on mods
+- Removed the "Senpai" chart stacked note
+- Some StoryMenuState.hx changes
+- While disabling version display, song infos should go in the corner of the screen now
+- GameOverSubstate.hx now checks for the current player1 instead of the current stage
+
+### Bugfix
+- I wonder why i haven't realized that yet but you couldn't hit "shits" so now you can hit them
+- Voice in the Charting Debug menu now starts/resumes correctly
+- Fixed week 6 death screen's OST (Game would crash)
+- Fixed week 6 death screen's animation (Console would open with a warning, i hate warnings)
+- We now check if boyfriend is dead before playing an animation
+- Fixed week 3 camera
+
+### Removal
+- Removed the keybind (ONE) to skip a song
+- Removed the gitaroo pause assets because I forgot
+
 ## [V.1.0.7]
 ### Overhaul
 - You can now see the currently selected character (not just the health icon) inside of the Character Selection menu and you can check how the animations look like using the arrows

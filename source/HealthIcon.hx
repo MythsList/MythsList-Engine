@@ -9,7 +9,7 @@ class HealthIcon extends FlxSprite
 	var newchar:String;
 	var daAntialiasing:Bool = true;
 
-	public function new(char:String = 'bf', isPlayer:Bool = false)
+	public function new(char:String = 'bf', isPlayer:Bool = false, isMenuIcon:Bool = false)
 	{
 		super();
 
@@ -17,10 +17,10 @@ class HealthIcon extends FlxSprite
 
 		switch(char)
 		{
-			case 'bf-car' | 'bf-christmas' | 'bf-minus' | null:
+			case 'bf-car' | 'bf-christmas' | 'bf-minus' | 'bf-corrupted' | null:
 				newchar = 'bf';
-			case 'bf-pixel':
-				daAntialiasing = false;
+			case 'gf-car' | 'gf-christmas' | 'gf-pixel':
+				newchar = 'gf';
 			case 'mom-car':
 				newchar = 'mom';
 			case 'parents-christmas':
@@ -29,13 +29,13 @@ class HealthIcon extends FlxSprite
 				newchar = 'monster';
 			case 'template':
 				newchar = 'face';
-			case 'senpai' | 'senpai-angry' | 'spirit':
+			case 'bf-pixel' | 'senpai' | 'senpai-angry' | 'spirit':
 				daAntialiasing = false;
 		}
 
 		loadGraphic(Paths.image('healthicons/icon-' + newchar, 'preload'), true, 150, 150);
 
-		if (MythsListEngineData.antiAliasing && daAntialiasing)
+		if ((MythsListEngineData.antiAliasing && daAntialiasing) || (daAntialiasing && isMenuIcon))
 			antialiasing = true;
 		else
 			antialiasing = false;

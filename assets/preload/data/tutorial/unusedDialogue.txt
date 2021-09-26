@@ -1,6 +1,0 @@
-left:bf:YOOOO
-right:bf:WTF LMAO, WHO ARE YOU?
-left:bf:XD IM YOU DUMBASS
-right:bf:True...
-middle:bf/bf:Try not to beep challenge
-middle:bf-pixel/bf-pixel:16 bit

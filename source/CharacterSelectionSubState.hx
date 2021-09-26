@@ -105,7 +105,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 
 			grpOptions.add(optionText);
 
-			var icon:HealthIcon = new HealthIcon(Icons[i]);
+			var icon:HealthIcon = new HealthIcon(Icons[i], false, true);
 			icon.sprTracker = optionText;
 
 			iconArray.push(icon);
@@ -131,7 +131,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		noteText.x = FlxG.width - noteText.width - 5;
 		noteText.y = FlxG.height - noteText.height - 5;
 
-		curIcon = new HealthIcon(MythsListEngineData.characterSkin);
+		curIcon = new HealthIcon(MythsListEngineData.characterSkin, false, true);
 		curIcon.x = curBGtext.x;
 		curIcon.y = curBGtext.y + curBGtext.height;
 		add(curIcon);
@@ -241,24 +241,16 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 				{
 					case 0:
 						if (controlArray[spr.ID])
-						{
 							curCharacter.playAnim('sing' + curPress[spr.ID], true);
-						}
 					case 1:
 						if (controlArray[spr.ID])
-						{
 							curCharacter.playAnim('sing' + curPress[spr.ID], true);
-						}
 					case 2:
 						if (controlArray[spr.ID])
-						{
 							curCharacter.playAnim('sing' + curPress[spr.ID], true);
-						}
 					case 3:
 						if (controlArray[spr.ID])
-						{
 							curCharacter.playAnim('sing' + curPress[spr.ID], true);
-						}
 				}
 			});
 		}
@@ -317,7 +309,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 			}
 
 			remove(curIcon);
-			curIcon = new HealthIcon(MythsListEngineData.characterSkin);
+			curIcon = new HealthIcon(MythsListEngineData.characterSkin, false, true);
 			curIcon.x = curBGtext.x;
 			curIcon.y = curBGtext.y + curBGtext.height;
 			add(curIcon);

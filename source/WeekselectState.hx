@@ -84,7 +84,7 @@ class WeekselectState extends MusicBeatState
 			weekText.targetY = i;
 			grpWeeks.add(weekText);
 
-			var icon:HealthIcon = new HealthIcon(weeks[i].songCharacters, false);
+			var icon:HealthIcon = new HealthIcon(weeks[i].songCharacters, false, true);
 			icon.sprTracker = weekText;
 			iconArray.push(icon);
 			add(icon);
@@ -146,6 +146,7 @@ class WeekselectState extends MusicBeatState
 		if (controls.ACCEPT)
 		{
 			FlxG.sound.play(Paths.sound('confirmMenu', 'preload'));
+			
 			curWeek = curSelected;
 			FlxG.switchState(new FreeplayState());
 		}

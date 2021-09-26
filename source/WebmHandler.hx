@@ -31,19 +31,25 @@ class WebmHandler
 	{
 		io = new WebmIoFile(vidPath);
 		webm = new WebmPlayer();
+
 		webm.fuck(io, false);
+
 		webm.addEventListener(WebmEvent.PLAY, function(e) {
 			onPlay();
 		});
+
 		webm.addEventListener(WebmEvent.COMPLETE, function(e) {
 			onEnd();
 		});
+
 		webm.addEventListener(WebmEvent.STOP, function(e) {
 			onStop();
 		});
+
 		webm.addEventListener(WebmEvent.RESTART, function(e) {
 			onRestart();
 		});
+
 		webm.visible = false;
 		initialized = true;
 	}
@@ -107,11 +113,9 @@ class WebmHandler
 	public function togglePause():Void
 	{
 		if (paused)
-		{
 			resume();
-		} else {
+		else
 			pause();
-		}
 	}
 	
 	public function clearPause():Void
@@ -137,7 +141,6 @@ class WebmHandler
 	
 	public function onEnd():Void
 	{
-		trace("IT ENDED!");
 		ended = true;
 	}
 	

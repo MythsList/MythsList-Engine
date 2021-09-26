@@ -13,21 +13,30 @@ class GameOverSubstate extends MusicBeatSubstate
 	var camFollow:FlxObject;
 
 	var stageSuffix:String = '';
+	var altLibrary:String = '';
 
-	public function new(x:Float, y:Float)
+	var daBf:String = 'bf';
+
+	public function new(x:Float, y:Float, character:String)
 	{
-		var daBf:String = '';
+		super();
 
-		switch (PlayState.curStage)
+		daBf = character;
+
+		if (daBf == 'bf-pixel')
+			daBf += '-dead';
+
+		switch(daBf)
 		{
-			case 'school' | 'schoolEvil':
+			case 'bf-pixel-dead':
 				stageSuffix = '-pixel';
-				daBf = 'bf-pixel-dead';
+				altLibrary = 'week6';
+			case 'bf':
+				altLibrary = 'shared';
 			default:
 				daBf = 'bf';
+				altLibrary = 'shared';
 		}
-
-		super();
 
 		Conductor.songPosition = 0;
 
@@ -51,9 +60,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		super.update(elapsed);
 
 		if (controls.ACCEPT)
-		{
 			endBullshit();
-		}
 
 		if (controls.BACK)
 		{
@@ -69,7 +76,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			FlxG.camera.follow(camFollow, LOCKON, 0.01);
 
 		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
-			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix, 'shared'));
+			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix, altLibrary));
 
 		if (FlxG.sound.music.playing)
 			Conductor.songPosition = FlxG.sound.music.time;
@@ -91,7 +98,7 @@ class GameOverSubstate extends MusicBeatSubstate
 			isEnding = true;
 			bf.playAnim('deathConfirm', true);
 			FlxG.sound.music.stop();
-			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix, 'shared'));
+			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix, altLibrary));
 
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="spooky.png">
+	<SubTexture name="spooky0000" x="0" y="0" width="382" height="549" frameX="0" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0001" x="0" y="0" width="382" height="549" frameX="0" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0002" x="392" y="0" width="380" height="549" frameX="-1" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0003" x="392" y="0" width="380" height="549" frameX="-1" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0004" x="782" y="0" width="358" height="549" frameX="-12" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0005" x="782" y="0" width="358" height="549" frameX="-12" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0006" x="1150" y="0" width="355" height="549" frameX="-13.5" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0007" x="1150" y="0" width="355" height="549" frameX="-13.5" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0008" x="1515" y="0" width="493" height="549" frameX="55.5" frameY="-6" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0009" x="1515" y="0" width="493" height="549" frameX="55.5" frameY="-6" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0010" x="2018" y="0" width="482" height="549" frameX="50" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0011" x="2018" y="0" width="482" height="549" frameX="50" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0012" x="782" y="0" width="358" height="549" frameX="-12" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0013" x="782" y="0" width="358" height="549" frameX="-12" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0014" x="1150" y="0" width="355" height="549" frameX="-13.5" frameY="0" frameWidth="382" frameHeight="549"/>
+	<SubTexture name="spooky0015" x="1150" y="0" width="355" height="549" frameX="-13.5" frameY="0" frameWidth="382" frameHeight="549"/>
+</TextureAtlas>

@@ -28,6 +28,7 @@ class GameplaySubState extends MusicBeatSubstate
 		'Downscroll',
 		'Middlescroll',
 		'Ghost tapping',
+		'Inputs counter',
 		'Stats display',
 		'Song infos display',
 		'Version display',
@@ -36,17 +37,7 @@ class GameplaySubState extends MusicBeatSubstate
 		'Fullscreen'
 	];
 
-	var dataStuff:Array<Bool> = [
-		FlxG.save.data.downScroll,
-		FlxG.save.data.middleScroll,
-		FlxG.save.data.ghostTapping,
-		FlxG.save.data.statsDisplay,
-		FlxG.save.data.songinfosDisplay,
-		FlxG.save.data.versionDisplay,
-		FlxG.save.data.songpositionDisplay,
-		FlxG.save.data.antiAliasing,
-		FlxG.fullscreen
-	];
+	var dataStuff:Array<Bool> = [];
 
 	var curSelected:Int = 0;
 
@@ -76,6 +67,8 @@ class GameplaySubState extends MusicBeatSubstate
 			var optionText:Alphabet = new Alphabet(0, (70 * i) + 30, textMenuItems[i], true, false);
 			optionText.isMenuItem = true;
 			optionText.targetY = i;
+
+			getDataList();
 
 			if (dataStuff[i])
 				optionText.color = FlxColor.GREEN;
@@ -119,17 +112,7 @@ class GameplaySubState extends MusicBeatSubstate
 		{
 			FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
-			dataStuff = [
-				FlxG.save.data.downScroll,
-				FlxG.save.data.middleScroll,
-				FlxG.save.data.ghostTapping,
-				FlxG.save.data.statsDisplay,
-				FlxG.save.data.songinfosDisplay,
-				FlxG.save.data.versionDisplay,
-				FlxG.save.data.songpositionDisplay,
-				FlxG.save.data.antiAliasing,
-				FlxG.fullscreen
-			];
+			getDataList();
 
 			if (dataStuff[curSelected])
 			{
@@ -184,21 +167,39 @@ class GameplaySubState extends MusicBeatSubstate
 			case 2:
 				FlxG.save.data.ghostTapping = change;
 			case 3:
-				FlxG.save.data.statsDisplay = change;
+				FlxG.save.data.inputsCounter = change;
 			case 4:
-				FlxG.save.data.songinfosDisplay = change;
+				FlxG.save.data.statsDisplay = change;
 			case 5:
-				FlxG.save.data.versionDisplay = change;
+				FlxG.save.data.songinfosDisplay = change;
 			case 6:
-				FlxG.save.data.songpositionDisplay = change;
+				FlxG.save.data.versionDisplay = change;
 			case 7:
-				FlxG.save.data.antiAliasing = change;
+				FlxG.save.data.songpositionDisplay = change;
 			case 8:
+				FlxG.save.data.antiAliasing = change;
+			case 9:
 				FlxG.fullscreen = change;
 		}
 
 		FlxG.save.flush();
 
 		MythsListEngineData.dataSave();
+	}
+
+	function getDataList()
+	{
+		dataStuff = [
+			FlxG.save.data.downScroll,
+			FlxG.save.data.middleScroll,
+			FlxG.save.data.ghostTapping,
+			FlxG.save.data.inputsCounter,
+			FlxG.save.data.statsDisplay,
+			FlxG.save.data.songinfosDisplay,
+			FlxG.save.data.versionDisplay,
+			FlxG.save.data.songpositionDisplay,
+			FlxG.save.data.antiAliasing,
+			FlxG.fullscreen
+		];
 	}
 }

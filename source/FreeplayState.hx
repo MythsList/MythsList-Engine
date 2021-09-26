@@ -117,7 +117,7 @@ class FreeplayState extends MusicBeatState
 			songText.targetY = i;
 			grpSongs.add(songText);
 
-			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter);
+			var icon:HealthIcon = new HealthIcon(songs[i].songCharacter, false, true);
 			icon.sprTracker = songText;
 
 			iconArray.push(icon);
@@ -182,14 +182,14 @@ class FreeplayState extends MusicBeatState
 		}
 	}
 
+	var selected:Bool = false;
+
 	override function update(elapsed:Float)
 	{
 		super.update(elapsed);
 
 		if (FlxG.sound.music.volume < 0.7)
-		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
-		}
 
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, 0.4));
 
@@ -198,33 +198,41 @@ class FreeplayState extends MusicBeatState
 
 		scoreText.text = "HIGHSCORE:" + lerpScore;
 
-		if (controls.UP_P)
-			changeSelection(-1);
-
-		if (controls.DOWN_P)
-			changeSelection(1);
-
-		if (controls.LEFT_P)
-			changeDiff(-1);
-
-		if (controls.RIGHT_P)
-			changeDiff(1);
-
-		if (controls.BACK)
-			FlxG.switchState(new WeekselectState());
-
-		if (controls.ACCEPT)
+		if (!selected)
 		{
-			FlxG.sound.play(Paths.sound('confirmMenu', 'preload'));
+			if (controls.UP_P)
+				changeSelection(-1);
 
-			var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+			if (controls.DOWN_P)
+				changeSelection(1);
 
-			PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
-			PlayState.isStoryMode = false;
-			PlayState.storyDifficulty = curDifficulty;
+			if (controls.LEFT_P)
+				changeDiff(-1);
 
-			PlayState.storyWeek = songs[curSelected].week;
-			LoadingState.loadAndSwitchState(new PlayState(), false);
+			if (controls.RIGHT_P)
+				changeDiff(1);
+
+			if (controls.BACK)
+			{
+				selected = true;
+				FlxG.switchState(new WeekselectState());
+			}
+
+			if (controls.ACCEPT)
+			{
+				FlxG.sound.play(Paths.sound('confirmMenu', 'preload'));
+
+				selected = true;
+
+				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+
+				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+				PlayState.isStoryMode = false;
+				PlayState.storyDifficulty = curDifficulty;
+
+				PlayState.storyWeek = songs[curSelected].week;
+				LoadingState.loadAndSwitchState(new PlayState(), false);
+			}
 		}
 	}
 

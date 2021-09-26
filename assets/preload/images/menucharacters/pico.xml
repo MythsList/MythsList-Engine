@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="pico.png">
+	<SubTexture name="pico0000" x="0" y="0" width="435" height="475" frameX="18" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0001" x="0" y="0" width="435" height="475" frameX="18" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0002" x="445" y="0" width="442" height="475" frameX="11" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0003" x="445" y="0" width="442" height="475" frameX="11" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0004" x="897" y="0" width="448" height="475" frameX="5" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0005" x="1355" y="0" width="444" height="475" frameX="5" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0006" x="1808" y="0" width="444" height="475" frameX="4" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0007" x="2261" y="0" width="442" height="475" frameX="0" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0008" x="2712" y="0" width="443" height="475" frameX="0" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0009" x="2712" y="0" width="443" height="475" frameX="0" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0010" x="2712" y="0" width="443" height="475" frameX="0" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0011" x="2712" y="0" width="443" height="475" frameX="0" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0012" x="2712" y="0" width="443" height="475" frameX="0" frameY="0" frameWidth="453" frameHeight="475"/>
+	<SubTexture name="pico0013" x="2712" y="0" width="443" height="475" frameX="0" frameY="0" frameWidth="453" frameHeight="475"/>
+</TextureAtlas>

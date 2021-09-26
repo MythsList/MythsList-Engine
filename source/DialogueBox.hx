@@ -31,7 +31,12 @@ class DialogueBox extends FlxSpriteGroup
 	public var finishThing:Void->Void;
 
 	var portraitLeft:Portrait;
+	var leftposX:Float;
+	var leftposY:Float;
+
 	var portraitRight:Portrait;
+	var rightposX:Float;
+	var rightposY:Float;
 
 	var bgFade:FlxSprite;
 	public static var fadeStyle:String = 'basic';
@@ -90,12 +95,14 @@ class DialogueBox extends FlxSpriteGroup
 		box = new FlxSprite(-20, 45);
 		
 		var hasDialog:Bool = false;
+		var isAnimated:Bool = false;
 
 		switch (PlayState.SONG.song.toLowerCase())
 		{
 			case 'senpai' | 'roses':
 			{
 				hasDialog = true;
+				isAnimated = true;
 
 				if (PlayState.SONG.song.toLowerCase() == 'roses')
 					FlxG.sound.play(Paths.sound('ANGRY_TEXT_BOX', 'shared'));
@@ -107,6 +114,7 @@ class DialogueBox extends FlxSpriteGroup
 			case 'thorns':
 			{
 				hasDialog = true;
+				isAnimated = true;
 
 				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-evil', 'week6');
 				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
@@ -116,6 +124,7 @@ class DialogueBox extends FlxSpriteGroup
 			default:
 			{
 				hasDialog = true;
+				isAnimated = true;
 
 				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-evil', 'week6');
 				box.animation.addByPrefix('normalOpen', 'Spirit Textbox spawn', 24, false);
@@ -129,70 +138,71 @@ class DialogueBox extends FlxSpriteGroup
 		if (!hasDialog)
 			return;
 
+		box.updateHitbox();
+		box.screenCenter(X);
+
 		switch(PlayState.SONG.song.toLowerCase())
 		{
 			case 'senpai' | 'roses' | 'thorns':
 			{
 				portraitLeft = new Portrait(PlayState.SONG.player2, false);
-				portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
+				portraitSetGraphicSize(PlayState.SONG.player2, portraitLeft);
 				portraitLeft.updateHitbox();
 				portraitLeft.scrollFactor.set();
 
-				portraitLeft.x = box.x + 250;
-				portraitLeft.y = -100;
-
-				add(portraitLeft);
-
-				portraitLeft.visible = false;
+				leftposX = box.x + 250;
+				leftposY = -100;
+				portraitLeft.x = leftposX;
+				portraitLeft.y = leftposY;
 	
 				portraitRight = new Portrait('bf-pixel', true);
-				portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
+				portraitSetGraphicSize('bf-pixel', portraitRight);
 				portraitRight.updateHitbox();
 				portraitRight.scrollFactor.set();
 
-				portraitRight.x = box.x + box.width - portraitRight.width - 250;
-				portraitRight.y = -100;
+				rightposX = box.x + box.width - portraitRight.width - 250;
+				rightposY = -100;
+				portraitRight.x = rightposX;
+				portraitRight.y = rightposY;
 
+				add(portraitLeft);
 				add(portraitRight);
 
+				portraitLeft.visible = false;
 				portraitRight.visible = false;
 			}
 			default:
 			{
-				portraitLeft = new Portrait('bf', false);
+				portraitLeft = new Portrait(PlayState.SONG.player2, false);
 				portraitLeft.updateHitbox();
 				portraitLeft.scrollFactor.set();
 
-				portraitLeft.x = box.x + 250;
-				portraitLeft.y = -100;
-
-				add(portraitLeft);
-
-				portraitLeft.visible = false;
+				leftposX = box.x + 250;
+				leftposY = -100;
+				portraitLeft.x = leftposX;
+				portraitLeft.y = leftposY;
 	
 				portraitRight = new Portrait('bf', true);
 				portraitRight.updateHitbox();
 				portraitRight.scrollFactor.set();
 
-				portraitRight.x = box.x + box.width - portraitRight.width - 250;
-				portraitRight.y = -100;
+				rightposX = box.x + box.width - portraitRight.width - 250;
+				rightposY = -100;
+				portraitRight.x = rightposX;
+				portraitRight.y = rightposY;
 
+				add(portraitLeft);
 				add(portraitRight);
 
+				portraitLeft.visible = false;
 				portraitRight.visible = false;
 			}
 		}
-		
-		box.animation.play('normalOpen');
-		box.setGraphicSize(Std.int(box.width * PlayState.daPixelZoom * 0.9));
-		box.updateHitbox();
 
 		add(box);
 
-		box.screenCenter(X);
-
-		portraitLeft.y = box.y;
-		portraitRight.y = box.y;
+		if (isAnimated)
+			box.animation.play('normalOpen');
 
 		switch(PlayState.SONG.song.toLowerCase())
 		{
@@ -339,37 +349,31 @@ class DialogueBox extends FlxSpriteGroup
 			case 'left':
 			{
 				portraitLeft = updatePortraits(curCharacter, false);
+
 				portraitLeft.alpha = 1;
 				portraitRight.alpha = 0;
-				switch(curCharacter)
-				{
-					case 'bf-pixel':
-						portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
-					case 'senpai' | 'senpai-angry' | 'spirit':
-						portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
-				}
+
+				portraitSetGraphicSize(curCharacter, portraitLeft);
 				portraitLeft.updateHitbox();
 				portraitLeft.scrollFactor.set();
-				portraitLeft.y = -100;
-				portraitLeft.x = box.x + 250;
+				portraitLeft.y = leftposY;
+				portraitLeft.x = leftposX;
+
 				add(portraitLeft);
 			}
 			case 'right':
 			{
 				portraitRight = updatePortraits(curCharacter, true);
+
 				portraitRight.alpha = 1;
 				portraitLeft.alpha = 0;
-				switch(curCharacter)
-				{
-					case 'bf-pixel':
-						portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
-					case 'senpai' | 'senpai-angry' | 'spirit':
-						portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
-				}
+
+				portraitSetGraphicSize(curCharacter, portraitRight);
 				portraitRight.updateHitbox();
 				portraitRight.scrollFactor.set();
-				portraitRight.y = -100;
-				portraitRight.x = box.x + box.width - portraitRight.width - 250;
+				portraitRight.y = rightposY;
+				portraitRight.x = rightposX;
+
 				add(portraitRight);
 			}
 			case 'middle':
@@ -384,33 +388,32 @@ class DialogueBox extends FlxSpriteGroup
 				portraitRight.alpha = 1;
 				portraitLeft.alpha = 1;
 
-				switch(portrait1)
-				{
-					case 'bf-pixel':
-						portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
-					case 'senpai' | 'senpai-angry' | 'spirit':
-						portraitLeft.setGraphicSize(Std.int(portraitLeft.width * PlayState.daPixelZoom * 0.9));
-				}
+				portraitSetGraphicSize(portrait1, portraitLeft);
 				portraitLeft.updateHitbox();
 				portraitLeft.scrollFactor.set();
-				portraitLeft.y = -100;
-				portraitLeft.x = box.x + 250;
+				portraitLeft.y = leftposY;
+				portraitLeft.x = leftposX;
 
-				switch(portrait2)
-				{
-					case 'bf-pixel':
-						portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
-					case 'senpai' | 'senpai-angry' | 'spirit':
-						portraitRight.setGraphicSize(Std.int(portraitRight.width * PlayState.daPixelZoom * 0.9));
-				}
+				portraitSetGraphicSize(portrait2, portraitRight);
 				portraitRight.updateHitbox();
 				portraitRight.scrollFactor.set();
-				portraitRight.y = -100;
-				portraitRight.x = box.x + box.width - portraitRight.width - 250;
+				portraitRight.y = rightposY;
+				portraitRight.x = rightposX;
 
 				add(portraitLeft);
 				add(portraitRight);
 			}
+		}
+	}
+
+	function portraitSetGraphicSize(character:String = 'bf', object:Portrait)
+	{
+		switch(character)
+		{
+			case 'bf-pixel':
+				object.setGraphicSize(Std.int(object.width * PlayState.daPixelZoom * 0.9));
+			case 'senpai' | 'senpai-angry' | 'spirit':
+				object.setGraphicSize(Std.int(object.width * PlayState.daPixelZoom * 0.9));
 		}
 	}
 

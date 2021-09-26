@@ -43,6 +43,7 @@ class VideoState extends MusicBeatState
 		
 		leSource = source;
 		transClass = toTrans;
+
 		if (frameSkipLimit != -1 && GlobalVideo.isWebm)
 		{
 			GlobalVideo.getWebm().webm.SKIP_STEP_LIMIT = frameSkipLimit;	
@@ -132,59 +133,58 @@ class VideoState extends MusicBeatState
 			soundMultiplier = GlobalVideo.get().webm.renderedCount / videoFrames;
 			
 			if (soundMultiplier > 1)
-			{
 				soundMultiplier = 1;
-			}
+
 			if (soundMultiplier < 0)
-			{
 				soundMultiplier = 0;
-			}
+
 			if (doShit)
 			{
 				var compareShit:Float = 50;
 				if (vidSound.time >= (vidSound.length * soundMultiplier) + compareShit || vidSound.time <= (vidSound.length * soundMultiplier) - compareShit)
 					vidSound.time = vidSound.length * soundMultiplier;
 			}
+
 			if (wasFuckingHit)
 			{
-			if (soundMultiplier == 0)
-			{
-				if (prevSoundMultiplier != 0)
+				if (soundMultiplier == 0)
 				{
-					vidSound.pause();
-					vidSound.time = 0;
-				}
-			} else {
-				if (prevSoundMultiplier == 0)
+					if (prevSoundMultiplier != 0)
+					{
+						vidSound.pause();
+						vidSound.time = 0;
+					}
+				} 
+				else
 				{
-					vidSound.resume();
-					vidSound.time = vidSound.length * soundMultiplier;
+					if (prevSoundMultiplier == 0)
+					{
+						vidSound.resume();
+						vidSound.time = vidSound.length * soundMultiplier;
+					}
 				}
-			}
-			prevSoundMultiplier = soundMultiplier;
+				prevSoundMultiplier = soundMultiplier;
 			}
 		}
 		
 		if (notDone)
-		{
 			FlxG.sound.music.volume = 0;
-		}
+
 		GlobalVideo.get().update(elapsed);
 
 		if (controls.RESET)
-		{
 			GlobalVideo.get().restart();
-		}
 		
 		if (FlxG.keys.justPressed.P)
 		{
 			txt.text = pauseText;
-			trace("PRESSED PAUSE");
+
 			GlobalVideo.get().togglePause();
+
 			if (GlobalVideo.get().paused)
-			{
 				GlobalVideo.get().alpha();
-			} else {
+			else
+			{
 				GlobalVideo.get().unalpha();
 				txt.text = defaultText;
 			}
@@ -202,19 +202,19 @@ class VideoState extends MusicBeatState
 			notDone = false;
 			FlxG.sound.music.volume = fuckingVolume;
 			txt.text = pauseText;
+
 			if (musicPaused)
 			{
 				musicPaused = false;
 				FlxG.sound.music.resume();
 			}
+
 			FlxG.autoPause = true;
 			FlxG.switchState(transClass);
 		}
 		
 		if (GlobalVideo.get().played || GlobalVideo.get().restarted)
-		{
 			GlobalVideo.get().show();
-		}
 		
 		GlobalVideo.get().restarted = false;
 		GlobalVideo.get().played = false;

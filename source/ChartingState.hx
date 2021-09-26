@@ -570,10 +570,16 @@ class ChartingState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music.time > FlxG.sound.music.length)
+		{
 			FlxG.sound.music.time = FlxG.sound.music.length;
+			vocals.time = FlxG.sound.music.time;
+		}
 
 		if (curBeat < 0)
+		{
 			FlxG.sound.music.time = 0;
+			vocals.time = FlxG.sound.music.time;
+		}
 
 		curStep = recalculateSteps();
 
@@ -626,7 +632,10 @@ class ChartingState extends MusicBeatState
 		else if (strumLine.y < -10)
 		{
 			if (_song.notes[curSection - 1] == null)
+			{
 				FlxG.sound.music.time = 0;
+				vocals.time = FlxG.sound.music.time;
+			}
 	
 			changeSection(curSection - 1, false);
 		}
@@ -753,6 +762,7 @@ class ChartingState extends MusicBeatState
 				{
 					vocals.play();
 					FlxG.sound.music.play();
+					vocals.time = FlxG.sound.music.time;
 				}
 			}
 

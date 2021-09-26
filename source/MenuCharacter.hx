@@ -7,7 +7,8 @@ class MenuCharacter extends FlxSprite
 {
 	public var character:String;
 	
-	var looped:Bool;
+	private var looped:Bool = true;
+	private var animated:Bool = true;
 
 	public function new(x:Float, character:String = 'bf')
 	{
@@ -18,34 +19,28 @@ class MenuCharacter extends FlxSprite
 		switch(character)
 		{
 			case 'bfConfirm':
+				character = 'confirmbf';
 				looped = false;
+			case '' | null:
+				character = 'dad';
+				animated = false;
+				visible = false;
 			default:
-				looped = true;
+				visible = true;
 		}
 
-		/*
-		var tex = Paths.getSparrowAtlas('menucharacters/' + character, 'preload');
-		frames = tex;
+		//Still wip...
 
-		animation.addByPrefix(character, character, 24, looped);
-		*/
+		//frames = Paths.getSparrowAtlas('menucharacters/' + character, 'preload');
 
-		var tex = Paths.getSparrowAtlas('campaign_menu_UI_characters', 'preload');
-		frames = tex;
+		frames = Paths.getSparrowAtlas('campaign_menu_UI_characters', 'preload');
 
-		animation.addByPrefix('bf', "BF idle dance white", 24);
-		animation.addByPrefix('bfConfirm', 'BF HEY!!', 24, looped);
-		animation.addByPrefix('gf', "GF Dancing Beat WHITE", 24);
-		animation.addByPrefix('dad', "Dad idle dance BLACK LINE", 24);
-		animation.addByPrefix('spooky', "spooky dance idle BLACK LINES", 24);
-		animation.addByPrefix('pico', "Pico Idle Dance", 24);
-		animation.addByPrefix('mom', "Mom Idle BLACK LINES", 24);
-		animation.addByPrefix('parents-christmas', "Parent Christmas Idle", 24);
-		animation.addByPrefix('senpai', "SENPAI idle Black Lines", 24);
+		if (animated)
+		{
+			animation.addByPrefix(character, character, 24, looped);
+			animation.play(character);
+		}
 
-		// WIP SHIT, not coming now
-
-		animation.play(character);
 		updateHitbox();
 	}
 }

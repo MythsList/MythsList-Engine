@@ -8,7 +8,7 @@ class MythsListEngineData
 {
     // VERSION
 
-    public static var engineVersion:String = "V.1.0.7";
+    public static var engineVersion:String = "V.1.0.8";
     public static var modVersion:String = " ";
 
     // KEYBINDS
@@ -24,6 +24,7 @@ class MythsListEngineData
     public static var downScroll:Bool;
     public static var middleScroll:Bool;
 	public static var ghostTapping:Bool;
+	public static var inputsCounter:Bool;
     public static var statsDisplay:Bool;
     public static var songinfosDisplay:Bool;
     public static var versionDisplay:Bool;
@@ -73,6 +74,8 @@ class MythsListEngineData
 			FlxG.save.data.middleScroll = false;
 		if (FlxG.save.data.ghostTapping == null)
 			FlxG.save.data.ghostTapping = false;
+		if (FlxG.save.data.inputsCounter == null)
+			FlxG.save.data.inputsCounter = false;
 		if (FlxG.save.data.statsDisplay == null)
 			FlxG.save.data.statsDisplay = true;
 		if (FlxG.save.data.songinfosDisplay == null)
@@ -125,6 +128,7 @@ class MythsListEngineData
 		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
 		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
 		MythsListEngineData.ghostTapping = FlxG.save.data.ghostTapping;
+		MythsListEngineData.inputsCounter = FlxG.save.data.inputsCounter;
 		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
@@ -156,6 +160,7 @@ class MythsListEngineData
 		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
 		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
 		MythsListEngineData.ghostTapping = FlxG.save.data.ghostTapping;
+		MythsListEngineData.inputsCounter = FlxG.save.data.inputsCounter;
 		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
@@ -189,6 +194,8 @@ class MythsListEngineData
 			FlxG.save.data.middleScroll = false;
 		if (FlxG.save.data.ghostTapping != null)
 			FlxG.save.data.ghostTapping = false;
+		if (FlxG.save.data.inputsCounter != null)
+			FlxG.save.data.inputsCounter = false;
 		if (FlxG.save.data.statsDisplay != null)
 			FlxG.save.data.statsDisplay = true;
 		if (FlxG.save.data.songinfosDisplay != null)
@@ -241,6 +248,7 @@ class MythsListEngineData
 		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
 		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
 		MythsListEngineData.ghostTapping = FlxG.save.data.ghostTapping;
+		MythsListEngineData.inputsCounter = FlxG.save.data.inputsCounter;
 		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;

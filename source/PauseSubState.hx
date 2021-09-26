@@ -12,6 +12,7 @@ import flixel.text.FlxText;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
+import flixel.util.FlxTimer;
 
 class PauseSubState extends MusicBeatSubstate
 {
@@ -21,6 +22,8 @@ class PauseSubState extends MusicBeatSubstate
 
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 	var menuItems:Array<String>;
+
+	var canSelect:Bool = false;
 
 	public function new(x:Float, y:Float)
 	{
@@ -80,6 +83,11 @@ class PauseSubState extends MusicBeatSubstate
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
+
+		new FlxTimer().start(0.4, function(tmr:FlxTimer)
+		{
+			canSelect = true;
+		});
 	}
 
 	override function update(elapsed:Float)
@@ -91,10 +99,11 @@ class PauseSubState extends MusicBeatSubstate
 
 		if (controls.UP_P)
 			changeSelection(-1);
+		
 		if (controls.DOWN_P)
 			changeSelection(1);
 
-		if (controls.ACCEPT)
+		if ((controls.PAUSE || controls.ACCEPT) && canSelect)
 		{
 			var daSelected:String = menuItems[curSelected];
 
