@@ -693,7 +693,9 @@ class PlayState extends MusicBeatState
 		botTxt.cameras = [camHUD];
 		engineversion.cameras = [camHUD];
 		version.cameras = [camHUD];
-		inputsTxt.cameras = [camHUD];
+			
+		if (MythsListEngineData.inputsCounter)
+			inputsTxt.cameras = [camHUD];
 
 		if (MythsListEngineData.songpositionDisplay)
 		{
