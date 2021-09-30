@@ -334,7 +334,7 @@ class PlayState extends MusicBeatState
 		
 		if (dad.hasTrail)
 		{
-			var evilTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
+			var evilTrail:FlxTrail = new FlxTrail(dad, null, 4, 24, 0.3, 0.069);
 			add(evilTrail);
 		}
 
@@ -395,7 +395,7 @@ class PlayState extends MusicBeatState
 		
 		if (boyfriend.hasTrail)
 		{
-			var evilTrail = new FlxTrail(boyfriend, null, 4, 24, 0.3, 0.069);
+			var evilTrail:FlxTrail = new FlxTrail(boyfriend, null, 4, 24, 0.3, 0.069);
 			add(evilTrail);
 		}
 
@@ -693,7 +693,9 @@ class PlayState extends MusicBeatState
 		botTxt.cameras = [camHUD];
 		engineversion.cameras = [camHUD];
 		version.cameras = [camHUD];
-		inputsTxt.cameras = [camHUD];
+
+		if (MythsListEngineData.inputsCounter)
+			inputsTxt.cameras = [camHUD];
 
 		if (MythsListEngineData.songpositionDisplay)
 		{
@@ -1228,8 +1230,7 @@ class PlayState extends MusicBeatState
 					babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
 					babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
 
-					if (MythsListEngineData.antiAliasing)
-						babyArrow.antialiasing = true;
+					babyArrow.antialiasing = MythsListEngineData.antiAliasing;
 
 					babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
 
@@ -1400,7 +1401,7 @@ class PlayState extends MusicBeatState
 
 	function truncateFloat(number:Float, precision:Int):Float
 	{
-		var num = number;
+		var num:Float = number;
 
 		num = num * Math.pow(10, precision);
 		num = Math.round(num) / Math.pow(10, precision);
@@ -1675,29 +1676,15 @@ class PlayState extends MusicBeatState
 			vocals.stop();
 			FlxG.sound.music.stop();
 
-			FlxG.save.data.deathAmount += 1;
-			MythsListEngineData.deathAmount = FlxG.save.data.deathAmount;
+			//DEATH ACHIEVEMENT
 
-			switch(MythsListEngineData.deathAmount)
-			{
-				case 1:
-					FlxG.save.data.dataCategoryThree[0] = true;
-					MythsListEngineData.dataCategoryThree[0] = FlxG.save.data.dataCategoryThree[0];
-				case 15:
-					FlxG.save.data.dataCategoryThree[1] = true;
-					MythsListEngineData.dataCategoryThree[1] = FlxG.save.data.dataCategoryThree[1];
-				case 25:
-					FlxG.save.data.dataCategoryThree[2] = true;
-					MythsListEngineData.dataCategoryThree[2] = FlxG.save.data.dataCategoryThree[2];
-				case 50:
-					FlxG.save.data.dataCategoryThree[3] = true;
-					MythsListEngineData.dataCategoryThree[3] = FlxG.save.data.dataCategoryThree[3];
-				case 80:
-					FlxG.save.data.dataCategoryThree[4] = true;
-					MythsListEngineData.dataCategoryThree[4] = FlxG.save.data.dataCategoryThree[4];
-			}
-
+			FlxG.save.data.deathAmount ++;
 			FlxG.save.flush();
+
+			MythsListEngineData.dataSave();
+			AchievementsUnlock.deathAchievement();
+
+			//DEATH ACHIEVEMENT
 
 			openSubState(new GameOverSubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y, boyfriend.curCharacter));
 			
@@ -1752,7 +1739,7 @@ class PlayState extends MusicBeatState
 
 						if ((!daNote.mustPress || daNote.wasGoodHit || daNote.prevNote.wasGoodHit && !daNote.canBeHit) && daNote.y - daNote.offset.y * daNote.scale.y + daNote.height >= (strumLine.y + Note.swagWidth / 2))
 						{
-								var swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
+								var swagRect:FlxRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
 								swagRect.y /= daNote.scale.y;
 								swagRect.height -= swagRect.y;
 	
@@ -1771,7 +1758,7 @@ class PlayState extends MusicBeatState
 					{
 				   		if (daNote.y + daNote.offset.y <= strumLine.y + Note.swagWidth / 2 && (!daNote.mustPress || (daNote.wasGoodHit || (daNote.prevNote.wasGoodHit && !daNote.canBeHit))))
 				    	{
-					   		var swagRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
+					   		var swagRect:FlxRect = new FlxRect(0, strumLine.y + Note.swagWidth / 2 - daNote.y, daNote.width * 2, daNote.height * 2);
 					   		swagRect.y /= daNote.scale.y;
 				       		swagRect.height -= swagRect.y;
 
@@ -1888,101 +1875,30 @@ class PlayState extends MusicBeatState
 
 		Highscore.saveScore(SONG.song, songScore, storyDifficulty);
 		
-		FlxG.save.data.playAmount += 1;
-		MythsListEngineData.playAmount = FlxG.save.data.playAmount;
-		
-		if (MythsListEngineData.downScroll)
-		{
-			FlxG.save.data.playDownscroll = true;
-			MythsListEngineData.playDownscroll = FlxG.save.data.playDownscroll;
-		}
-		else
-		{
-			FlxG.save.data.playUpscroll = true;
-			MythsListEngineData.playUpscroll = FlxG.save.data.playUpscroll;
-		}
+		// DATA
 
-		if (MythsListEngineData.middleScroll)
-		{
-			FlxG.save.data.playMiddlescroll = true;
-			MythsListEngineData.playMiddlescroll = FlxG.save.data.playMiddlescroll;
-		}
-
-		switch(MythsListEngineData.playAmount)
-		{
-			case 1:
-				FlxG.save.data.dataCategoryTwo[0] = true;
-				MythsListEngineData.dataCategoryTwo[0] = FlxG.save.data.dataCategoryTwo[0];
-			case 10:
-				FlxG.save.data.dataCategoryTwo[1] = true;
-				MythsListEngineData.dataCategoryTwo[1] = FlxG.save.data.dataCategoryTwo[1];
-			case 25:
-				FlxG.save.data.dataCategoryTwo[2] = true;
-				MythsListEngineData.dataCategoryTwo[2] = FlxG.save.data.dataCategoryTwo[2];
-			case 50:
-				FlxG.save.data.dataCategoryTwo[3] = true;
-				MythsListEngineData.dataCategoryTwo[3] = FlxG.save.data.dataCategoryTwo[3];
-			case 100:
-				FlxG.save.data.dataCategoryTwo[4] = true;
-				MythsListEngineData.dataCategoryTwo[4] = FlxG.save.data.dataCategoryTwo[4];
-		}
+		FlxG.save.data.playAmount ++;
 
 		if (fc)
-		{
-			FlxG.save.data.fcAmount += 1;
-			MythsListEngineData.fcAmount = FlxG.save.data.fcAmount;
+			FlxG.save.data.fcAmount ++;
+		
+		if (MythsListEngineData.downScroll)
+			FlxG.save.data.playDownscroll = true;
+		else
+			FlxG.save.data.playUpscroll = true;
 
-			switch(MythsListEngineData.fcAmount)
-			{
-				case 1:
-					FlxG.save.data.dataCategoryOne[0] = true;
-					MythsListEngineData.dataCategoryOne[0] = FlxG.save.data.dataCategoryOne[0];
-				case 5:
-					FlxG.save.data.dataCategoryOne[1] = true;
-					MythsListEngineData.dataCategoryOne[1] = FlxG.save.data.dataCategoryOne[1];
-				case 10:
-					FlxG.save.data.dataCategoryOne[2] = true;
-					MythsListEngineData.dataCategoryOne[2] = FlxG.save.data.dataCategoryOne[2];
-				case 25:
-					FlxG.save.data.dataCategoryOne[3] = true;
-					MythsListEngineData.dataCategoryOne[3] = FlxG.save.data.dataCategoryOne[3];
-				case 50:
-					FlxG.save.data.dataCategoryOne[4] = true;
-					MythsListEngineData.dataCategoryOne[4] = FlxG.save.data.dataCategoryOne[4];
-			}
-		}
-
-		switch(MythsListEngineData.playUpscroll)
-		{
-			case true:
-				FlxG.save.data.dataCategoryFour[0] = true;
-				MythsListEngineData.dataCategoryFour[0] = FlxG.save.data.dataCategoryFour[0];
-			case false:
-				FlxG.save.data.dataCategoryFour[0] = false;
-				MythsListEngineData.dataCategoryFour[0] = FlxG.save.data.dataCategoryFour[0];
-		}
-
-		switch(MythsListEngineData.playDownscroll)
-		{
-			case true:
-				FlxG.save.data.dataCategoryFour[1] = true;
-				MythsListEngineData.dataCategoryFour[1] = FlxG.save.data.dataCategoryFour[1];
-			case false:
-				FlxG.save.data.dataCategoryFour[1] = false;
-				MythsListEngineData.dataCategoryFour[1] = FlxG.save.data.dataCategoryFour[1];
-		}
-
-		switch(MythsListEngineData.playMiddlescroll)
-		{
-			case true:
-				FlxG.save.data.dataCategoryFour[2] = true;
-				MythsListEngineData.dataCategoryFour[2] = FlxG.save.data.dataCategoryFour[2];
-			case false:
-				FlxG.save.data.dataCategoryFour[2] = false;
-				MythsListEngineData.dataCategoryFour[2] = FlxG.save.data.dataCategoryFour[2];
-		}
+		if (MythsListEngineData.middleScroll)
+			FlxG.save.data.playMiddlescroll = true;
 
 		FlxG.save.flush();
+
+		MythsListEngineData.dataSave();
+
+		AchievementsUnlock.fcAchievement();
+		AchievementsUnlock.playAchievement();
+		AchievementsUnlock.scrollAchievement();
+
+		// DATA
 
 		if (isStoryMode)
 		{
@@ -2008,15 +1924,7 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
-				var difficulty:String = '';
-
-				switch(storyDifficulty)
-				{
-					case 0:
-						difficulty = '-easy';
-					case 2:
-						difficulty = '-hard';
-				}
+				var difficulty:Array<String> = ['-easy', '', '-hard'];
 
 				switch(SONG.song.toLowerCase())
 				{
@@ -2038,7 +1946,7 @@ class PlayState extends MusicBeatState
 
 				prevCamFollow = camFollow;
 
-				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty, PlayState.storyPlaylist[0]);
+				PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + difficulty[storyDifficulty], PlayState.storyPlaylist[0]);
 				FlxG.sound.music.stop();
 
 				LoadingState.loadAndSwitchState(new PlayState());
@@ -2132,14 +2040,10 @@ class PlayState extends MusicBeatState
 		if (!curStage.startsWith('school'))
 		{
 			rating.setGraphicSize(Std.int(rating.width * 0.7));
-
-			if (MythsListEngineData.antiAliasing)
-				rating.antialiasing = true;
+			rating.antialiasing = MythsListEngineData.antiAliasing;
 
 			comboSpr.setGraphicSize(Std.int(comboSpr.width * 0.7));
-
-			if (MythsListEngineData.antiAliasing)
-				comboSpr.antialiasing = true;
+			comboSpr.antialiasing = MythsListEngineData.antiAliasing;
 		}
 		else
 		{
@@ -2178,13 +2082,14 @@ class PlayState extends MusicBeatState
 
 			if (!curStage.startsWith('school'))
 			{
-				if (MythsListEngineData.antiAliasing)
-					numScore.antialiasing = true;
-				
 				numScore.setGraphicSize(Std.int(numScore.width * 0.5));
+				numScore.antialiasing = MythsListEngineData.antiAliasing;
 			}
 			else
+			{
 				numScore.setGraphicSize(Std.int(numScore.width * daPixelZoom));
+				numScore.antialiasing = false;
+			}
 
 			numScore.updateHitbox();
 			numScore.acceleration.y = FlxG.random.int(200, 300);
@@ -2255,7 +2160,7 @@ class PlayState extends MusicBeatState
 
 			if (possibleNotes.length > 0)
 			{
-				var daNote = possibleNotes[0];
+				var daNote:Note = possibleNotes[0];
 
 				if (possibleNotes.length >= 2)
 				{
@@ -2396,7 +2301,7 @@ class PlayState extends MusicBeatState
 
 	function badNoteCheck(daNote:Note):Void
 	{
-		var controlArrayPress = [controls.LEFT_P, controls.DOWN_P, controls.UP_P, controls.RIGHT_P];
+		var controlArrayPress:Array<Bool> = [controls.LEFT_P, controls.DOWN_P, controls.UP_P, controls.RIGHT_P];
 
 		if (!MythsListEngineData.ghostTapping)
 		{

@@ -34,9 +34,9 @@ using StringTools;
 class TitleState extends MusicBeatState
 {
 	#if !web
-	public static var soundExt = ".ogg";
+	public static var soundExt:String = ".ogg";
 	#else
-	public static var soundExt = ".mp3";
+	public static var soundExt:String = ".mp3";
 	#end
 
 	public static var initialized:Bool = false;

@@ -1,0 +1,5 @@
+The journey starts.|Play 1 song
+Level up!|Play 10 songs
+The journey continues.|Play 25 songs
+Half way there...|Play 50 songs
+The journey ends.|Play 100 songs

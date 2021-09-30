@@ -50,10 +50,8 @@ class Stage extends FlxSprite
 			}
 			case 'spooky':
 			{
-				var hallowTex = Paths.getSparrowAtlas('halloween_bg', 'week2');
-
-	            var halloweenBG:FlxSprite = new FlxSprite(-200, -100);
-				halloweenBG.frames = hallowTex;
+				var halloweenBG:FlxSprite = new FlxSprite(-200, -100);
+				halloweenBG.frames = Paths.getSparrowAtlas('halloween_bg', 'week2');
 				halloweenBG.animation.addByPrefix('idle', 'halloweem bg0');
 	            halloweenBG.animation.addByPrefix('lightning', 'halloweem bg lightning strike', 24, false);
 	            halloweenBG.animation.play('idle');
@@ -201,7 +199,7 @@ class Stage extends FlxSprite
 			}
 			case 'school':
 			{
-				var bgSky = new FlxSprite().loadGraphic(Paths.image('weeb/weebSky', 'week6'));
+				var bgSky:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('weeb/weebSky', 'week6'));
 		        bgSky.scrollFactor.set(0.1, 0.1);
 
 		        var bgSchool:FlxSprite = new FlxSprite(-200, 0).loadGraphic(Paths.image('weeb/weebSchool', 'week6'));
@@ -248,8 +246,8 @@ class Stage extends FlxSprite
 			}
 			case 'schoolEvil':
 			{
-				var waveEffectBG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
-		        var waveEffectFG = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 5, 2);
+				var waveEffectBG:FlxWaveEffect = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
+		        var waveEffectFG:FlxWaveEffect = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 5, 2);
 
 		        var bg:FlxSprite = new FlxSprite(420, 200);
 		        bg.frames = Paths.getSparrowAtlas('weeb/animatedEvilSchool', 'week6');

@@ -48,17 +48,10 @@ class Highscore
 
 	public static function formatSong(song:String, diff:Int):String
 	{
-		var daSong:String = song;
-
-		switch(diff)
-		{
-			case 0:
-				daSong += '-easy';
-			case 1:
-				daSong += '';
-			case 2:
-				daSong += '-hard';
-		}
+		var daSong:String;
+		var difficulty:Array<String> = ['-easy', '', '-hard'];
+		
+		daSong = song + difficulty[diff];
 
 		return daSong;
 	}

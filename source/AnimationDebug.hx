@@ -75,7 +75,7 @@ class AnimationDebug extends FlxState
 		}
 		else
 		{
-			bf = new Boyfriend(0, 0);
+			bf = new Boyfriend(0, 0, daAnim);
 			bf.screenCenter();
 			bf.scrollFactor.set();
 			bf.debugMode = true;
@@ -93,7 +93,7 @@ class AnimationDebug extends FlxState
 			bf.flipX = false;
 		}
 
-		redgridBG.screenCenter();
+		redgridBG.screenCenter(XY);
 
 		dumbTexts = new FlxTypedGroup<FlxText>();
 		add(dumbTexts);
@@ -150,22 +150,9 @@ class AnimationDebug extends FlxState
 
 		switch(char.animation.curAnim.name.toLowerCase())
 		{
-			case 'danceleft' | 'danceright':
+			case 'danceleft' | 'danceright' | 'idle':
 			{
-				if (isDad == true)
-				{
-					redgridBG.x = (dad.getGraphicMidpoint().x) - (redgridBG.width / 2);
-					redgridBG.y = (dad.getGraphicMidpoint().y) - (redgridBG.height / 2);
-				}
-				else
-				{
-					redgridBG.x = (bf.getGraphicMidpoint().x) - (redgridBG.width / 2);
-					redgridBG.y = (bf.getGraphicMidpoint().y) - (redgridBG.height / 2);
-				}
-			}
-			case 'idle':
-			{
-				if (isDad == true)
+				if (isDad)
 				{
 					redgridBG.x = (dad.getGraphicMidpoint().x) - (redgridBG.width / 2);
 					redgridBG.y = (dad.getGraphicMidpoint().y) - (redgridBG.height / 2);
@@ -180,44 +167,40 @@ class AnimationDebug extends FlxState
 
 		if (FlxG.keys.justPressed.E)
 			FlxG.camera.zoom += 0.25;
+
 		if (FlxG.keys.justPressed.Q)
 			FlxG.camera.zoom -= 0.25;
 
-		if (FlxG.keys.pressed.I || FlxG.keys.pressed.J || FlxG.keys.pressed.K || FlxG.keys.pressed.L)
+		var camControlArray:Array<Bool> = [FlxG.keys.pressed.I, FlxG.keys.pressed.J, FlxG.keys.pressed.K, FlxG.keys.pressed.L];
+
+		if (camControlArray.contains(true))
 		{
-			if (FlxG.keys.pressed.I)
+			if (camControlArray[0])
 				camFollow.velocity.y = -90;
-			else if (FlxG.keys.pressed.K)
+			else if (camControlArray[2])
 				camFollow.velocity.y = 90;
 			else
 				camFollow.velocity.y = 0;
 
-			if (FlxG.keys.pressed.J)
+			if (camControlArray[1])
 				camFollow.velocity.x = -90;
-			else if (FlxG.keys.pressed.L)
+			else if (camControlArray[3])
 				camFollow.velocity.x = 90;
 			else
 				camFollow.velocity.x = 0;
 		}
 		else
-		{
 			camFollow.velocity.set();
-		}
 
 		if (FlxG.keys.justPressed.W)
-		{
-			curAnim -= 1;
-		}
+			curAnim --;
 
 		if (FlxG.keys.justPressed.S)
-		{
-			curAnim += 1;
-		}
+			curAnim ++;
 
 		if (curAnim < 0)
 			curAnim = animList.length - 1;
-
-		if (curAnim >= animList.length)
+		else if (curAnim >= animList.length)
 			curAnim = 0;
 
 		if (FlxG.keys.justPressed.S || FlxG.keys.justPressed.W || FlxG.keys.justPressed.SPACE)
@@ -228,38 +211,42 @@ class AnimationDebug extends FlxState
 			genBoyOffsets(false);
 		}
 
-		var upP = FlxG.keys.anyJustPressed([UP]);
-		var rightP = FlxG.keys.anyJustPressed([RIGHT]);
-		var downP = FlxG.keys.anyJustPressed([DOWN]);
-		var leftP = FlxG.keys.anyJustPressed([LEFT]);
+		var offsetControlArray:Array<Bool> = [
+			FlxG.keys.anyJustPressed([UP]),
+			FlxG.keys.anyJustPressed([RIGHT]),
+			FlxG.keys.anyJustPressed([DOWN]),
+			FlxG.keys.anyJustPressed([LEFT])
+		];
 
-		var holdShift = FlxG.keys.pressed.SHIFT;
-		var multiplier = 1;
+		var multiplier:Int = 1;
 
-		if (holdShift)
+		if (FlxG.keys.pressed.SHIFT)
 			multiplier = 10;
 
-		if (upP || rightP || downP || leftP)
+		if (offsetControlArray.contains(true))
 		{
 			updateTexts();
-			if (upP)
+
+			if (offsetControlArray[0])
 				char.animOffsets.get(animList[curAnim])[1] += 1 * multiplier;
-			if (downP)
+
+			if (offsetControlArray[2])
 				char.animOffsets.get(animList[curAnim])[1] -= 1 * multiplier;
-			if (leftP)
+
+			if (offsetControlArray[3])
 				char.animOffsets.get(animList[curAnim])[0] += 1 * multiplier;
-			if (rightP)
+
+			if (offsetControlArray[1])
 				char.animOffsets.get(animList[curAnim])[0] -= 1 * multiplier;
 
 			updateTexts();
+
 			genBoyOffsets(false);
 			char.playAnim(animList[curAnim]);
 		}
 
 		if (FlxG.keys.justPressed.BACKSPACE || FlxG.keys.justPressed.ESCAPE)
-		{
 			FlxG.switchState(new MainMenuState());
-		}
 
 		super.update(elapsed);
 	}

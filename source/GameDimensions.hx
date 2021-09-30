@@ -1,7 +1,9 @@
 package;
 
+import flixel.FlxG;
+
 class GameDimensions
 {
-	public static var width:Int = 1280;
-	public static var height:Int = 720;
+	public static var width:Int = FlxG.width;
+	public static var height:Int = FlxG.height;
 }

@@ -1,0 +1,3 @@
+Play the game normally...I guess?|Play a song using upscroll
+Average rhythm game player.|Play a song using downscroll
+Can't look on both sides.|Play a song using middlescroll

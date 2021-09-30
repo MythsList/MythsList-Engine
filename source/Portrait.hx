@@ -27,14 +27,9 @@ class Portrait extends FlxSprite
 		{
 			case 'bf-pixel' | 'senpai' | 'senpai-angry' | 'spirit':
 				antiAliasing = false;
-				
 				loadGraphic(Paths.image('portraits/portrait-' + newchar, 'shared'), true, 100, 100);
 			default:
-				if (MythsListEngineData.antiAliasing)
-					antiAliasing = true;
-				else
-					antiAliasing = false;
-				
+				antiAliasing = MythsListEngineData.antiAliasing;
 				loadGraphic(Paths.image('portraits/portrait-' + newchar, 'shared'), true, 540, 540);
 		}
 		

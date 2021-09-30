@@ -123,9 +123,8 @@ class Note extends FlxSprite
 
 				setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
-
-				if (MythsListEngineData.antiAliasing)
-					antialiasing = true;
+				
+				antialiasing = MythsListEngineData.antiAliasing;
 			}
 		}
 

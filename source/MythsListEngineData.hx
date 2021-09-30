@@ -8,7 +8,7 @@ class MythsListEngineData
 {
     // VERSION
 
-    public static var engineVersion:String = "V.1.0.8";
+    public static var engineVersion:String = "V.1.0.9";
     public static var modVersion:String = " ";
 
     // KEYBINDS
@@ -38,10 +38,7 @@ class MythsListEngineData
 
     // ACHIEVEMENTS
 
-    public static var dataCategoryOne:Array<Bool>;
-    public static var dataCategoryTwo:Array<Bool>;
-    public static var dataCategoryThree:Array<Bool>;
-	public static var dataCategoryFour:Array<Bool>;
+    public static var dataAchievements:Array<Array<Bool>>;
 
     // ACHIEVEMENTS PROGRESS
 
@@ -92,16 +89,15 @@ class MythsListEngineData
 		if (FlxG.save.data.characterSkin == null)
 			FlxG.save.data.characterSkin = 'bf';
 
-		if (FlxG.save.data.dataCategoryOne == null)
-			FlxG.save.data.dataCategoryOne = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryTwo == null)
-			FlxG.save.data.dataCategoryTwo = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryThree == null)
-			FlxG.save.data.dataCategoryThree = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryThree == null)
-			FlxG.save.data.dataCategoryThree = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryFour == null)
-			FlxG.save.data.dataCategoryFour = [false, false, false, false, false];
+		if (FlxG.save.data.dataAchievements == null)
+		{
+			FlxG.save.data.dataAchievements = [
+				[false, false, false, false, false],
+				[false, false, false, false, false],
+				[false, false, false, false, false],
+				[false, false, false],
+			];
+		}
 
 		if (FlxG.save.data.fcAmount == null)
 			FlxG.save.data.fcAmount = 0;
@@ -138,10 +134,7 @@ class MythsListEngineData
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
 
-		MythsListEngineData.dataCategoryOne = FlxG.save.data.dataCategoryOne;
-		MythsListEngineData.dataCategoryTwo = FlxG.save.data.dataCategoryTwo;
-		MythsListEngineData.dataCategoryThree = FlxG.save.data.dataCategoryThree;
-		MythsListEngineData.dataCategoryFour = FlxG.save.data.dataCategoryFour;
+		MythsListEngineData.dataAchievements = FlxG.save.data.dataAchievements;
 
 		MythsListEngineData.fcAmount = FlxG.save.data.fcAmount;
 		MythsListEngineData.playAmount = FlxG.save.data.playAmount;
@@ -170,10 +163,7 @@ class MythsListEngineData
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
 
-		MythsListEngineData.dataCategoryOne = FlxG.save.data.dataCategoryOne;
-		MythsListEngineData.dataCategoryTwo = FlxG.save.data.dataCategoryTwo;
-		MythsListEngineData.dataCategoryThree = FlxG.save.data.dataCategoryThree;
-		MythsListEngineData.dataCategoryFour = FlxG.save.data.dataCategoryFour;
+		MythsListEngineData.dataAchievements = FlxG.save.data.dataAchievements;
 
 		MythsListEngineData.fcAmount = FlxG.save.data.fcAmount;
 		MythsListEngineData.playAmount = FlxG.save.data.playAmount;
@@ -212,16 +202,15 @@ class MythsListEngineData
 		if (FlxG.save.data.characterSkin != null)
 			FlxG.save.data.characterSkin = 'bf';
 
-		if (FlxG.save.data.dataCategoryOne != null)
-			FlxG.save.data.dataCategoryOne = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryTwo != null)
-			FlxG.save.data.dataCategoryTwo = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryThree != null)
-			FlxG.save.data.dataCategoryThree = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryThree != null)
-			FlxG.save.data.dataCategoryThree = [false, false, false, false, false];
-		if (FlxG.save.data.dataCategoryFour != null)
-			FlxG.save.data.dataCategoryFour = [false, false, false, false, false];
+		if (FlxG.save.data.dataAchievements != null)
+		{
+			FlxG.save.data.dataAchievements = [
+				[false, false, false, false, false],
+				[false, false, false, false, false],
+				[false, false, false, false, false],
+				[false, false, false],
+			];
+		}
 
 		if (FlxG.save.data.fcAmount != null)
 			FlxG.save.data.fcAmount = 0;
@@ -258,10 +247,7 @@ class MythsListEngineData
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
 
-		MythsListEngineData.dataCategoryOne = FlxG.save.data.dataCategoryOne;
-		MythsListEngineData.dataCategoryTwo = FlxG.save.data.dataCategoryTwo;
-		MythsListEngineData.dataCategoryThree = FlxG.save.data.dataCategoryThree;
-		MythsListEngineData.dataCategoryFour = FlxG.save.data.dataCategoryFour;
+		MythsListEngineData.dataAchievements = FlxG.save.data.dataAchievements;
 
 		MythsListEngineData.fcAmount = FlxG.save.data.fcAmount;
 		MythsListEngineData.playAmount = FlxG.save.data.playAmount;

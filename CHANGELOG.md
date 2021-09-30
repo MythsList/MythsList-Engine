@@ -2,6 +2,22 @@
 
 All notable changes will be documented in this file.
 
+## [V.1.0.9]
+### Overhaul
+- Made AchievementsSubState.hx modder friendly (Still needs coding knowledge)
+
+### Addition
+- Added AchievementsUnlock.hx to make it "easier" setting up your own achievement
+
+### Tweak
+- Massive code cleaning including : Character.hx, ChartingState.hx, AnimationDebug.hx and some other files
+
+### Bugfix
+- Fixed V.1.0.8's inputs counter crash
+
+### Removal
+- Removed more useless or unused stuff
+
 ## [V.1.0.8]
 ### Addition
 - ADDED A WIKI ON THE GITHUB PAGE

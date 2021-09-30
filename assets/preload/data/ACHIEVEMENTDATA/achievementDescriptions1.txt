@@ -1,0 +1,5 @@
+FC novice|Full combo 1 song
+FC amateur|Full combo 5 songs
+FC professional|Full combo 10 songs
+FC master|Full combo 25 songs
+FC legend|Full combo 50 songs

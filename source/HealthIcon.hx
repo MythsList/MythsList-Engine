@@ -35,7 +35,7 @@ class HealthIcon extends FlxSprite
 
 		loadGraphic(Paths.image('healthicons/icon-' + newchar, 'preload'), true, 150, 150);
 
-		if ((MythsListEngineData.antiAliasing && daAntialiasing) || (daAntialiasing && isMenuIcon))
+		if ((MythsListEngineData.antiAliasing || isMenuIcon) && daAntialiasing)
 			antialiasing = true;
 		else
 			antialiasing = false;

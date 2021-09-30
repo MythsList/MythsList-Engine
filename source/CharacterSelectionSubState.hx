@@ -389,7 +389,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 			case 'brody-foxx':
 				curCharacter.x -= 60;
 			case 'template':
-				curCharacter.x -= 100;
+				curCharacter.x -= 50;
 		}
 	}
 
