@@ -1,5 +1,6 @@
 package;
 
+import js.html.Float64Array;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.FlxState;
@@ -43,15 +44,17 @@ class LatencyState extends FlxState
 
 		Conductor.songPosition = FlxG.sound.music.time - Conductor.offset;
 
-		var multiply:Float = 1;
+		var multiply:Float;
 
 		if (FlxG.keys.pressed.SHIFT)
 			multiply = 10;
+		else
+			multiply = 1;
 
 		if (FlxG.keys.justPressed.RIGHT)
-			Conductor.offset += 1 * multiply;
+			Conductor.offset += multiply;
 		if (FlxG.keys.justPressed.LEFT)
-			Conductor.offset -= 1 * multiply;
+			Conductor.offset -= multiply;
 
 		if (FlxG.keys.justPressed.SPACE)
 		{

@@ -99,7 +99,6 @@ class TitleState extends MusicBeatState
 		Application.current.onExit.add (function (exitCode) {
 			DiscordClient.shutdown();
 		});
-
 		#end
 	}
 
@@ -256,6 +255,7 @@ class TitleState extends MusicBeatState
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
 			titleText.animation.play('press');
+			titleText.offset.set(-9, -8);
 
 			FlxG.camera.flash(FlxColor.WHITE, 1);
 			FlxG.sound.play(Paths.sound('confirmMenu', 'preload'), 0.7);
@@ -267,13 +267,9 @@ class TitleState extends MusicBeatState
 				var version:String = "v" + Application.current.meta.get('version');
 
 				if (version.trim() != NGio.GAME_VER_NUMS.trim() && !OutdatedSubState.leftState)
-				{
 					FlxG.switchState(new OutdatedSubState());
-				}
 				else
-				{
 					FlxG.switchState(new MainMenuState());
-				}
 			});
 		}
 

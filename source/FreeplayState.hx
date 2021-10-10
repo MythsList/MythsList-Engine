@@ -46,10 +46,12 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In The Freeplay Menu", null);
 		#end
 
-		var isDebug:Bool = false;
+		var isDebug:Bool;
 
 		#if debug
-		isDebug = true;
+			isDebug = true;
+		#else
+			isDebug = false;
 		#end
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
@@ -135,14 +137,17 @@ class FreeplayState extends MusicBeatState
 
 		leftArrow = new FlxText(scoreBG.x + 5, scoreText.y + 35, 0, "<", 24);
 		leftArrow.font = scoreText.font;
+		leftArrow.antialiasing = true;
 		add(leftArrow);
 
 		diffText = new FlxText(leftArrow.width + leftArrow.x + 5, leftArrow.y, 0, "NORMAL", 24);
 		diffText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		diffText.antialiasing = true;
 		add(diffText);
 
 		rightArrow = new FlxText(diffText.width + diffText.x + 5, diffText.y, 0, ">", 24);
 		rightArrow.font = scoreText.font;
+		rightArrow.antialiasing = true;
 		add(rightArrow);
 
 		var engineversionText:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
@@ -224,9 +229,11 @@ class FreeplayState extends MusicBeatState
 
 				selected = true;
 
-				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
+				var songName:String = songs[curSelected].songName.toLowerCase();
 
-				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
+				var poop:String = Highscore.formatSong(songName, curDifficulty);
+
+				PlayState.SONG = Song.loadFromJson(poop, songName);
 				PlayState.isStoryMode = false;
 				PlayState.storyDifficulty = curDifficulty;
 
@@ -238,29 +245,31 @@ class FreeplayState extends MusicBeatState
 
 	function changeDiff(change:Int = 0)
 	{
+		var difficultyArray:Array<String> = [
+			'EASY',
+			'NORMAL',
+			'HARD'
+		];
+
+		var colorArray:Array<FlxColor> = [
+			0xFF00FF00,
+			0xFFFFFF00,
+			0xFFFF0000
+		];
+
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
-			curDifficulty = 2;
-		if (curDifficulty > 2)
+			curDifficulty = Std.int(difficultyArray.length - 1);
+		else if (curDifficulty >= difficultyArray.length)
 			curDifficulty = 0;
 
 		#if !switch
 		intendedScore = Highscore.getScore(songs[curSelected].songName, curDifficulty);
 		#end
 
-		switch (curDifficulty)
-		{
-			case 0:
-				diffText.text = 'EASY';
-				diffText.color = 0xFF00FF00;
-			case 1:
-				diffText.text = 'NORMAL';
-				diffText.color = 0xFFFFFF00;
-			case 2:
-				diffText.text = 'HARD';
-				diffText.color = 0xFFFF0000;
-		}
+		diffText.text = difficultyArray[curDifficulty];
+		diffText.color = colorArray[curDifficulty];
 
 		diffText.x = leftArrow.width + leftArrow.x + 5;
 		diffText.y = leftArrow.y;
@@ -277,7 +286,7 @@ class FreeplayState extends MusicBeatState
 
 		if (curSelected < 0)
 			curSelected = songs.length - 1;
-		if (curSelected >= songs.length)
+		else if (curSelected >= songs.length)
 			curSelected = 0;
 
 		#if !switch
@@ -305,9 +314,7 @@ class FreeplayState extends MusicBeatState
 			item.alpha = 0.6;
 
 			if (item.targetY == 0)
-			{
 				item.alpha = 1;
-			}
 		}
 	}
 }

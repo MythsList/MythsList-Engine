@@ -23,8 +23,6 @@ class Stage extends FlxSprite
 		{
 			case 'stage':
 			{
-				PlayState.defaultCamZoom = 0.9;
-
 				var bg:FlxSprite = new FlxSprite(-600, -200).loadGraphic(Paths.image('stageback', 'week1'));
 		        bg.antialiasing = daAntialiasing;
 		        bg.scrollFactor.set(0.9, 0.9);
@@ -61,10 +59,10 @@ class Stage extends FlxSprite
 			}
 			case 'philly':
 			{
-				var bg:FlxSprite = new FlxSprite(-100).loadGraphic(Paths.image('philly/sky', 'week3'));
+				var bg:FlxSprite = new FlxSprite(-100, 0).loadGraphic(Paths.image('philly/sky', 'week3'));
 		        bg.scrollFactor.set(0.1, 0.1);
 
-	            var city:FlxSprite = new FlxSprite(-10).loadGraphic(Paths.image('philly/city', 'week3'));
+	            var city:FlxSprite = new FlxSprite(-10, 0).loadGraphic(Paths.image('philly/city', 'week3'));
 		        city.scrollFactor.set(0.3, 0.3);
 		        city.setGraphicSize(Std.int(city.width * 0.85));
 		        city.updateHitbox();
@@ -91,8 +89,6 @@ class Stage extends FlxSprite
 			}
 			case 'limo':
 			{
-				PlayState.defaultCamZoom = 0.9;
-
 		        var skyBG:FlxSprite = new FlxSprite(-120, -50).loadGraphic(Paths.image('limo/limoSunset', 'week4'));
 		        skyBG.scrollFactor.set(0.1, 0.1);
 
@@ -124,8 +120,6 @@ class Stage extends FlxSprite
 			}
 			case 'mall':
 			{
-				PlayState.defaultCamZoom = 0.8;
-
 		        var bg:FlxSprite = new FlxSprite(-1000, -500).loadGraphic(Paths.image('christmas/bgWalls', 'week5'));
 				bg.antialiasing = daAntialiasing;
 		        bg.scrollFactor.set(0.2, 0.2);

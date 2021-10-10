@@ -1,15 +1,13 @@
 package;
 
-import flixel.input.gamepad.FlxGamepad;
-import openfl.Lib;
 import flixel.FlxG;
 
 class MythsListEngineData
 {
     // VERSION
 
-    public static var engineVersion:String = "V.1.0.9";
-    public static var modVersion:String = " ";
+    public static var engineVersion:String = 'V.1.1.0';
+    public static var modVersion:String = '';
 
     // KEYBINDS
 
@@ -29,8 +27,12 @@ class MythsListEngineData
     public static var songinfosDisplay:Bool;
     public static var versionDisplay:Bool;
 	public static var songpositionDisplay:Bool;
-	public static var antiAliasing:Bool;
 	public static var botPlay:Bool;
+
+	// PERFORMANCE
+
+	public static var antiAliasing:Bool;
+	public static var backgroundDisplay:Bool;
 
     // CHARACTER SELECTION
 
@@ -81,10 +83,13 @@ class MythsListEngineData
 			FlxG.save.data.versionDisplay = true;
 		if (FlxG.save.data.songpositionDisplay == null)
 			FlxG.save.data.songpositionDisplay = false;
-		if (FlxG.save.data.antiAliasing == null)
-			FlxG.save.data.antiAliasing = true;
 		if (FlxG.save.data.botPlay == null)
 			FlxG.save.data.botPlay = false;
+
+		if (FlxG.save.data.antiAliasing == null)
+			FlxG.save.data.antiAliasing = true;
+		if (FlxG.save.data.backgroundDisplay == null)
+			FlxG.save.data.backgroundDisplay = true;
 
 		if (FlxG.save.data.characterSkin == null)
 			FlxG.save.data.characterSkin = 'bf';
@@ -129,8 +134,10 @@ class MythsListEngineData
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
 		MythsListEngineData.songpositionDisplay = FlxG.save.data.songpositionDisplay;
-		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
 		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
+
+		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
+		MythsListEngineData.backgroundDisplay = FlxG.save.data.backgroundDisplay;
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
 
@@ -158,8 +165,10 @@ class MythsListEngineData
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
 		MythsListEngineData.songpositionDisplay = FlxG.save.data.songpositionDisplay;
-		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
 		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
+
+		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
+		MythsListEngineData.backgroundDisplay = FlxG.save.data.backgroundDisplay;
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
 
@@ -194,10 +203,13 @@ class MythsListEngineData
 			FlxG.save.data.versionDisplay = true;
 		if (FlxG.save.data.songpositionDisplay != null)
 			FlxG.save.data.songpositionDisplay = false;
-		if (FlxG.save.data.antiAliasing != null)
-			FlxG.save.data.antiAliasing = true;
 		if (FlxG.save.data.botPlay != null)
 			FlxG.save.data.botPlay = false;
+
+		if (FlxG.save.data.antiAliasing != null)
+			FlxG.save.data.antiAliasing = true;
+		if (FlxG.save.data.backgroundDisplay != null)
+			FlxG.save.data.backgroundDisplay = true;
 
 		if (FlxG.save.data.characterSkin != null)
 			FlxG.save.data.characterSkin = 'bf';
@@ -242,8 +254,10 @@ class MythsListEngineData
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
 		MythsListEngineData.songpositionDisplay = FlxG.save.data.songpositionDisplay;
-		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
 		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
+
+		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
+		MythsListEngineData.backgroundDisplay = FlxG.save.data.backgroundDisplay;
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
 

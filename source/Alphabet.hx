@@ -60,16 +60,12 @@ class Alphabet extends FlxSpriteGroup
 		for (character in splitWords)
 		{
 			if (character == " " || character == "-")
-			{
 				lastWasSpace = true;
-			}
 
 			if (AlphaCharacter.alphabet.indexOf(character.toLowerCase()) != -1)
 			{
 				if (lastSprite != null)
-				{
 					xPos = lastSprite.x + lastSprite.width;
-				}
 
 				if (lastWasSpace)
 				{
@@ -118,20 +114,20 @@ class Alphabet extends FlxSpriteGroup
 				curRow += 1;
 			}
 
-			if (splitWords[loopNum] == " ")
-			{
+			var splitWord:String = splitWords[loopNum];
+
+			if (splitWord == " ")
 				lastWasSpace = true;
-			}
 
 			#if (haxe >= "4.0.0")
-			var isNumber:Bool = AlphaCharacter.numbers.contains(splitWords[loopNum]);
-			var isSymbol:Bool = AlphaCharacter.symbols.contains(splitWords[loopNum]);
+			var isNumber:Bool = AlphaCharacter.numbers.contains(splitWord);
+			var isSymbol:Bool = AlphaCharacter.symbols.contains(splitWord);
 			#else
-			var isNumber:Bool = AlphaCharacter.numbers.indexOf(splitWords[loopNum]) != -1;
-			var isSymbol:Bool = AlphaCharacter.symbols.indexOf(splitWords[loopNum]) != -1;
+			var isNumber:Bool = AlphaCharacter.numbers.indexOf(splitWord) != -1;
+			var isSymbol:Bool = AlphaCharacter.symbols.indexOf(splitWord) != -1;
 			#end
 
-			if (AlphaCharacter.alphabet.indexOf(splitWords[loopNum].toLowerCase()) != -1 || isNumber || isSymbol)
+			if (AlphaCharacter.alphabet.indexOf(splitWord.toLowerCase()) != -1 || isNumber || isSymbol)
 			{
 				if (lastSprite != null && !xPosResetted)
 				{
@@ -139,9 +135,7 @@ class Alphabet extends FlxSpriteGroup
 					xPos += lastSprite.width + 3;
 				}
 				else
-				{
 					xPosResetted = false;
-				}
 
 				if (lastWasSpace)
 				{
@@ -153,23 +147,15 @@ class Alphabet extends FlxSpriteGroup
 				letter.row = curRow;
 
 				if (isBold)
-				{
-					letter.createBold(splitWords[loopNum]);
-				}
+					letter.createBold(splitWord);
 				else
 				{
 					if (isNumber)
-					{
-						letter.createNumber(splitWords[loopNum]);
-					}
+						letter.createNumber(splitWord);
 					else if (isSymbol)
-					{
-						letter.createSymbol(splitWords[loopNum]);
-					}
+						letter.createSymbol(splitWord);
 					else
-					{
-						letter.createLetter(splitWords[loopNum]);
-					}
+						letter.createLetter(splitWord);
 
 					letter.x += 90;
 				}
@@ -236,9 +222,7 @@ class AlphaCharacter extends FlxSprite
 		var letterCase:String = "lowercase";
 
 		if (letter.toLowerCase() != letter)
-		{
 			letterCase = 'capital';
-		}
 
 		animation.addByPrefix(letter, letter + " " + letterCase, 24);
 		animation.play(letter);
@@ -260,7 +244,7 @@ class AlphaCharacter extends FlxSprite
 
 	public function createSymbol(letter:String)
 	{
-		switch (letter)
+		switch(letter)
 		{
 			case '.':
 				animation.addByPrefix(letter, 'period', 24);

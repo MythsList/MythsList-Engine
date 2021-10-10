@@ -16,7 +16,7 @@ class Highscore
 
 		if (songScores.exists(daSong))
 		{
-			if (songScores.get(daSong) < score)
+			if (songScores[daSong] < score)
 				setScore(daSong, score);
 		}
 		else
@@ -29,7 +29,7 @@ class Highscore
 
 		if (songScores.exists(daWeek))
 		{
-			if (songScores.get(daWeek) < score)
+			if (songScores[daWeek] < score)
 				setScore(daWeek, score);
 		}
 		else
@@ -40,7 +40,7 @@ class Highscore
 	{
 		if (!MythsListEngineData.botPlay)
 		{
-			songScores.set(song, score);
+			songScores[song] = score;
 			FlxG.save.data.songScores = songScores;
 			FlxG.save.flush();
 		}
@@ -58,18 +58,22 @@ class Highscore
 
 	public static function getScore(song:String, diff:Int):Int
 	{
-		if (!songScores.exists(formatSong(song, diff)))
-			setScore(formatSong(song, diff), 0);
+		var daSong = formatSong(song, diff);
 
-		return songScores.get(formatSong(song, diff));
+		if (!songScores.exists(daSong))
+			setScore(daSong, 0);
+
+		return songScores[daSong];
 	}
 
 	public static function getWeekScore(week:Int, diff:Int):Int
 	{
-		if (!songScores.exists(formatSong('week' + week, diff)))
-			setScore(formatSong('week' + week, diff), 0);
+		var daWeek = formatSong('week' + week, diff);
 
-		return songScores.get(formatSong('week' + week, diff));
+		if (!songScores.exists(daWeek))
+			setScore(daWeek, 0);
+
+		return songScores[daWeek];
 	}
 
 	public static function load():Void

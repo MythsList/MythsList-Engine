@@ -66,17 +66,23 @@ class GameOverSubstate extends MusicBeatSubstate
 		{
 			FlxG.sound.music.stop();
 
+			remove(camFollow);
+			remove(bf);
+
 			if (PlayState.isStoryMode)
 				FlxG.switchState(new StoryMenuState());
 			else
 				FlxG.switchState(new FreeplayState());
 		}
 
-		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.curFrame == 12)
-			FlxG.camera.follow(camFollow, LOCKON, 0.01);
+		if (bf.animation.curAnim.name == 'firstDeath')
+		{
+			if (bf.animation.curAnim.curFrame == 12)
+				FlxG.camera.follow(camFollow, LOCKON, 0.01);
 
-		if (bf.animation.curAnim.name == 'firstDeath' && bf.animation.curAnim.finished)
-			FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix, altLibrary));
+			if (bf.animation.curAnim.finished)
+				FlxG.sound.playMusic(Paths.music('gameOver' + stageSuffix, altLibrary));
+		}
 
 		if (FlxG.sound.music.playing)
 			Conductor.songPosition = FlxG.sound.music.time;
@@ -104,7 +110,10 @@ class GameOverSubstate extends MusicBeatSubstate
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
 				{
-					LoadingState.loadAndSwitchState(new PlayState());
+					remove(camFollow);
+					remove(bf);
+
+					LoadingState.loadAndSwitchState(new PlayState(), true);
 				});
 			});
 		}

@@ -429,10 +429,8 @@ class DialogueBox extends FlxSpriteGroup
 
 	function updatePortraits(curCharacter:String = 'bf', flipped:Bool = false)
 	{
-		var portrait:Portrait;
-
-		portrait = new Portrait(curCharacter, flipped);
-
+		var portrait:Portrait = new Portrait(curCharacter, flipped);
+		
 		return portrait;
 	}
 }

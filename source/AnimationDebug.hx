@@ -11,9 +11,14 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import openfl.net.FileReference;
+import openfl.events.Event;
+import openfl.events.IOErrorEvent;
 
 class AnimationDebug extends FlxState
 {
+	var _file:FileReference;
+
 	var bf:Boyfriend;
 	var dad:Character;
 	var char:Character;
@@ -43,6 +48,9 @@ class AnimationDebug extends FlxState
 	{
 		FlxG.sound.music.stop();
 
+		if (!FlxG.sound.music.playing)
+			FlxG.sound.playMusic(Paths.music('breakfast', 'shared'), 0.4);
+
 		#if desktop
 			DiscordClient.changePresence("In The Animation Debug Menu", null);
 		#end
@@ -51,46 +59,42 @@ class AnimationDebug extends FlxState
 		gridBG.scrollFactor.set();
 		add(gridBG);
 
-		if (daAnim == 'bf')
+		if (CharacterSelectionSubState.icons.contains(daAnim))
 			isDad = false;
 
 		if (isDad == true)
 		{
 			dad = new Character(0, 0, daAnim);
-			dad.screenCenter();
-			dad.scrollFactor.set();
+			dad.updateHitbox();
+			dad.screenCenter(XY);
+			dad.scrollFactor.set(1, 1);
 			dad.debugMode = true;
 
-			redgridBG = new FlxSprite(0, 0).makeGraphic(dad.frameWidth, dad.frameHeight, FlxColor.RED);
+			redgridBG = new FlxSprite(0, 0).makeGraphic(Std.int(dad.width), Std.int(dad.height), FlxColor.RED);
 			redgridBG.alpha = 0.25;
-			redgridBG.scrollFactor.set();
+			redgridBG.scrollFactor.set(1, 1);
 			add(redgridBG);
 
 			add(dad);
 
-			dad.updateHitbox();
-
 			char = dad;
-			dad.flipX = false;
 		}
 		else
 		{
 			bf = new Boyfriend(0, 0, daAnim);
-			bf.screenCenter();
-			bf.scrollFactor.set();
+			bf.updateHitbox();
+			bf.screenCenter(XY);
+			bf.scrollFactor.set(1, 1);
 			bf.debugMode = true;
 
-			redgridBG = new FlxSprite(0, 0).makeGraphic(bf.frameWidth, bf.frameHeight, FlxColor.RED);
+			redgridBG = new FlxSprite(0, 0).makeGraphic(Std.int(bf.width), Std.int(bf.height), FlxColor.RED);
 			redgridBG.alpha = 0.25;
-			redgridBG.scrollFactor.set();
+			redgridBG.scrollFactor.set(1, 1);
 			add(redgridBG);
 
 			add(bf);
 
-			bf.updateHitbox();
-
 			char = bf;
-			bf.flipX = false;
 		}
 
 		redgridBG.screenCenter(XY);
@@ -98,12 +102,22 @@ class AnimationDebug extends FlxState
 		dumbTexts = new FlxTypedGroup<FlxText>();
 		add(dumbTexts);
 
-		textAnim = new FlxText(0, 15);
-		textAnim.size = 26;
+		textAnim = new FlxText(0, 10, 0, 'PlaceHolder', 32);
+		textAnim.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		textAnim.scrollFactor.set();
+		textAnim.antialiasing = true;
 		add(textAnim);
 
-		textAnim.x = FlxG.width - (textAnim.width + 15);
+		textAnim.x = FlxG.width - (textAnim.width + 10);
+
+		var noteText:FlxText = new FlxText(0, 0, 0, 'Press ENTER or ALT to save offsets', 26);
+		noteText.scrollFactor.set();
+		noteText.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		noteText.antialiasing = true;
+		add(noteText);
+
+		noteText.x = FlxG.width - noteText.width - 5;
+		noteText.y = FlxG.height - noteText.height - 5;
 
 		genBoyOffsets();
 
@@ -122,9 +136,10 @@ class AnimationDebug extends FlxState
 
 		for (anim => offsets in char.animOffsets)
 		{
-			var text:FlxText = new FlxText(10, 20 + (18 * daLoop), 0, anim + ' : ' + offsets, 15);
+			var text:FlxText = new FlxText(10, 10 + (28 * daLoop), 0, anim + ' : ' + offsets, 26);
+			text.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.BLUE, LEFT);
 			text.scrollFactor.set();
-			text.color = FlxColor.BLUE;
+			text.antialiasing = true;
 			dumbTexts.add(text);
 
 			if (pushList)
@@ -176,21 +191,21 @@ class AnimationDebug extends FlxState
 		if (camControlArray.contains(true))
 		{
 			if (camControlArray[0])
-				camFollow.velocity.y = -90;
-			else if (camControlArray[2])
 				camFollow.velocity.y = 90;
+			else if (camControlArray[2])
+				camFollow.velocity.y = -90;
 			else
 				camFollow.velocity.y = 0;
 
 			if (camControlArray[1])
-				camFollow.velocity.x = -90;
-			else if (camControlArray[3])
 				camFollow.velocity.x = 90;
+			else if (camControlArray[3])
+				camFollow.velocity.x = -90;
 			else
 				camFollow.velocity.x = 0;
 		}
 		else
-			camFollow.velocity.set();
+			camFollow.velocity.set(0, 0);
 
 		if (FlxG.keys.justPressed.W)
 			curAnim --;
@@ -228,16 +243,13 @@ class AnimationDebug extends FlxState
 			updateTexts();
 
 			if (offsetControlArray[0])
-				char.animOffsets.get(animList[curAnim])[1] += 1 * multiplier;
-
-			if (offsetControlArray[2])
-				char.animOffsets.get(animList[curAnim])[1] -= 1 * multiplier;
-
-			if (offsetControlArray[3])
-				char.animOffsets.get(animList[curAnim])[0] += 1 * multiplier;
-
-			if (offsetControlArray[1])
-				char.animOffsets.get(animList[curAnim])[0] -= 1 * multiplier;
+				char.animOffsets.get(animList[curAnim])[1] += multiplier;
+			else if (offsetControlArray[2])
+				char.animOffsets.get(animList[curAnim])[1] -= multiplier;
+			else if (offsetControlArray[3])
+				char.animOffsets.get(animList[curAnim])[0] += multiplier;
+			else if (offsetControlArray[1])
+				char.animOffsets.get(animList[curAnim])[0] -= multiplier;
 
 			updateTexts();
 
@@ -246,8 +258,59 @@ class AnimationDebug extends FlxState
 		}
 
 		if (FlxG.keys.justPressed.BACKSPACE || FlxG.keys.justPressed.ESCAPE)
+		{
+			FlxG.sound.music.stop();
 			FlxG.switchState(new MainMenuState());
+		}
+
+		if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.ALT)
+			generateOffsetsFile();
 
 		super.update(elapsed);
+	}
+
+	private function generateOffsetsFile()
+	{
+		var fileData:String = '';
+
+		for (anim => offsets in char.animOffsets)
+		{
+			fileData += anim + ' ' + offsets[0] + ' ' + offsets[1] + '\n';
+		}
+
+		if (fileData.length > 0)
+		{
+			_file = new FileReference();
+			_file.addEventListener(Event.COMPLETE, onSaveComplete);
+			_file.addEventListener(Event.CANCEL, onSaveCancel);
+			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+			_file.save(fileData, daAnim + 'Offsets.txt');
+		}
+	}
+
+	function onSaveComplete(_):Void
+	{
+		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
+		_file.removeEventListener(Event.CANCEL, onSaveCancel);
+		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+		_file = null;
+		FlxG.log.notice("Successfully saved the file.");
+	}
+	
+	function onSaveCancel(_):Void
+	{
+		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
+		_file.removeEventListener(Event.CANCEL, onSaveCancel);
+		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+		_file = null;
+	}
+
+	function onSaveError(_):Void
+	{
+		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
+		_file.removeEventListener(Event.CANCEL, onSaveCancel);
+		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+		_file = null;
+		FlxG.log.error("File encountered an error during the saving process!");
 	}
 }

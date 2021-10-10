@@ -204,7 +204,7 @@ class ControlsSubState extends MusicBeatSubstate
 
 		if (curSelected < 0)
 			curSelected = textMenuItems.length - 1;
-		if (curSelected >= textMenuItems.length)
+		else if (curSelected >= textMenuItems.length)
 			curSelected = 0;
 
 		var stuff:Int = 0;

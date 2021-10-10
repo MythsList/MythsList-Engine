@@ -59,15 +59,23 @@ class PauseSubState extends MusicBeatSubstate
 		levelDifficulty.updateHitbox();
 		add(levelDifficulty);
 
+		var icon:HealthIcon = new HealthIcon(PlayState.SONG.player2, false, true);
+		icon.setGraphicSize(Std.int(icon.width * 1.2));
+		icon.updateHitbox();
+		add(icon);
+
 		levelDifficulty.alpha = 0;
 		levelInfo.alpha = 0;
+		icon.alpha = 0;
 
 		levelInfo.x = FlxG.width - (levelInfo.width + 20);
 		levelDifficulty.x = FlxG.width - (levelDifficulty.width + 20);
+		icon.setPosition(FlxG.width - icon.width, FlxG.height - icon.height - 5);
 
 		FlxTween.tween(bg, {alpha: 0.6}, 0.4, {ease: FlxEase.quartInOut});
 		FlxTween.tween(levelInfo, {alpha: 1, y: 20}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.3});
 		FlxTween.tween(levelDifficulty, {alpha: 1, y: levelDifficulty.y + 5}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.5});
+		FlxTween.tween(icon, {alpha: 1, y: FlxG.height - icon.height}, 0.4, {ease: FlxEase.quartInOut, startDelay: 0.7});
 
 		grpMenuShit = new FlxTypedGroup<Alphabet>();
 		add(grpMenuShit);
@@ -138,7 +146,7 @@ class PauseSubState extends MusicBeatSubstate
 
 		if (curSelected < 0)
 			curSelected = menuItems.length - 1;
-		if (curSelected >= menuItems.length)
+		else if (curSelected >= menuItems.length)
 			curSelected = 0;
 
 		var bullShit:Int = 0;

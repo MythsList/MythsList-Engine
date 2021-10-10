@@ -4,8 +4,9 @@ import flixel.FlxSprite;
 
 class Portrait extends FlxSprite
 {
-	var newchar:String;
-	var antiAliasing:Bool;
+	var newchar:String = 'bf';
+	var antiAliasing:Bool = true;
+	var size:Int = 540;
 
 	public function new(char:String = 'bf', flipped:Bool = false)
 	{
@@ -27,11 +28,13 @@ class Portrait extends FlxSprite
 		{
 			case 'bf-pixel' | 'senpai' | 'senpai-angry' | 'spirit':
 				antiAliasing = false;
-				loadGraphic(Paths.image('portraits/portrait-' + newchar, 'shared'), true, 100, 100);
+				size = 100;
 			default:
 				antiAliasing = MythsListEngineData.antiAliasing;
-				loadGraphic(Paths.image('portraits/portrait-' + newchar, 'shared'), true, 540, 540);
+				size = 540;
 		}
+
+		loadGraphic(Paths.image('portraits/portrait-' + newchar, 'shared'), true, size, size);
 		
 		antialiasing = antiAliasing;
 

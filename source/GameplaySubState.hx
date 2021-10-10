@@ -33,7 +33,6 @@ class GameplaySubState extends MusicBeatSubstate
 		'Song infos display',
 		'Version display',
 		'Song position display',
-		'Antialiasing',
 		'Fullscreen'
 	];
 
@@ -135,7 +134,7 @@ class GameplaySubState extends MusicBeatSubstate
 
 		if (curSelected < 0)
 			curSelected = textMenuItems.length - 1;
-		if (curSelected >= textMenuItems.length)
+		else if (curSelected >= textMenuItems.length)
 			curSelected = 0;
 
 		var bullShit:Int = 0;
@@ -148,9 +147,7 @@ class GameplaySubState extends MusicBeatSubstate
 			item.alpha = 0.6;
 
 			if (item.targetY == 0)
-			{
 				item.alpha = 1;
-			}
 		}
 	}
 
@@ -177,8 +174,6 @@ class GameplaySubState extends MusicBeatSubstate
 			case 7:
 				FlxG.save.data.songpositionDisplay = change;
 			case 8:
-				FlxG.save.data.antiAliasing = change;
-			case 9:
 				FlxG.fullscreen = change;
 		}
 
@@ -198,7 +193,6 @@ class GameplaySubState extends MusicBeatSubstate
 			FlxG.save.data.songinfosDisplay,
 			FlxG.save.data.versionDisplay,
 			FlxG.save.data.songpositionDisplay,
-			FlxG.save.data.antiAliasing,
 			FlxG.fullscreen
 		];
 	}

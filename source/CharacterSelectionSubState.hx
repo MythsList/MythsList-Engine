@@ -33,7 +33,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 	(Related to HealthIcon.hx and Character.hx, would recommend putting your character's name in like I did)
 	*/
 
-	var textMenuItems:Array<String> = [
+	public static var textMenuItems:Array<String> = [
 		'Boyfriend',
 		'Minus Boyfriend',
 		'Beta Boyfriend',
@@ -43,7 +43,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		'Rhys'
 	];
 
-	var Icons:Array<String> = [
+	public static var icons:Array<String> = [
 		'bf',
 		'bf-minus',
 		'bf-old',
@@ -98,14 +98,14 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 			optionText.isMenuItem = true;
 			optionText.targetY = i;
 
-			if (MythsListEngineData.characterSkin == Icons[i])
+			if (MythsListEngineData.characterSkin == icons[i])
 				optionText.color = FlxColor.GREEN;
-			else if (MythsListEngineData.characterSkin != Icons[i])
+			else if (MythsListEngineData.characterSkin != icons[i])
 				optionText.color = FlxColor.RED;
 
 			grpOptions.add(optionText);
 
-			var icon:HealthIcon = new HealthIcon(Icons[i], false, true);
+			var icon:HealthIcon = new HealthIcon(icons[i], false, true);
 			icon.sprTracker = optionText;
 
 			iconArray.push(icon);
@@ -138,7 +138,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 
 		for (i in 0...textMenuItems.length)
 		{
-			if (MythsListEngineData.characterSkin == Icons[i])
+			if (MythsListEngineData.characterSkin == icons[i])
 				curIconText = new FlxText(0, 0, 0, textMenuItems[i], 16);
 		}
 
@@ -188,41 +188,14 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		{
 			playerStrums.forEach(function(spr:FlxSprite)
 			{
-				switch (spr.ID)
+				if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
 				{
-					case 0:
-						if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
-						{
-							spr.animation.play('pressed');
-							curCharacter.playAnim('sing' + curPress[spr.ID], true);
-						}
-						if (controlArrayRelease[spr.ID])
-							spr.animation.play('static');
-					case 1:
-						if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
-						{
-							spr.animation.play('pressed');
-							curCharacter.playAnim('sing' + curPress[spr.ID], true);
-						}
-						if (controlArrayRelease[spr.ID])
-							spr.animation.play('static');
-					case 2:
-						if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
-						{
-							spr.animation.play('pressed');
-							curCharacter.playAnim('sing' + curPress[spr.ID], true);
-						}
-						if (controlArrayRelease[spr.ID])
-							spr.animation.play('static');
-					case 3:
-						if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
-						{
-							spr.animation.play('pressed');
-							curCharacter.playAnim('sing' + curPress[spr.ID], true);
-						}
-						if (controlArrayRelease[spr.ID])
-							spr.animation.play('static');
+					spr.animation.play('pressed');
+					curCharacter.playAnim('sing' + curPress[spr.ID], true);
 				}
+
+				if (controlArrayRelease[spr.ID])
+					spr.animation.play('static');
 			
 				if (spr.animation.curAnim.name == 'confirm')
 				{
@@ -237,21 +210,8 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		{
 			playerStrums.forEach(function(spr:FlxSprite)
 			{
-				switch (spr.ID)
-				{
-					case 0:
-						if (controlArray[spr.ID])
-							curCharacter.playAnim('sing' + curPress[spr.ID], true);
-					case 1:
-						if (controlArray[spr.ID])
-							curCharacter.playAnim('sing' + curPress[spr.ID], true);
-					case 2:
-						if (controlArray[spr.ID])
-							curCharacter.playAnim('sing' + curPress[spr.ID], true);
-					case 3:
-						if (controlArray[spr.ID])
-							curCharacter.playAnim('sing' + curPress[spr.ID], true);
-				}
+				if (controlArray[spr.ID])
+					curCharacter.playAnim('sing' + curPress[spr.ID], true);
 			});
 		}
 
@@ -298,9 +258,9 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 
 			for (item in grpOptions.members)
 			{
-				if (MythsListEngineData.characterSkin == Icons[curSelected] && curSelected == curItem)
+				if (MythsListEngineData.characterSkin == icons[curSelected] && curSelected == curItem)
 					item.color = FlxColor.GREEN;
-				else if (MythsListEngineData.characterSkin != Icons[curSelected] && curSelected != curItem)
+				else if (MythsListEngineData.characterSkin != icons[curSelected] && curSelected != curItem)
 					item.color = FlxColor.RED;
 				else
 					item.color = FlxColor.RED;
@@ -318,7 +278,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 
 			for (i in 0...textMenuItems.length)
 			{
-				if (MythsListEngineData.characterSkin == Icons[i])
+				if (MythsListEngineData.characterSkin == icons[i])
 					curIconText = new FlxText(0, 0, 0, textMenuItems[i], 16);
 			}
 
@@ -339,7 +299,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 
 		if (curSelected < 0)
 			curSelected = textMenuItems.length - 1;
-		if (curSelected >= textMenuItems.length)
+		else if (curSelected >= textMenuItems.length)
 			curSelected = 0;
 
 		var bullShit:Int = 0;
@@ -352,9 +312,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 			item.alpha = 0.6;
 
 			if (item.targetY == 0)
-			{
 				item.alpha = 1;
-			}
 		}
 	}
 
@@ -362,7 +320,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
-		FlxG.save.data.characterSkin = Icons[selected];
+		FlxG.save.data.characterSkin = icons[selected];
 		FlxG.save.flush();
 
 		MythsListEngineData.dataSave();
@@ -410,25 +368,23 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 
 			greyArrow.setGraphicSize(Std.int(greyArrow.width * 0.7));
 
-			switch (Math.abs(i))
+			greyArrow.x += Note.swagWidth * i;
+
+			switch(Math.abs(i))
 			{
 				case 0:
-					greyArrow.x += Note.swagWidth * 0;
 					greyArrow.animation.addByPrefix('static', 'arrowLEFT');
 					greyArrow.animation.addByPrefix('pressed', 'left press', 24, false);
 					greyArrow.animation.addByPrefix('confirm', 'left confirm', 24, false);
 				case 1:
-					greyArrow.x += Note.swagWidth * 1;
 					greyArrow.animation.addByPrefix('static', 'arrowDOWN');
 					greyArrow.animation.addByPrefix('pressed', 'down press', 24, false);
 					greyArrow.animation.addByPrefix('confirm', 'down confirm', 24, false);
 				case 2:
-					greyArrow.x += Note.swagWidth * 2;
 					greyArrow.animation.addByPrefix('static', 'arrowUP');
 					greyArrow.animation.addByPrefix('pressed', 'up press', 24, false);
 					greyArrow.animation.addByPrefix('confirm', 'up confirm', 24, false);
 				case 3:
-					greyArrow.x += Note.swagWidth * 3;
 					greyArrow.animation.addByPrefix('static', 'arrowRIGHT');
 					greyArrow.animation.addByPrefix('pressed', 'right press', 24, false);
 					greyArrow.animation.addByPrefix('confirm', 'right confirm', 24, false);

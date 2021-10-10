@@ -196,7 +196,7 @@ class AchievementsSubState extends MusicBeatSubstate
 
 		if (curSelected < 0)
 			curSelected = achievements[curCategory].length - 1;
-		if (curSelected >= achievements[curCategory].length)
+		else if (curSelected >= achievements[curCategory].length)
 			curSelected = 0;
 
 		var curIconName:String = achievements[curCategory][curSelected];
@@ -252,7 +252,7 @@ class AchievementsSubState extends MusicBeatSubstate
 
 		if (curCategory < 0)
 			curCategory = achievements.length - 1;
-		if (curCategory >= achievements.length)
+		else if (curCategory >= achievements.length)
 			curCategory = 0;
 
 		changeSelection(0, true);

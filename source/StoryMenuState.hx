@@ -310,16 +310,18 @@ class StoryMenuState extends MusicBeatState
 				stopspamming = true;
 			}
 
-			PlayState.storyPlaylist = weekData[curWeek].copy();
-			PlayState.isStoryMode = true;
-			selectedWeek = true;
-
 			var diffic:Array<String> = ['-easy', '', '-hard'];
 
-			PlayState.storyDifficulty = curDifficulty;
+			selectedWeek = true;
 
-			PlayState.SONG = Song.loadFromJson(PlayState.storyPlaylist[0].toLowerCase() + diffic[curDifficulty], PlayState.storyPlaylist[0].toLowerCase());
+			PlayState.storyPlaylist = weekData[curWeek].copy();
+			PlayState.isStoryMode = true;
+
+			var songName:String = PlayState.storyPlaylist[0].toLowerCase();
+
+			PlayState.SONG = Song.loadFromJson(songName + diffic[curDifficulty], songName);
 			PlayState.storyWeek = curWeek;
+			PlayState.storyDifficulty = curDifficulty;
 			PlayState.campaignScore = 0;
 
 			new FlxTimer().start(1, function(tmr:FlxTimer)
@@ -335,27 +337,27 @@ class StoryMenuState extends MusicBeatState
 
 	function changeDifficulty(change:Int = 0):Void
 	{
+		var difficultyArray:Array<String> = [
+			'easy',
+			'normal',
+			'hard'
+		];
+
+		var offsetArray:Array<Float> = [
+			-53,
+			0,
+			-48
+		];
+
 		curDifficulty += change;
 
 		if (curDifficulty < 0)
-			curDifficulty = 2;
-		if (curDifficulty > 2)
+			curDifficulty = Std.int(difficultyArray.length - 1);
+		else if (curDifficulty >= difficultyArray.length)
 			curDifficulty = 0;
 
-		sprDifficulty.offset.x = 0;
-
-		switch (curDifficulty)
-		{
-			case 0:
-				sprDifficulty.animation.play('easy');
-				sprDifficulty.offset.x = -53;
-			case 1:
-				sprDifficulty.animation.play('normal');
-				sprDifficulty.offset.x = 0;
-			case 2:
-				sprDifficulty.animation.play('hard');
-				sprDifficulty.offset.x = -48;
-		}
+		sprDifficulty.animation.play(difficultyArray[curDifficulty]);
+		sprDifficulty.offset.x = offsetArray[curDifficulty];
 
 		sprDifficulty.alpha = 0;
 		sprDifficulty.y = leftArrow.y - 15;
@@ -378,7 +380,7 @@ class StoryMenuState extends MusicBeatState
 
 		if (curWeek >= weekData.length)
 			curWeek = 0;
-		if (curWeek < 0)
+		else if (curWeek < 0)
 			curWeek = weekData.length - 1;
 
 		var bullShit:Int = 0;

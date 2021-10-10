@@ -160,7 +160,7 @@ class WeekselectState extends MusicBeatState
 
 		if (curSelected < 0)
 			curSelected = weeks.length - 1;
-		if (curSelected >= weeks.length)
+		else if (curSelected >= weeks.length)
 			curSelected = 0;
 
 		var bullShit:Int = 0;

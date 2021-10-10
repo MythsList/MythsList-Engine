@@ -3,7 +3,9 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
+import lime.app.Application;
 import Controls.Control;
+import Main;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -20,16 +22,14 @@ import flixel.addons.transition.FlxTransitionableState;
 
 using StringTools;
 
-class OptionsSubState extends MusicBeatState
+class PerformanceSubState extends MusicBeatSubstate
 {
-	public static var textMenuItems:Array<String> = [
-		'Controls',
-		'Gameplay',
-		'Performance',
-		'Character selection',
-		'Achievements',
-		'Reset data'
+	var textMenuItems:Array<String> = [
+		'Background display',
+		'Antialiasing'
 	];
+
+	var dataStuff:Array<Bool> = [];
 
 	var curSelected:Int = 0;
 
@@ -40,7 +40,7 @@ class OptionsSubState extends MusicBeatState
 		super();
 
 		#if desktop
-			DiscordClient.changePresence("In The Options Menu", null);
+			DiscordClient.changePresence("In The Performance Options Menu", null);
 		#end
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
@@ -59,10 +59,15 @@ class OptionsSubState extends MusicBeatState
 			var optionText:Alphabet = new Alphabet(0, (70 * i) + 30, textMenuItems[i], true, false);
 			optionText.isMenuItem = true;
 			optionText.targetY = i;
-			grpOptions.add(optionText);
 
-			if (textMenuItems[i] == 'Reset data')
+			getDataList();
+
+			if (dataStuff[i])
+				optionText.color = FlxColor.GREEN;
+			else if (!dataStuff[i])
 				optionText.color = FlxColor.RED;
+
+			grpOptions.add(optionText);
 		}
 
 		var engineversionText:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
@@ -82,9 +87,6 @@ class OptionsSubState extends MusicBeatState
 	{
 		super.update(elapsed);
 
-		if (!FlxG.sound.music.playing)
-			FlxG.sound.playMusic(Paths.music('freakyMenu', 'preload'));
-
 		if (controls.UP_P)
 			changeSelection(-1);
 
@@ -93,32 +95,26 @@ class OptionsSubState extends MusicBeatState
 
 		if (controls.BACK)
 		{
-			FlxTransitionableState.skipNextTransIn = false;
-			FlxTransitionableState.skipNextTransOut = false;
-			FlxG.switchState(new MainMenuState());
+			FlxTransitionableState.skipNextTransIn = true;
+			FlxTransitionableState.skipNextTransOut = true;
+			FlxG.switchState(new OptionsSubState());
 		}
 
 		if (controls.ACCEPT)
 		{
 			FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
-			FlxTransitionableState.skipNextTransIn = true;
-			FlxTransitionableState.skipNextTransOut = true;
+			getDataList();
 
-			switch(textMenuItems[curSelected])
+			if (dataStuff[curSelected])
 			{
-				case 'Controls':
-					FlxG.switchState(new ControlsSubState());
-				case 'Gameplay':
-					FlxG.switchState(new GameplaySubState());
-				case 'Performance':
-					FlxG.switchState(new PerformanceSubState());
-				case 'Character selection':
-					FlxG.switchState(new CharacterSelectionSubState());
-				case 'Achievements':
-					FlxG.switchState(new AchievementsSubState());
-				case 'Reset data':
-					resetData();
+				interact(false, curSelected);
+				grpOptions.members[curSelected].color = FlxColor.RED;
+			}
+			else if (!dataStuff[curSelected])
+			{
+				interact(true, curSelected);
+				grpOptions.members[curSelected].color = FlxColor.GREEN;
 			}
 		}
 	}
@@ -148,10 +144,28 @@ class OptionsSubState extends MusicBeatState
 		}
 	}
 
-	function resetData()
+	function interact(change:Bool = true, selected:Int = 0)
 	{
-		MythsListEngineData.dataReset();
+		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
-		Highscore.delete();
+		switch(selected)
+		{
+			case 0:
+				FlxG.save.data.backgroundDisplay = change;
+			case 1:
+				FlxG.save.data.antiAliasing = change;
+		}
+
+		FlxG.save.flush();
+
+		MythsListEngineData.dataSave();
+	}
+
+	function getDataList()
+	{
+		dataStuff = [
+			FlxG.save.data.backgroundDisplay,
+			FlxG.save.data.antiAliasing
+		];
 	}
 }

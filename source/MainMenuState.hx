@@ -94,8 +94,8 @@ class MainMenuState extends MusicBeatState
 		{
 			var menuItem:FlxSprite = new FlxSprite(0, 90 + (i * 200));
 			menuItem.frames = tex;
-			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
-			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
+			menuItem.animation.addByPrefix('idle', optionShit[i] + ' basic', 24);
+			menuItem.animation.addByPrefix('selected', optionShit[i] + ' white', 24);
 			menuItem.animation.play('idle');
 			menuItem.ID = i;
 			menuItem.screenCenter(X);
@@ -128,23 +128,15 @@ class MainMenuState extends MusicBeatState
 	override function update(elapsed:Float)
 	{
 		if (FlxG.sound.music.volume < 0.8)
-		{
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
-		}
 
 		if (!selectedSomethin)
 		{
 			if (controls.UP_P)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu', 'preload'));
 				changeItem(-1);
-			}
 
 			if (controls.DOWN_P)
-			{
-				FlxG.sound.play(Paths.sound('scrollMenu', 'preload'));
 				changeItem(1);
-			}
 
 			if (controls.ACCEPT)
 			{
@@ -199,11 +191,13 @@ class MainMenuState extends MusicBeatState
 
 	function changeItem(change:Int = 0)
 	{
+		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'));
+
 		curSelected += change;
 
 		if (curSelected >= menuItems.length)
 			curSelected = 0;
-		if (curSelected < 0)
+		else if (curSelected < 0)
 			curSelected = menuItems.length - 1;
 
 		menuItems.forEach(function(spr:FlxSprite)

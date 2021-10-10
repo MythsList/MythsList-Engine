@@ -2,6 +2,36 @@
 
 All notable changes will be documented in this file.
 
+## [V.1.1.0]
+### Addition
+- Added a Performance tab in the Options menu
+- Added the option to Enable/Disable the background display in the new Options tab
+- You can now save the offsets via the Animation Debug menu as a txt file
+- The pause menu now shows the icon of the current player 2
+- Added the "breakfast" track in the Animation Debug menu (Sorry, I checked a lot of Psych Engine's source code)
+
+### Tweak
+- Another massive code cleaning
+- Discord rich presence now always show the difficulty
+- Made HealthIcon.hx better (Code was inspired by Psych Engine's)
+- HUD is now invisible when you enter a cutscene and/or dialogue
+- Made portraits more customizable (You can now set the size of portraits instead of just using 540x540 everytime)
+- When changing the player 1 via charting debug menu, the offsets should be better than before now
+- Changed some icons to make them "better"
+- Animation Debug menu's UI has been changed
+- Title screen's button's pressed animation is now aligned with the idle animation
+- Moved the Antialiasing option to the Options' Performance tab
+
+### Bugfix
+- Character selection menu or playable character deletion no longer makes the game crash (hopefully)
+- Fixed the camera zoom permanently
+- Charting debug menu's icons and missing vocals fixed
+- Fixed multiple Animation Debug menu bugs
+- Fixed inputs once again
+
+### Removal
+- Boyfriend can't be stunned anymore
+
 ## [V.1.0.9]
 ### Overhaul
 - Made AchievementsSubState.hx modder friendly (Still needs coding knowledge)
