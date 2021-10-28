@@ -20,13 +20,12 @@ class WeekselectState extends MusicBeatState
 	var weeks:Array<WeekMetadata> = [];
 
 	var curSelected:Int = 0;
-
 	public static var curWeek:Int = 0;
 
-	private var grpWeeks:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
 
-	private var iconArray:Array<HealthIcon> = [];
+	private var grpWeeks:FlxTypedGroup<Alphabet>;
+	private var iconArray:FlxTypedGroup<HealthIcon>;
 
 	override function create()
 	{
@@ -74,6 +73,9 @@ class WeekselectState extends MusicBeatState
 		grpWeeks = new FlxTypedGroup<Alphabet>();
 		add(grpWeeks);
 
+		iconArray = new FlxTypedGroup<HealthIcon>();
+		add(iconArray);
+
 		for (i in 0...weeks.length)
 		{
 			var weekText:Alphabet = null;
@@ -85,9 +87,9 @@ class WeekselectState extends MusicBeatState
 			grpWeeks.add(weekText);
 
 			var icon:HealthIcon = new HealthIcon(weeks[i].songCharacters, false, true);
+			icon.ID = i;
 			icon.sprTracker = weekText;
-			iconArray.push(icon);
-			add(icon);
+			iconArray.add(icon);
 		}
 
 		var scoreBG:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, 42, 0xFF000000);
@@ -154,7 +156,8 @@ class WeekselectState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
+		if (change != 0)
+			FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 		curSelected += change;
 
@@ -165,12 +168,11 @@ class WeekselectState extends MusicBeatState
 
 		var bullShit:Int = 0;
 
-		for (i in 0...iconArray.length)
-		{
-			iconArray[i].alpha = 0.6;
-		}
-
-		iconArray[curSelected].alpha = 1;
+		iconArray.forEach(function(spr:FlxSprite)
+		{					
+			spr.alpha = (spr.ID == curSelected ? 1 : 0.6);
+			spr.animation.curAnim.curFrame = (spr.ID == curSelected ? 2 : 0);
+		});
 
 		for (item in grpWeeks.members)
 		{

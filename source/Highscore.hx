@@ -2,11 +2,15 @@ package;
 
 import flixel.FlxG;
 
+using StringTools;
+
 class Highscore
 {
 	#if (haxe >= "4.0.0")
+	public static var weekScores:Map<String, Int> = new Map();
 	public static var songScores:Map<String, Int> = new Map();
 	#else
+	public static var weekScores:Map<String, Int> = new Map();
 	public static var songScores:Map<String, Int> = new Map<String, Int>();
 	#end
 
@@ -17,26 +21,26 @@ class Highscore
 		if (songScores.exists(daSong))
 		{
 			if (songScores[daSong] < score)
-				setScore(daSong, score);
+				setSongScore(daSong, score);
 		}
 		else
-			setScore(daSong, score);
+			setSongScore(daSong, score);
 	}
 
-	public static function saveWeekScore(week:Int = 1, score:Int = 0, ?diff:Int = 0):Void
+	public static function saveWeekScore(week:Int = 0, score:Int = 0, ?diff:Int = 0):Void
 	{
 		var daWeek:String = formatSong('week' + week, diff);
 
-		if (songScores.exists(daWeek))
+		if (weekScores.exists(daWeek))
 		{
-			if (songScores[daWeek] < score)
-				setScore(daWeek, score);
+			if (weekScores[daWeek] < score)
+				setWeekScore(daWeek, score);
 		}
 		else
-			setScore(daWeek, score);
+			setWeekScore(daWeek, score);
 	}
 
-	static function setScore(song:String, score:Int):Void
+	static function setSongScore(song:String, score:Int):Void
 	{
 		if (!MythsListEngineData.botPlay)
 		{
@@ -46,12 +50,20 @@ class Highscore
 		}
 	}
 
+	static function setWeekScore(week:String, score:Int):Void
+	{
+		if (!MythsListEngineData.botPlay)
+		{
+			weekScores[week] = score;
+			FlxG.save.data.weekScores = weekScores;
+			FlxG.save.flush();
+		}
+	}
+
 	public static function formatSong(song:String, diff:Int):String
 	{
-		var daSong:String;
 		var difficulty:Array<String> = ['-easy', '', '-hard'];
-		
-		daSong = song + difficulty[diff];
+		var daSong:String = song + difficulty[diff];
 
 		return daSong;
 	}
@@ -61,7 +73,7 @@ class Highscore
 		var daSong = formatSong(song, diff);
 
 		if (!songScores.exists(daSong))
-			setScore(daSong, 0);
+			setSongScore(daSong, 0);
 
 		return songScores[daSong];
 	}
@@ -70,23 +82,28 @@ class Highscore
 	{
 		var daWeek = formatSong('week' + week, diff);
 
-		if (!songScores.exists(daWeek))
-			setScore(daWeek, 0);
+		if (!weekScores.exists(daWeek))
+			setWeekScore(daWeek, 0);
 
-		return songScores[daWeek];
+		return weekScores[daWeek];
 	}
 
 	public static function load():Void
 	{
 		if (FlxG.save.data.songScores != null)
 			songScores = FlxG.save.data.songScores;
+
+		if (FlxG.save.data.weekScores != null)
+			weekScores = FlxG.save.data.weekScores;
 	}
 
 	public static function delete():Void
 	{
 		FlxG.save.data.songScores = null;
-		songScores = new Map<String, Int>();
+		FlxG.save.data.weekScores = null;
 
 		FlxG.save.flush();
+
+		load();
 	}
 }

@@ -33,6 +33,7 @@ class GameplaySubState extends MusicBeatSubstate
 		'Song infos display',
 		'Version display',
 		'Song position display',
+		'Bot play',
 		'Fullscreen'
 	];
 
@@ -128,7 +129,8 @@ class GameplaySubState extends MusicBeatSubstate
 
 	function changeSelection(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
+		if (change != 0)
+			FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 		curSelected += change;
 
@@ -174,6 +176,8 @@ class GameplaySubState extends MusicBeatSubstate
 			case 7:
 				FlxG.save.data.songpositionDisplay = change;
 			case 8:
+				FlxG.save.data.botPlay = change;
+			case 9:
 				FlxG.fullscreen = change;
 		}
 
@@ -193,6 +197,7 @@ class GameplaySubState extends MusicBeatSubstate
 			FlxG.save.data.songinfosDisplay,
 			FlxG.save.data.versionDisplay,
 			FlxG.save.data.songpositionDisplay,
+			FlxG.save.data.botPlay,
 			FlxG.fullscreen
 		];
 	}

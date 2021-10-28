@@ -78,6 +78,12 @@ class AchievementsUnlock
         if (MythsListEngineData.playMiddlescroll)
             FlxG.save.data.dataAchievements[3][2] = true;
 
+        if (MythsListEngineData.playUpMiddlescroll)
+            FlxG.save.data.dataAchievements[3][3] = true;
+
+        if (MythsListEngineData.playDownMiddlescroll)
+            FlxG.save.data.dataAchievements[3][4] = true;
+
         FlxG.save.flush();
         MythsListEngineData.dataSave();
     }

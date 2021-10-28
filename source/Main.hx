@@ -29,21 +29,15 @@ class Main extends Sprite
 		super();
 
 		if (stage != null)
-		{
 			init();
-		}
 		else
-		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
-		}
 	}
 
 	private function init(?E:Event):Void
 	{
 		if (hasEventListener(Event.ADDED_TO_STAGE))
-		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
-		}
 
 		setupGame();
 	}
@@ -67,27 +61,6 @@ class Main extends Sprite
 		#end
 
 		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
-
-		var ourSource:String = "assets/videos/DO NOT DELETE OR GAME WILL CRASH/dontDelete.webm";
-
-		#if web
-			var str1:String = "HTML CRAP";
-			var vHandler = new VideoHandler();
-			vHandler.init1();
-			vHandler.video.name = str1;
-			addChild(vHandler.video);
-			vHandler.init2();
-			GlobalVideo.setVid(vHandler);
-			vHandler.source(ourSource);
-		#elseif desktop
-			var str1:String = "WEBM SHIT"; 
-			var webmHandle = new WebmHandler();
-			webmHandle.source(ourSource);
-			webmHandle.makePlayer();
-			webmHandle.webm.name = str1;
-			addChild(webmHandle.webm);
-			GlobalVideo.setWebm(webmHandle);
-		#end
 
 		#if !mobile
 			addChild(new FPS(10, 3, 0xFFFFFFFF));

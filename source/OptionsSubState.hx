@@ -26,6 +26,7 @@ class OptionsSubState extends MusicBeatState
 		'Controls',
 		'Gameplay',
 		'Performance',
+		'Arrow colors',
 		'Character selection',
 		'Achievements',
 		'Reset data'
@@ -113,6 +114,8 @@ class OptionsSubState extends MusicBeatState
 					FlxG.switchState(new GameplaySubState());
 				case 'Performance':
 					FlxG.switchState(new PerformanceSubState());
+				case 'Arrow colors':
+					FlxG.switchState(new ArrowColorSubState());
 				case 'Character selection':
 					FlxG.switchState(new CharacterSelectionSubState());
 				case 'Achievements':
@@ -125,7 +128,8 @@ class OptionsSubState extends MusicBeatState
 
 	function changeSelection(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
+		if (change != 0) 
+			FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 		curSelected += change;
 

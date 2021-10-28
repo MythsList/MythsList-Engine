@@ -6,12 +6,25 @@ using StringTools;
 
 class CoolUtil
 {
-	public static var difficultyArray:Array<String> = ['EASY', 'NORMAL', 'HARD'];
+	// DIFFICULTY NAME, JSON SUFFIX, FREEPLAY COLOR
 
-	public static function difficultyString():String
-	{
-		return difficultyArray[PlayState.storyDifficulty];
-	}
+	public static var difficultyArray:Array<Dynamic> = [
+		['EASY', '-easy', 0xFF00FF00],
+		['NORMAL', '', 0xFFFFFF00],
+		['HARD', '-hard', 0xFFFF0000]
+	];
+
+	// SONG NAME, VIDEO PATH, STORY MODE CUTSCENE, FREEPLAY CUTSCENE
+
+	public static var startCutsceneArray:Array<Dynamic> = [
+		// ['tutorial', 'test', true, false]
+	];
+
+	// SONG NAME, VIDEO PATH, FREEPLAY CUTSCENE
+	
+	public static var endCutsceneArray:Array<Dynamic> = [
+		// ['tutorial', 'test', false]
+	];
 
 	public static function coolTextFile(path:String):Array<String>
 	{

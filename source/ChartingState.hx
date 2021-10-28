@@ -95,6 +95,8 @@ class ChartingState extends MusicBeatState
 	private var lastNote:Note;
 	var claps:Array<Note> = [];
 
+	var colorArray:Array<Dynamic>;
+
 	override function create()
 	{
 		#if desktop
@@ -118,6 +120,13 @@ class ChartingState extends MusicBeatState
 				validScore: false
 			};
 		}
+
+		colorArray = [
+			MythsListEngineData.arrowLeft,
+			MythsListEngineData.arrowDown,
+			MythsListEngineData.arrowUp,
+			MythsListEngineData.arrowRight
+		];
 
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
 		menuBG.color = 0xFF606060;
@@ -707,7 +716,7 @@ class ChartingState extends MusicBeatState
 			PlayState.SONG = _song;
 			FlxG.sound.music.stop();
 			vocals.stop();
-			LoadingState.loadAndSwitchState(new PlayState());
+			LoadingState.loadAndSwitchState(new PlayState(), true);
 		}
 
 		if (FlxG.keys.justPressed.ESCAPE)
@@ -1053,6 +1062,9 @@ class ChartingState extends MusicBeatState
 
 			var note:Note = new Note(daStrumTime, daNoteInfo % 4, null, false, daType);
 
+			if (MythsListEngineData.arrowColors && daType == 0)
+				note.color = FlxColor.fromRGB(colorArray[daNoteInfo % 4][0], colorArray[daNoteInfo % 4][1], colorArray[daNoteInfo % 4][2]);
+
 			note.sustainLength = daSus;
 			note.setGraphicSize(GRID_SIZE, GRID_SIZE);
 			note.updateHitbox();
@@ -1188,9 +1200,9 @@ class ChartingState extends MusicBeatState
 
 	function loadJson(song:String):Void
 	{
-		var difficulty:Array<String> = ['-easy', '', '-hard'];
+		var difficulty:String = CoolUtil.difficultyArray[PlayState.storyDifficulty][1];
 
-		PlayState.SONG = Song.loadFromJson(song.toLowerCase() + difficulty[PlayState.storyDifficulty], song.toLowerCase());
+		PlayState.SONG = Song.loadFromJson(song.toLowerCase() + difficulty, song.toLowerCase());
 		LoadingState.loadAndSwitchState(new ChartingState());
 	}
 
@@ -1222,7 +1234,7 @@ class ChartingState extends MusicBeatState
 			_file.addEventListener(Event.COMPLETE, onSaveComplete);
 			_file.addEventListener(Event.CANCEL, onSaveCancel);
 			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
-			_file.save(data.trim(), _song.song.toLowerCase() + ".json");
+			_file.save(data.trim(), _song.song.toLowerCase() + CoolUtil.difficultyArray[PlayState.storyDifficulty][1] + ".json");
 		}
 	}
 

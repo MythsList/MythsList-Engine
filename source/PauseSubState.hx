@@ -53,7 +53,7 @@ class PauseSubState extends MusicBeatSubstate
 		add(levelInfo);
 
 		var levelDifficulty:FlxText = new FlxText(20, 15 + levelInfo.height, 0, '', 32);
-		levelDifficulty.text = '(' + CoolUtil.difficultyString() + ')';
+		levelDifficulty.text = '(' + CoolUtil.difficultyArray[PlayState.storyDifficulty][0].toUpperCase() + ')';
 		levelDifficulty.scrollFactor.set();
 		levelDifficulty.setFormat(Paths.font('vcr.ttf'), 32);
 		levelDifficulty.updateHitbox();
@@ -100,10 +100,12 @@ class PauseSubState extends MusicBeatSubstate
 
 	override function update(elapsed:Float)
 	{
+		super.update(elapsed);
+
+		var pauseControlArray:Array<Bool> = [controls.PAUSE, controls.ACCEPT];
+
 		if (pauseMusic.volume < 0.5)
 			pauseMusic.volume += 0.01 * elapsed;
-
-		super.update(elapsed);
 
 		if (controls.UP_P)
 			changeSelection(-1);
@@ -111,7 +113,7 @@ class PauseSubState extends MusicBeatSubstate
 		if (controls.DOWN_P)
 			changeSelection(1);
 
-		if ((controls.PAUSE || controls.ACCEPT) && canSelect)
+		if (pauseControlArray.contains(true) && canSelect)
 		{
 			var daSelected:String = menuItems[curSelected];
 

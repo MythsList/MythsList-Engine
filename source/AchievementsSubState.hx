@@ -26,22 +26,23 @@ class AchievementsSubState extends MusicBeatSubstate
 {
 	/*
 	WARNING :
-	To make your achievement work, you have to change the data formar in MythsListEngineData.hx to
+	To make your achievement work, you have to change the data format in MythsListEngineData.hx to
 	make it match the arrays below then, add how you should be able to unlock it like i did in PlayState.hx.
+	I know, it's complicated. It needs some coding knowledge.
 	*/
 
 	var achievements:Array<Array<String>> = [
 		['fc', 'fc', 'fc', 'fc', 'fc'],
 		['play', 'play', 'play', 'play', 'play'],
 		['death', 'death', 'death', 'death', 'death'],
-		['upscroll', 'downscroll', 'middlescroll']
+		['upscroll', 'downscroll', 'middlescroll', 'upmiddlescroll', 'downmiddlescroll']
 	];
 
 	var frames:Array<Array<String>> = [
 		['bronze', 'silver', 'gold', 'diamond', 'ruby'],
 		['bronze', 'silver', 'gold', 'diamond', 'ruby'],
 		['bronze', 'silver', 'gold', 'diamond', 'ruby'],
-		['bronze', 'bronze', 'silver']
+		['bronze', 'bronze', 'silver', 'gold', 'gold']
 	];
 
 	var grpIcons:FlxTypedGroup<FlxSprite>;
@@ -120,24 +121,24 @@ class AchievementsSubState extends MusicBeatSubstate
 			}
 		}
 
-		var curBG:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width / 2), 150, 0xFF000000);
+		var curBG:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width / 2), FlxG.height, 0xFF000000);
 		curBG.alpha = 0.25;
 		add(curBG);
 		curBG.x = FlxG.width - curBG.width;
 
-		curName = new FlxText(curBG.x + 5, curBG.y + 5, 0, 'PlaceHolder Name', 26);
+		curName = new FlxText(curBG.x + 5, curBG.y + 5, FlxG.width / 2 - 10, 'PlaceHolder Name', 26);
 		curName.scrollFactor.set();
 		curName.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT);
 		curName.antialiasing = true;
 		add(curName);
 
-		curGoal = new FlxText(curBG.x + 5, (curBG.height / 2) - 13, 0, 'PlaceHolder Goal', 26);
+		curGoal = new FlxText(curName.x, curName.y + (26 * 3), FlxG.width / 2 - 10, 'PlaceHolder Goal', 26);
 		curGoal.scrollFactor.set();
 		curGoal.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT);
 		curGoal.antialiasing = true;
 		add(curGoal);
 
-		curProgress = new FlxText(curGoal.x, (curBG.y + curBG.height) - curGoal.height - 5, 0, 'PlaceHolder Progress', 26);
+		curProgress = new FlxText(curName.x, curGoal.y + (26 * 3), FlxG.width / 2 - 10, 'PlaceHolder Progress', 26);
 		curProgress.scrollFactor.set();
 		curProgress.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT);
 		curProgress.antialiasing = true;
@@ -187,7 +188,8 @@ class AchievementsSubState extends MusicBeatSubstate
 
 	function changeSelection(change:Int = 0, reset:Bool = false)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
+		if (change != 0)
+			FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 		if (reset)
 			curSelected = 0;
@@ -241,12 +243,20 @@ class AchievementsSubState extends MusicBeatSubstate
 				curProgress.text = "Played with downscroll: " + MythsListEngineData.playDownscroll;
 			case 'middlescroll':
 				curProgress.text = "Played with middlescroll: " + MythsListEngineData.playMiddlescroll;
+			case 'upmiddlescroll':
+				curProgress.text = "Played with upscroll and middlescroll: " + MythsListEngineData.playUpMiddlescroll;
+			case 'downmiddlescroll':
+				curProgress.text = "Played with downscroll and middlescroll: " + MythsListEngineData.playDownMiddlescroll;
 		}
+
+		curGoal.y = curName.y + curName.height + 26;
+		curProgress.y = curGoal.y + curGoal.height + 26;
 	}
 
 	function changeCategory(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
+		if (change != 0)
+			FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
 		curCategory += change;
 

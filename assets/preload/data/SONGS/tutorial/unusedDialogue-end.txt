@@ -1,0 +1,4 @@
+left:bf:Smh i lost
+right:bf:Sorry man but I had to
+left:bf:ok
+middle:bf/bf:yes

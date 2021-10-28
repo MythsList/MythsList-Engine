@@ -2,6 +2,38 @@
 
 All notable changes will be documented in this file.
 
+## [V.1.1.1]
+### Addition
+- MP4 SUPPORT
+- Added a new menu in the Options, giving you the ability to change the color of your arrows (Experimental)
+- Added the option to Enable/Disable bot play
+- Added StageSprite.hx for easier stage creation
+- Recoded Stage.hx
+- Added new achievements
+- Added myself in the health icons lol
+
+### Tweak
+- Achievements menu's UI have been tweaked
+- Better dialogue support (more automatized, now includes end dialogues)
+- Inputs have been recoded once again for bot play and special notes
+- Highscore system recoded (Tell me how to fix freeplay scores lol)
+- Made it so it doesn't play the scroll sound when you enter a menu
+- It is now easier to make difficulties (Everything is in CoolUtil.hx, have fun)
+- New bf winning icon (Thanks zPablo)
+- New winning icons
+- When a dialogue starts, the camera will now always focus on gf or on the center of the screen
+- When selecting a song in freeplay, you will now see the winning icon of this one character
+
+### Bugfix
+- Template's offsets are officially fixed
+- Fixed gf's scared animation
+
+### Improvement
+- Cleaned code, once again (DialogueBox.hx, Portrait.hx, PlayState.hx, etc...)
+
+### Removal
+- WEBM support
+
 ## [V.1.1.0]
 ### Addition
 - Added a Performance tab in the Options menu

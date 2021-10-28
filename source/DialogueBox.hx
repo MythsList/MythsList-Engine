@@ -17,6 +17,10 @@ using StringTools;
 class DialogueBox extends FlxSpriteGroup
 {
 	var box:FlxSprite;
+	var hasMusic:Bool = false;
+	var isAnimated:Bool = false;
+
+	var songName:String;
 
 	var curCharacter:String = '';
 	var curSide:String = '';
@@ -25,7 +29,6 @@ class DialogueBox extends FlxSpriteGroup
 	var dialogueList:Array<String> = [];
 
 	var swagDialogue:FlxTypeText;
-
 	var dropText:FlxText;
 
 	public var finishThing:Void->Void;
@@ -39,26 +42,35 @@ class DialogueBox extends FlxSpriteGroup
 	var rightposY:Float;
 
 	var bgFade:FlxSprite;
+
 	public static var fadeStyle:String = 'basic';
 
-	public function new(talkingRight:Bool = true, ?dialogueList:Array<String>)
+	public function new(?dialogueList:Array<String>)
 	{
 		super();
 
+		songName = PlayState.SONG.song.toLowerCase();
+
 		bgFade = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2));
 
-		switch (PlayState.SONG.song.toLowerCase())
+		switch(songName)
 		{
 			case 'senpai' | 'roses' | 'thorns':
 			{
 				fadeStyle = 'pixel';
 
-				if (PlayState.SONG.song.toLowerCase() == 'senpai')
-					FlxG.sound.playMusic(Paths.music('Lunchbox', 'week6'), 0);
-				else if (PlayState.SONG.song.toLowerCase() == 'thorns')
-					FlxG.sound.playMusic(Paths.music('LunchboxScary', 'week6'), 0);
+				if (songName == 'senpai' || songName == 'thorns')
+				{
+					var soundTrack:String = 'Lunchbox';
+					hasMusic = true;
+
+					if (songName == 'thorns')
+						soundTrack += 'Scary';
+
+					FlxG.sound.playMusic(Paths.music(soundTrack, 'week6'), 0);
+				}
 				
-				if (PlayState.SONG.song.toLowerCase() != 'roses')
+				if (hasMusic)
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
 
 				bgFade.color = 0xFFB3DFd8;
@@ -74,7 +86,7 @@ class DialogueBox extends FlxSpriteGroup
 		bgFade.screenCenter();
 		add(bgFade);
 
-		switch (fadeStyle)
+		switch(fadeStyle)
 		{
 			case 'pixel':
 			{
@@ -95,16 +107,17 @@ class DialogueBox extends FlxSpriteGroup
 		box = new FlxSprite(-20, 45);
 		
 		var hasDialog:Bool = false;
-		var isAnimated:Bool = false;
+		
+		isAnimated = false;
 
-		switch (PlayState.SONG.song.toLowerCase())
+		switch(songName)
 		{
 			case 'senpai' | 'roses':
 			{
 				hasDialog = true;
 				isAnimated = true;
 
-				if (PlayState.SONG.song.toLowerCase() == 'roses')
+				if (songName == 'roses')
 					FlxG.sound.play(Paths.sound('ANGRY_TEXT_BOX', 'shared'));
 
 				box.frames = Paths.getSparrowAtlas('weeb/pixelUI/dialogueBox-pixel', 'week6');
@@ -141,62 +154,31 @@ class DialogueBox extends FlxSpriteGroup
 		box.updateHitbox();
 		box.screenCenter(X);
 
-		switch(PlayState.SONG.song.toLowerCase())
+		// Consider not deleting the default portrait in the files (so bf) or else it won't work.
+		// It is just to set up the system
+
+		portraitLeft = updatePortraits('bf', false);
+		portraitSetGraphicSize('bf', portraitLeft);
+		portraitLeft.visible = false;
+		add(portraitLeft);
+
+		portraitRight = updatePortraits('bf', false);
+		portraitSetGraphicSize('bf', portraitRight);
+		portraitRight.visible = false;
+		add(portraitRight);
+
+		switch(songName)
 		{
 			case 'senpai' | 'roses' | 'thorns':
-			{
-				portraitLeft = new Portrait(PlayState.SONG.player2, false);
-				portraitSetGraphicSize(PlayState.SONG.player2, portraitLeft);
-				portraitLeft.updateHitbox();
-				portraitLeft.scrollFactor.set();
-
 				leftposX = box.x + 250;
 				leftposY = -100;
-				portraitLeft.x = leftposX;
-				portraitLeft.y = leftposY;
-	
-				portraitRight = new Portrait('bf-pixel', true);
-				portraitSetGraphicSize('bf-pixel', portraitRight);
-				portraitRight.updateHitbox();
-				portraitRight.scrollFactor.set();
-
 				rightposX = box.x + box.width - portraitRight.width - 250;
 				rightposY = -100;
-				portraitRight.x = rightposX;
-				portraitRight.y = rightposY;
-
-				add(portraitLeft);
-				add(portraitRight);
-
-				portraitLeft.visible = false;
-				portraitRight.visible = false;
-			}
 			default:
-			{
-				portraitLeft = new Portrait(PlayState.SONG.player2, false);
-				portraitLeft.updateHitbox();
-				portraitLeft.scrollFactor.set();
-
 				leftposX = box.x + 250;
 				leftposY = -100;
-				portraitLeft.x = leftposX;
-				portraitLeft.y = leftposY;
-	
-				portraitRight = new Portrait('bf', true);
-				portraitRight.updateHitbox();
-				portraitRight.scrollFactor.set();
-
 				rightposX = box.x + box.width - portraitRight.width - 250;
 				rightposY = -100;
-				portraitRight.x = rightposX;
-				portraitRight.y = rightposY;
-
-				add(portraitLeft);
-				add(portraitRight);
-
-				portraitLeft.visible = false;
-				portraitRight.visible = false;
-			}
 		}
 
 		add(box);
@@ -204,9 +186,9 @@ class DialogueBox extends FlxSpriteGroup
 		if (isAnimated)
 			box.animation.play('normalOpen');
 
-		switch(PlayState.SONG.song.toLowerCase())
+		switch(songName)
 		{
-			case 'senpai' | 'roses' | 'thorns':
+			case 'senpai' | 'roses':
 			{
 				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
 				dropText.font = 'Pixel Arial 11 Bold';
@@ -216,6 +198,20 @@ class DialogueBox extends FlxSpriteGroup
 				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText', 'shared'), 0.6)];
 				swagDialogue.font = 'Pixel Arial 11 Bold';
 				swagDialogue.color = 0xFF3F2021;
+
+				add(dropText);
+				add(swagDialogue);
+			}
+			case 'thorns':
+			{
+				dropText = new FlxText(242, 502, Std.int(FlxG.width * 0.6), "", 32);
+				dropText.font = 'Pixel Arial 11 Bold';
+				dropText.color = FlxColor.BLACK;
+				
+				swagDialogue = new FlxTypeText(240, 500, Std.int(FlxG.width * 0.6), "", 32);
+				swagDialogue.sounds = [FlxG.sound.load(Paths.sound('pixelText', 'shared'), 0.6)];
+				swagDialogue.font = 'Pixel Arial 11 Bold';
+				swagDialogue.color = FlxColor.WHITE;
 
 				add(dropText);
 				add(swagDialogue);
@@ -244,18 +240,9 @@ class DialogueBox extends FlxSpriteGroup
 
 	override function update(elapsed:Float)
 	{
-		switch(PlayState.SONG.song.toLowerCase())
-		{
-			case 'thorns':
-			{
-				swagDialogue.color = FlxColor.WHITE;
-				dropText.color = FlxColor.BLACK;
-			}
-		}
-
 		dropText.text = swagDialogue.text;
 
-		if (box.animation.curAnim != null)
+		if (isAnimated && box.animation.curAnim != null)
 		{
 			if (box.animation.curAnim.name == 'normalOpen' && box.animation.curAnim.finished)
 				dialogueOpened = true;
@@ -269,7 +256,7 @@ class DialogueBox extends FlxSpriteGroup
 			dialogueStarted = true;
 		}
 
-		if (FlxG.keys.justPressed.ENTER && dialogueStarted == true)
+		if (FlxG.keys.anyJustPressed([SPACE, ENTER]) && dialogueStarted == true)
 		{
 			remove(dialogue);
 				
@@ -281,13 +268,18 @@ class DialogueBox extends FlxSpriteGroup
 				{
 					isEnding = true;
 
-					switch(PlayState.SONG.song.toLowerCase())
+					if (hasMusic)
 					{
-						case 'senpai' | 'thorns':
-							FlxG.sound.music.fadeOut(2.2, 0);
+						switch(fadeStyle)
+						{
+							case 'pixel':
+								FlxG.sound.music.fadeOut(2.2, 0);
+							case 'basic':
+								FlxG.sound.music.fadeOut(1.4, 0);
+						}
 					}
 
-					switch (fadeStyle)
+					switch(fadeStyle)
 					{
 						case 'pixel':
 						{
@@ -296,9 +288,7 @@ class DialogueBox extends FlxSpriteGroup
 								box.alpha -= 1 / 5;
 								bgFade.alpha -= 1 / 5 * 0.7;
 								portraitLeft.visible = false;
-								portraitLeft.alpha = 0;
 								portraitRight.visible = false;
-								portraitRight.alpha = 0;
 								swagDialogue.alpha -= 1 / 5;
 								dropText.alpha = swagDialogue.alpha;
 							}, 5);
@@ -350,14 +340,8 @@ class DialogueBox extends FlxSpriteGroup
 			{
 				portraitLeft = updatePortraits(curCharacter, false);
 
-				portraitLeft.alpha = 1;
-				portraitRight.alpha = 0;
-
 				portraitSetGraphicSize(curCharacter, portraitLeft);
-				portraitLeft.updateHitbox();
-				portraitLeft.scrollFactor.set();
-				portraitLeft.y = leftposY;
-				portraitLeft.x = leftposX;
+				portraitLeft.setPosition(leftposX, leftposY);
 
 				add(portraitLeft);
 			}
@@ -365,14 +349,8 @@ class DialogueBox extends FlxSpriteGroup
 			{
 				portraitRight = updatePortraits(curCharacter, true);
 
-				portraitRight.alpha = 1;
-				portraitLeft.alpha = 0;
-
 				portraitSetGraphicSize(curCharacter, portraitRight);
-				portraitRight.updateHitbox();
-				portraitRight.scrollFactor.set();
-				portraitRight.y = rightposY;
-				portraitRight.x = rightposX;
+				portraitRight.setPosition(rightposX, rightposY);
 
 				add(portraitRight);
 			}
@@ -385,20 +363,11 @@ class DialogueBox extends FlxSpriteGroup
 				portraitLeft = updatePortraits(portrait1, false);
 				portraitRight = updatePortraits(portrait2, true);
 
-				portraitRight.alpha = 1;
-				portraitLeft.alpha = 1;
-
 				portraitSetGraphicSize(portrait1, portraitLeft);
-				portraitLeft.updateHitbox();
-				portraitLeft.scrollFactor.set();
-				portraitLeft.y = leftposY;
-				portraitLeft.x = leftposX;
+				portraitLeft.setPosition(leftposX, leftposY);
 
 				portraitSetGraphicSize(portrait2, portraitRight);
-				portraitRight.updateHitbox();
-				portraitRight.scrollFactor.set();
-				portraitRight.y = rightposY;
-				portraitRight.x = rightposX;
+				portraitRight.setPosition(rightposX, rightposY);
 
 				add(portraitLeft);
 				add(portraitRight);
@@ -410,11 +379,12 @@ class DialogueBox extends FlxSpriteGroup
 	{
 		switch(character)
 		{
-			case 'bf-pixel':
-				object.setGraphicSize(Std.int(object.width * PlayState.daPixelZoom * 0.9));
-			case 'senpai' | 'senpai-angry' | 'spirit':
+			case 'bf-pixel' | 'senpai' | 'senpai-angry' | 'spirit':
 				object.setGraphicSize(Std.int(object.width * PlayState.daPixelZoom * 0.9));
 		}
+
+		object.updateHitbox();
+		object.scrollFactor.set();
 	}
 
 	function cleanDialog():Void
@@ -427,7 +397,7 @@ class DialogueBox extends FlxSpriteGroup
 		dialogueList[0] = splitName[2].trim();
 	}
 
-	function updatePortraits(curCharacter:String = 'bf', flipped:Bool = false)
+	function updatePortraits(curCharacter:String = 'bf', flipped:Bool = false):Portrait
 	{
 		var portrait:Portrait = new Portrait(curCharacter, flipped);
 		

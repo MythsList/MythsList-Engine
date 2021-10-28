@@ -38,17 +38,9 @@ class MainMenuState extends MusicBeatState
 	{
 		FlxG.mouse.visible = false;
 
-		if (Std.is(FlxG.save.data.keyBinds, String) || !Std.is(FlxG.save.data.keyBinds, Array))
-		{
-			FlxG.save.data.keyBinds = null;
-			FlxG.save.flush();
-		}
-
-		MythsListEngineData.dataLoad();
-
 		#if desktop
 		// Updating Discord Rich Presence
-		DiscordClient.changePresence("In the Main Menu", null);
+		DiscordClient.changePresence("In The Main Menu", null);
 		#end
 
 		transIn = FlxTransitionableState.defaultTransIn;
@@ -191,7 +183,8 @@ class MainMenuState extends MusicBeatState
 
 	function changeItem(change:Int = 0)
 	{
-		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'));
+		if (change != 0)
+			FlxG.sound.play(Paths.sound('scrollMenu', 'preload'));
 
 		curSelected += change;
 

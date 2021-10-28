@@ -6,7 +6,7 @@ class MythsListEngineData
 {
     // VERSION
 
-    public static var engineVersion:String = 'V.1.1.0';
+    public static var engineVersion:String = 'V.1.1.1';
     public static var modVersion:String = '';
 
     // KEYBINDS
@@ -34,6 +34,14 @@ class MythsListEngineData
 	public static var antiAliasing:Bool;
 	public static var backgroundDisplay:Bool;
 
+	// ARROW COLORS
+
+	public static var arrowColors:Bool;
+	public static var arrowLeft:Array<Int>;
+	public static var arrowDown:Array<Int>;
+	public static var arrowUp:Array<Int>;
+	public static var arrowRight:Array<Int>;
+
     // CHARACTER SELECTION
 
     public static var characterSkin:String;
@@ -50,6 +58,8 @@ class MythsListEngineData
 	public static var playUpscroll:Bool;
 	public static var playDownscroll:Bool;
 	public static var playMiddlescroll:Bool;
+	public static var playUpMiddlescroll:Bool;
+	public static var playDownMiddlescroll:Bool;
 
 	// FUNCTIONS
 
@@ -94,13 +104,24 @@ class MythsListEngineData
 		if (FlxG.save.data.characterSkin == null)
 			FlxG.save.data.characterSkin = 'bf';
 
+		if (FlxG.save.data.arrowColors == null)
+			FlxG.save.data.arrowColors = false;
+		if (FlxG.save.data.arrowLeft == null)
+			FlxG.save.data.arrowLeft = [255, 255, 255];
+		if (FlxG.save.data.arrowDown == null)
+			FlxG.save.data.arrowDown = [255, 255, 255];
+		if (FlxG.save.data.arrowUp == null)
+			FlxG.save.data.arrowUp = [255, 255, 255];
+		if (FlxG.save.data.arrowRight == null)
+			FlxG.save.data.arrowRight = [255, 255, 255];
+
 		if (FlxG.save.data.dataAchievements == null)
 		{
 			FlxG.save.data.dataAchievements = [
 				[false, false, false, false, false],
 				[false, false, false, false, false],
 				[false, false, false, false, false],
-				[false, false, false],
+				[false, false, false, false, false],
 			];
 		}
 
@@ -116,6 +137,10 @@ class MythsListEngineData
 			FlxG.save.data.playDownscroll = false;
 		if (FlxG.save.data.playMiddlescroll == null)
 			FlxG.save.data.playMiddlescroll = false;
+		if (FlxG.save.data.playUpMiddlescroll == null)
+			FlxG.save.data.playUpMiddlescroll = false;
+		if (FlxG.save.data.playDownMiddlescroll == null)
+			FlxG.save.data.playDownMiddlescroll = false;
 
 		MythsListEngineData.keyBinds = [
 			FlxG.save.data.keyBinds[0],
@@ -126,29 +151,7 @@ class MythsListEngineData
 			FlxG.save.data.keyBinds[5],
 		];
 
-		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
-		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
-		MythsListEngineData.ghostTapping = FlxG.save.data.ghostTapping;
-		MythsListEngineData.inputsCounter = FlxG.save.data.inputsCounter;
-		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
-		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
-		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
-		MythsListEngineData.songpositionDisplay = FlxG.save.data.songpositionDisplay;
-		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
-
-		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
-		MythsListEngineData.backgroundDisplay = FlxG.save.data.backgroundDisplay;
-
-		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
-
-		MythsListEngineData.dataAchievements = FlxG.save.data.dataAchievements;
-
-		MythsListEngineData.fcAmount = FlxG.save.data.fcAmount;
-		MythsListEngineData.playAmount = FlxG.save.data.playAmount;
-		MythsListEngineData.deathAmount = FlxG.save.data.deathAmount;
-		MythsListEngineData.playUpscroll = FlxG.save.data.playUpscroll;
-		MythsListEngineData.playDownscroll = FlxG.save.data.playDownscroll;
-		MythsListEngineData.playMiddlescroll = FlxG.save.data.playMiddlescroll;
+		dataSave();
 
 		FlxG.save.flush();
     }
@@ -172,6 +175,12 @@ class MythsListEngineData
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
 
+		MythsListEngineData.arrowColors = FlxG.save.data.arrowColors;
+		MythsListEngineData.arrowLeft = FlxG.save.data.arrowLeft;
+		MythsListEngineData.arrowDown = FlxG.save.data.arrowDown;
+		MythsListEngineData.arrowUp = FlxG.save.data.arrowUp;
+		MythsListEngineData.arrowRight = FlxG.save.data.arrowRight;
+
 		MythsListEngineData.dataAchievements = FlxG.save.data.dataAchievements;
 
 		MythsListEngineData.fcAmount = FlxG.save.data.fcAmount;
@@ -180,6 +189,8 @@ class MythsListEngineData
 		MythsListEngineData.playUpscroll = FlxG.save.data.playUpscroll;
 		MythsListEngineData.playDownscroll = FlxG.save.data.playDownscroll;
 		MythsListEngineData.playMiddlescroll = FlxG.save.data.playMiddlescroll;
+		MythsListEngineData.playUpMiddlescroll = FlxG.save.data.playUpMiddlescroll;
+		MythsListEngineData.playDownMiddlescroll = FlxG.save.data.playDownMiddlescroll;
     }
 
     static public function dataReset():Void
@@ -214,13 +225,24 @@ class MythsListEngineData
 		if (FlxG.save.data.characterSkin != null)
 			FlxG.save.data.characterSkin = 'bf';
 
+		if (FlxG.save.data.arrowColors != null)
+			FlxG.save.data.arrowColors = false;
+		if (FlxG.save.data.arrowLeft != null)
+			FlxG.save.data.arrowLeft = [255, 255, 255];
+		if (FlxG.save.data.arrowDown != null)
+			FlxG.save.data.arrowDown = [255, 255, 255];
+		if (FlxG.save.data.arrowUp != null)
+			FlxG.save.data.arrowUp = [255, 255, 255];
+		if (FlxG.save.data.arrowRight != null)
+			FlxG.save.data.arrowRight = [255, 255, 255];
+
 		if (FlxG.save.data.dataAchievements != null)
 		{
 			FlxG.save.data.dataAchievements = [
 				[false, false, false, false, false],
 				[false, false, false, false, false],
 				[false, false, false, false, false],
-				[false, false, false],
+				[false, false, false, false, false],
 			];
 		}
 
@@ -236,6 +258,10 @@ class MythsListEngineData
 			FlxG.save.data.playDownscroll = false;
 		if (FlxG.save.data.playMiddlescroll != null)
 			FlxG.save.data.playMiddlescroll = false;
+		if (FlxG.save.data.playUpMiddlescroll != null)
+			FlxG.save.data.playUpMiddlescroll = false;
+		if (FlxG.save.data.playDownMiddlescroll != null)
+			FlxG.save.data.playDownMiddlescroll = false;
 
 		MythsListEngineData.keyBinds = [
 			FlxG.save.data.keyBinds[0],
@@ -246,29 +272,7 @@ class MythsListEngineData
 			FlxG.save.data.keyBinds[5],
 		];
 
-		MythsListEngineData.downScroll = FlxG.save.data.downScroll;
-		MythsListEngineData.middleScroll = FlxG.save.data.middleScroll;
-		MythsListEngineData.ghostTapping = FlxG.save.data.ghostTapping;
-		MythsListEngineData.inputsCounter = FlxG.save.data.inputsCounter;
-		MythsListEngineData.statsDisplay = FlxG.save.data.statsDisplay;
-		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
-		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
-		MythsListEngineData.songpositionDisplay = FlxG.save.data.songpositionDisplay;
-		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
-
-		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
-		MythsListEngineData.backgroundDisplay = FlxG.save.data.backgroundDisplay;
-
-		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
-
-		MythsListEngineData.dataAchievements = FlxG.save.data.dataAchievements;
-
-		MythsListEngineData.fcAmount = FlxG.save.data.fcAmount;
-		MythsListEngineData.playAmount = FlxG.save.data.playAmount;
-		MythsListEngineData.deathAmount = FlxG.save.data.deathAmount;
-		MythsListEngineData.playUpscroll = FlxG.save.data.playUpscroll;
-		MythsListEngineData.playDownscroll = FlxG.save.data.playDownscroll;
-		MythsListEngineData.playMiddlescroll = FlxG.save.data.playMiddlescroll;
+		dataSave();
 
         FlxG.save.flush();
     }

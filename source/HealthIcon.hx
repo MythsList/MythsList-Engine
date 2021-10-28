@@ -36,14 +36,7 @@ class HealthIcon extends FlxSprite
 	{
 		char = changeCharName(char);
 
-		var file:Dynamic;
-
-		try{
-			file = Paths.image('healthicons/icon-' + char, 'preload');
-		}
-		catch(ex:Any){
-			file = Paths.image('healthicons/icon-face', 'preload');
-		}
+		var file:Dynamic = Paths.image('healthicons/icon-' + char, 'preload');
 
 		loadGraphic(file, true, 150, 150);
 

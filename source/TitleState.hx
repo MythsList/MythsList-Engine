@@ -60,6 +60,14 @@ class TitleState extends MusicBeatState
 		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
 		#end
 
+		if (Std.is(FlxG.save.data.keyBinds, String) || !Std.is(FlxG.save.data.keyBinds, Array))
+		{
+			FlxG.save.data.keyBinds = null;
+			FlxG.save.flush();
+		}
+	
+		MythsListEngineData.dataLoad();
+
 		PlayerSettings.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
