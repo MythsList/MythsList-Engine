@@ -15,6 +15,7 @@ class Alphabet extends FlxSpriteGroup
 	public var paused:Bool = false;
 
 	public var targetY:Float = 0;
+	public var xForce:Float = Math.POSITIVE_INFINITY;
 	public var isMenuItem:Bool = false;
 
 	public var text:String = "";
@@ -38,6 +39,8 @@ class Alphabet extends FlxSpriteGroup
 	{
 		super(x, y);
 
+		xForce = Math.POSITIVE_INFINITY;
+
 		_finalText = text;
 		this.text = text;
 		isBold = bold;
@@ -59,7 +62,9 @@ class Alphabet extends FlxSpriteGroup
 
 		for (character in splitWords)
 		{
-			if (character == " " || character == "-")
+			var spaces:Array<String> = [' ', '-'];
+
+			if (spaces.contains(character))
 				lastWasSpace = true;
 
 			if (AlphaCharacter.alphabet.indexOf(character.toLowerCase()) != -1)
@@ -116,7 +121,7 @@ class Alphabet extends FlxSpriteGroup
 
 			var splitWord:String = splitWords[loopNum];
 
-			if (splitWord == " ")
+			if (splitWord == ' ')
 				lastWasSpace = true;
 
 			#if (haxe >= "4.0.0")
@@ -184,7 +189,11 @@ class Alphabet extends FlxSpriteGroup
 			var scaledY = FlxMath.remapToRange(targetY, 0, 1, 0, 1.3);
 
 			y = FlxMath.lerp(y, (scaledY * 120) + (FlxG.height * 0.48), 0.16);
-			x = FlxMath.lerp(x, (targetY * 20) + 90, 0.16);
+
+			if (xForce != Math.POSITIVE_INFINITY)
+				x = xForce
+			else
+				x = FlxMath.lerp(x, (targetY * 20) + 90, 0.16);
 		}
 
 		super.update(elapsed);

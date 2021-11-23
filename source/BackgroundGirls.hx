@@ -5,26 +5,21 @@ import flixel.graphics.frames.FlxAtlasFrames;
 
 class BackgroundGirls extends FlxSprite
 {
-	public function new(x:Float, y:Float)
+	public function new(x:Float, y:Float, altAnimations:Bool = false)
 	{
 		super(x, y);
 
+		var animationStr:String = (altAnimations ? 'BG fangirls dissuaded' : 'BG girls group');
+
 		frames = Paths.getSparrowAtlas('weeb/bgFreaks', 'week6');
 
-		animation.addByIndices('danceLeft', 'BG girls group', CoolUtil.numberArray(14), "", 24, false);
-		animation.addByIndices('danceRight', 'BG girls group', CoolUtil.numberArray(30, 15), "", 24, false);
+		animation.addByIndices('danceLeft', animationStr, CoolUtil.numberArray(14), "", 24, false);
+		animation.addByIndices('danceRight', animationStr, CoolUtil.numberArray(30, 15), "", 24, false);
 
 		animation.play('danceLeft');
 	}
 
 	var danceDir:Bool = false;
-
-	public function getScared():Void
-	{
-		animation.addByIndices('danceLeft', 'BG fangirls dissuaded', CoolUtil.numberArray(14), "", 24, false);
-		animation.addByIndices('danceRight', 'BG fangirls dissuaded', CoolUtil.numberArray(30, 15), "", 24, false);
-		dance();
-	}
 
 	public function dance():Void
 	{

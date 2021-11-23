@@ -29,10 +29,9 @@ class PauseSubState extends MusicBeatSubstate
 	{
 		super();
 
-		if (PlayState.isStoryMode)
-			menuItems = ['Resume', 'Restart song', 'Exit to story menu', 'Exit to main menu', 'Exit to options menu'];
-		else
-			menuItems = ['Resume', 'Restart song', 'Exit to freeplay menu', 'Exit to main menu', 'Exit to options menu'];
+		var menuOption:String = (PlayState.isStoryMode ? 'Exit to story menu' : 'Exit to freeplay menu');
+
+		menuItems = ['Resume', 'Restart song', menuOption, 'Exit to main menu', 'Exit to options menu', 'Bot play'];
 
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast', 'shared'), true, true);
 		pauseMusic.volume = 0;
@@ -85,6 +84,10 @@ class PauseSubState extends MusicBeatSubstate
 			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, menuItems[i], true, false);
 			songText.isMenuItem = true;
 			songText.targetY = i;
+
+			if (menuItems[i] == 'Bot play')
+				songText.color = (MythsListEngineData.botPlay ? FlxColor.GREEN : FlxColor.RED);
+
 			grpMenuShit.add(songText);
 		}
 
@@ -131,6 +134,9 @@ class PauseSubState extends MusicBeatSubstate
 					FlxG.switchState(new FreeplayState());
 				case 'Exit to options menu':
 					FlxG.switchState(new OptionsSubState());
+				case 'Bot play':
+					MythsListEngineData.botPlay = !MythsListEngineData.botPlay;
+					grpMenuShit.members[curSelected].color = (MythsListEngineData.botPlay ? FlxColor.GREEN : FlxColor.RED);
 			}
 		}
 	}

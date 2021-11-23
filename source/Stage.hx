@@ -144,15 +144,16 @@ class Stage extends StageSprite
 				treeLeaves.playAnim('PETALS ALL');
 				treeLeaves.newGraphicSize(6);
 
+				var scaredGirls:Bool = false;
+
 				if (PlayState.SONG.song.toLowerCase() != 'thorns')
-				{
-		        	PlayState.bgGirls = new BackgroundGirls(-100, 190);
+				{ 
+					if (PlayState.SONG.song.toLowerCase() == 'roses')
+						scaredGirls = true;
+
+		        	PlayState.bgGirls = new BackgroundGirls(-100, 190, scaredGirls);
 		        	PlayState.bgGirls.scrollFactor.set(0.9, 0.9);
 					PlayState.bgGirls.antialiasing = false;
-
-		        	if (PlayState.SONG.song.toLowerCase() == 'roses')
-		            	PlayState.bgGirls.getScared();
-
 		        	PlayState.bgGirls.setGraphicSize(Std.int(PlayState.bgGirls.width * 6));
 		        	PlayState.bgGirls.updateHitbox();
 				}

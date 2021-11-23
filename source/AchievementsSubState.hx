@@ -53,9 +53,13 @@ class AchievementsSubState extends MusicBeatSubstate
 	var curSelected:Int = 0;
 	var curCategory:Int = 0;
 
+	var amountOfAchievements:Int = 0;
+	var amountOfUnlockedAchievements:Int = 0;
+
 	var curName:FlxText;
 	var curGoal:FlxText;
 	var curProgress:FlxText;
+	var curAchievementProgress:FlxText;
 
 	var descList:Array<String>;
 
@@ -89,7 +93,7 @@ class AchievementsSubState extends MusicBeatSubstate
 			for (p in 0...achievements[i].length)
 			{
 				var achievementIcon:FlxSprite = new FlxSprite(0, 0).loadGraphic(Paths.image('achievementassets/icons/icon-' + achievements[i][p], 'preload'), false, 50, 50);
-				achievementIcon.antialiasing = true;
+				achievementIcon.antialiasing = MythsListEngineData.menuAntialiasing;
 				achievementIcon.updateHitbox();
 				grpIcons.add(achievementIcon);
 
@@ -104,7 +108,7 @@ class AchievementsSubState extends MusicBeatSubstate
 					achievementIcon.x = 100 + (100 * p);
 		
 				var achievementFrame:FlxSprite = new FlxSprite((achievementIcon.getGraphicMidpoint().x) - 64/2, (achievementIcon.getGraphicMidpoint().y) - 64/2).loadGraphic(Paths.image('achievementassets/frames/frame-' + frames[i][p], 'preload'), false, 65, 65);
-				achievementFrame.antialiasing = true;
+				achievementFrame.antialiasing = MythsListEngineData.menuAntialiasing;
 				achievementFrame.updateHitbox();
 				grpFrames.add(achievementFrame);
 	
@@ -112,12 +116,16 @@ class AchievementsSubState extends MusicBeatSubstate
 				{
 					achievementIcon.alpha = 1;
 					achievementFrame.alpha = 1;
+
+					amountOfUnlockedAchievements ++;
 				}
 				else
 				{
 					achievementIcon.alpha = 0.6;
 					achievementFrame.alpha = 0.6;
-				}	
+				}
+
+				amountOfAchievements ++;
 			}
 		}
 
@@ -129,37 +137,32 @@ class AchievementsSubState extends MusicBeatSubstate
 		curName = new FlxText(curBG.x + 5, curBG.y + 5, FlxG.width / 2 - 10, 'PlaceHolder Name', 26);
 		curName.scrollFactor.set();
 		curName.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT);
-		curName.antialiasing = true;
+		curName.antialiasing = MythsListEngineData.menuAntialiasing;
 		add(curName);
 
 		curGoal = new FlxText(curName.x, curName.y + (26 * 3), FlxG.width / 2 - 10, 'PlaceHolder Goal', 26);
 		curGoal.scrollFactor.set();
 		curGoal.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT);
-		curGoal.antialiasing = true;
+		curGoal.antialiasing = MythsListEngineData.menuAntialiasing;
 		add(curGoal);
 
 		curProgress = new FlxText(curName.x, curGoal.y + (26 * 3), FlxG.width / 2 - 10, 'PlaceHolder Progress', 26);
 		curProgress.scrollFactor.set();
 		curProgress.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT);
-		curProgress.antialiasing = true;
+		curProgress.antialiasing = MythsListEngineData.menuAntialiasing;
 		add(curProgress);
 
-		var noteText:FlxText = new FlxText(0, 0, 0, 'Note : If your achievements are not showing, this is due to V.1.0.9 changing the code entirely', 12);
-		noteText.scrollFactor.set();
-		noteText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(noteText);
-		noteText.x = FlxG.width - noteText.width - 5;
-		noteText.y = FlxG.height - noteText.height - 3;
+		curAchievementProgress = new FlxText(curName.x, FlxG.height - 5, FlxG.width / 2 - 10, 'Unlocked achievements: ' + amountOfUnlockedAchievements + ' / ' + amountOfAchievements, 26);
+		curAchievementProgress.scrollFactor.set();
+		curAchievementProgress.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		curAchievementProgress.y -= curAchievementProgress.height;
+		curAchievementProgress.antialiasing = MythsListEngineData.menuAntialiasing;
+		add(curAchievementProgress);
 
 		var engineversionText:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
 		engineversionText.scrollFactor.set();
 		engineversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(engineversionText);
-
-		var modversionText:FlxText = new FlxText(5, engineversionText.y - engineversionText.height, 0, MythsListEngineData.modVersion, 12);
-		modversionText.scrollFactor.set();
-		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
-		add(modversionText);
 
 		changeCategory(0);
 	}

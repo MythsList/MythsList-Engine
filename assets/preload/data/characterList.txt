@@ -10,9 +10,6 @@ brody-foxx
 template
 rhys
 gf
-gf-car
-gf-christmas
-gf-pixel
 dad
 spooky
 monster
@@ -24,3 +21,4 @@ monster-christmas
 senpai
 senpai-angry
 spirit
+mythslist

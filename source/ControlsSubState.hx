@@ -57,6 +57,7 @@ class ControlsSubState extends MusicBeatSubstate
 	];
 
 	var BG:FlxSprite;
+	var BG2:FlxSprite;
 
 	var curKeybinds:FlxText;
 	var curBind:FlxText;
@@ -73,6 +74,10 @@ class ControlsSubState extends MusicBeatSubstate
 			DiscordClient.changePresence("In The Keybinds Options Menu", null);
 		#end
 
+		#if html5
+			throw 'Browser users are not supposed to access this menu!';
+		#end
+
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
 		menuBG.color = 0xFF71fd89;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
@@ -87,16 +92,24 @@ class ControlsSubState extends MusicBeatSubstate
 		for (i in 0...textMenuItems.length)
 		{
 			var optionText:Alphabet = new Alphabet(0, (70 * i) + 30, textMenuItems[i], true, false);
+			optionText.x = 80;
+
 			optionText.isMenuItem = true;
 			optionText.targetY = i;
+			optionText.xForce = optionText.x;
 
 			grpOptions.add(optionText);
 		}
 
-		BG = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width / 4), 250, 0xFF000000);
+		BG = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width / 4), Std.int(FlxG.height / 2), 0xFF000000);
 		BG.x = FlxG.width - BG.width;
 		BG.alpha = 0.25;
 		add(BG);
+
+		BG2 = new FlxSprite(0, FlxG.height / 2).makeGraphic(Std.int(FlxG.width / 4), Std.int(FlxG.height / 2), 0xFF000000);
+		BG2.x = FlxG.width - BG2.width;
+		BG2.alpha = 0.6;
+		add(BG2);
 
 		curKeybinds = new FlxText(BG.x + 5, BG.y + 5, 0, 
 		'Current keybinds:\n\n'
@@ -106,24 +119,21 @@ class ControlsSubState extends MusicBeatSubstate
 		+ 'Right key: ' + MythsListEngineData.keyBinds[3] + '\n'
 		+ '\nReset key: ' + MythsListEngineData.keyBinds[4] + '\n'
 		+ 'Pause key: ' + MythsListEngineData.keyBinds[5],
-		16);
+		24);
 		
 		add(curKeybinds);
 
-		curBind = new FlxText(0, 0, 0, '_', 200);
-		curBind.x = (BG.x + BG.width) - ((BG.width / 2) + (curBind.width / 2));
-		curBind.y = (FlxG.height / 2) - (curBind.height / 2) + 100;
+		curBind = new FlxText(0, 0, 0, '_', 216);
+		curBind.x = (BG2.x + BG2.width) - (BG2.width / 2) - (curBind.width / 2);
+		curBind.y = (FlxG.height / 2) + (FlxG.height / 4) - (curBind.height / 2);
+		curBind.font = Paths.font("vcr.ttf");
+		curBind.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(curBind);
 
 		var engineversionText:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
 		engineversionText.scrollFactor.set();
 		engineversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(engineversionText);
-
-		var modversionText:FlxText = new FlxText(5, engineversionText.y - engineversionText.height, 0, MythsListEngineData.modVersion, 12);
-		modversionText.scrollFactor.set();
-		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
-		add(modversionText);
 
 		changeSelection(0);
 	}
@@ -193,7 +203,7 @@ class ControlsSubState extends MusicBeatSubstate
 		+ '\nReset key: ' + MythsListEngineData.keyBinds[4] + '\n'
 		+ 'Pause key: ' + MythsListEngineData.keyBinds[5];
 
-		curBind.x = (BG.x + BG.width) - ((BG.width / 2) + (curBind.width / 2));
+		curBind.x = (BG2.x + BG2.width) - (BG2.width / 2) - (curBind.width / 2);
 	}
 
 	function changeSelection(change:Int = 0)
@@ -222,6 +232,7 @@ class ControlsSubState extends MusicBeatSubstate
 		}
 
 		curBind.text = MythsListEngineData.keyBinds[curSelected].toUpperCase();
+		curBind.y = (FlxG.height / 2) + (FlxG.height / 4) - (curBind.height / 2);
 	}
 
 	function interact(interaction:Bool = false, key:String = null)
@@ -229,6 +240,7 @@ class ControlsSubState extends MusicBeatSubstate
 		if (interaction) // saves the keybind
 		{
 			curBind.text = MythsListEngineData.keyBinds[curSelected].toUpperCase();
+			curBind.y = (FlxG.height / 2) + (FlxG.height / 4) - (curBind.height / 2);
 
 			controls.setKeyboardScheme(Solo, true);
 			MythsListEngineData.dataSave();
@@ -242,6 +254,7 @@ class ControlsSubState extends MusicBeatSubstate
 				if (!keybindBlacklist.contains(key) && !MythsListEngineData.keyBinds.contains(key))
 				{
 					curBind.text = key.toUpperCase();
+					curBind.y = (FlxG.height / 2) + (FlxG.height / 4) - (curBind.height / 2);
 
 					FlxG.save.data.keyBinds[curSelected] = key;
 					FlxG.save.flush();
@@ -252,6 +265,7 @@ class ControlsSubState extends MusicBeatSubstate
 			else
 			{
 				curBind.text = oldKey.toUpperCase();
+				curBind.y = (FlxG.height / 2) + (FlxG.height / 4) - (curBind.height / 2);
 			}
 		}
 	}

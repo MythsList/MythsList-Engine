@@ -26,28 +26,30 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 	// ADD YOUR CHARACTER FIRST IN CHARACTER.HX AND CHARACTERSLIST.TXT!
 
 	/*
-	textMenuItems contain the character names.
-	(has nothing to do with Character.hx and characterlist.txt, it's just for the button names)
+	characterLabels contain the character names.
+	(has nothing to do with Character.hx and characterlist.txt, it's just for the buttons)
 
-	Icons contain the health icons of your characters.
+	characters contain your characters, of course.
 	(Related to HealthIcon.hx and Character.hx, would recommend putting your character's name in like I did)
 	*/
 
-	public static var textMenuItems:Array<String> = [
+	public static var characterLabels:Array<String> = [
 		'Boyfriend',
 		'Minus Boyfriend',
 		'Beta Boyfriend',
 		'Old Boyfriend',
+		'Corrupted Boyfriend',
 		'Brody Foxx',
 		'Template',
 		'Rhys'
 	];
 
-	public static var icons:Array<String> = [
+	public static var characters:Array<String> = [
 		'bf',
 		'bf-minus',
 		'bf-old',
 		'bf-veryold',
+		'bf-corrupted',
 		'brody-foxx',
 		'template',
 		'rhys'
@@ -92,20 +94,23 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
-		for (i in 0...textMenuItems.length)
+		for (i in 0...characterLabels.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, (70 * i) + 30, textMenuItems[i], true, false);
+			var optionText:Alphabet = new Alphabet(0, (70 * i) + 30, characterLabels[i], true, false);
+			optionText.x = 50;
+
 			optionText.isMenuItem = true;
 			optionText.targetY = i;
+			optionText.xForce = optionText.x;
 
-			if (MythsListEngineData.characterSkin == icons[i])
+			if (MythsListEngineData.characterSkin == characters[i])
 				optionText.color = FlxColor.GREEN;
-			else if (MythsListEngineData.characterSkin != icons[i])
+			else if (MythsListEngineData.characterSkin != characters[i])
 				optionText.color = FlxColor.RED;
 
 			grpOptions.add(optionText);
 
-			var icon:HealthIcon = new HealthIcon(icons[i], false, true);
+			var icon:HealthIcon = new HealthIcon(characters[i], false, true);
 			icon.sprTracker = optionText;
 
 			iconArray.push(icon);
@@ -136,10 +141,10 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		curIcon.y = curBGtext.y + curBGtext.height;
 		add(curIcon);
 
-		for (i in 0...textMenuItems.length)
+		for (i in 0...characterLabels.length)
 		{
-			if (MythsListEngineData.characterSkin == icons[i])
-				curIconText = new FlxText(0, 0, 0, textMenuItems[i], 16);
+			if (MythsListEngineData.characterSkin == characters[i])
+				curIconText = new FlxText(0, 0, 0, characterLabels[i], 16);
 		}
 
 		curIconText.x = curBGtext.x;
@@ -149,28 +154,20 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		add(curIconText);
 
 		curCharacter = new Character(curBGtext.x, curBG.y + curBG.height, MythsListEngineData.characterSkin, true, true);
-		curCharacter.scrollFactor.set();
-		curCharacter.antialiasing = true;
-		curCharacter.playAnim('idle');
-		add(curCharacter);
-
 		curCharacter.x = curBGtext.x + (curBG.width / 2) - (curCharacter.frameWidth / 2);
 		curCharacter.y = curBG.y + (curBG.height * 2) - (curCharacter.frameHeight / 2);
-
-		offsetChange();
+		curCharacter.scrollFactor.set();
+		curCharacter.dance();
+		add(curCharacter);
 
 		var engineversionText:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
 		engineversionText.scrollFactor.set();
 		engineversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(engineversionText);
 
-		var modversionText:FlxText = new FlxText(5, engineversionText.y - engineversionText.height, 0, MythsListEngineData.modVersion, 12);
-		modversionText.scrollFactor.set();
-		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
-		add(modversionText);
-
 		changeSelection(0);
 		generateArrows();
+		offsetChange();
 	}
 
 	override function update(elapsed:Float)
@@ -182,7 +179,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		var controlArrayRelease:Array<Bool> = [controls.LEFT_R, controls.DOWN_R, controls.UP_R, controls.RIGHT_R];
 
 		if (curCharacter.animation.finished)
-			curCharacter.playAnim('idle');
+			curCharacter.dance();
 
 		if (arrowsEnabled && (controlArrayPress.contains(true) || controlArrayRelease.contains(true)))
 		{
@@ -258,9 +255,9 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 
 			for (item in grpOptions.members)
 			{
-				if (MythsListEngineData.characterSkin == icons[curSelected] && curSelected == curItem)
+				if (MythsListEngineData.characterSkin == characters[curSelected] && curSelected == curItem)
 					item.color = FlxColor.GREEN;
-				else if (MythsListEngineData.characterSkin != icons[curSelected] && curSelected != curItem)
+				else if (MythsListEngineData.characterSkin != characters[curSelected] && curSelected != curItem)
 					item.color = FlxColor.RED;
 				else
 					item.color = FlxColor.RED;
@@ -276,10 +273,10 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 
 			remove(curIconText);
 
-			for (i in 0...textMenuItems.length)
+			for (i in 0...characterLabels.length)
 			{
-				if (MythsListEngineData.characterSkin == icons[i])
-					curIconText = new FlxText(0, 0, 0, textMenuItems[i], 16);
+				if (MythsListEngineData.characterSkin == characters[i])
+					curIconText = new FlxText(0, 0, 0, characterLabels[i], 16);
 			}
 
 			curIconText.x = curBGtext.x;
@@ -299,8 +296,8 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		curSelected += change;
 
 		if (curSelected < 0)
-			curSelected = textMenuItems.length - 1;
-		else if (curSelected >= textMenuItems.length)
+			curSelected = characterLabels.length - 1;
+		else if (curSelected >= characterLabels.length)
 			curSelected = 0;
 
 		var bullShit:Int = 0;
@@ -321,7 +318,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
-		FlxG.save.data.characterSkin = icons[selected];
+		FlxG.save.data.characterSkin = characters[selected];
 		FlxG.save.flush();
 
 		MythsListEngineData.dataSave();
@@ -329,8 +326,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 		remove(curCharacter);
 		curCharacter = new Character(curBGtext.x, curBG.y + curBG.height, MythsListEngineData.characterSkin, true, true);
 		curCharacter.scrollFactor.set();
-		curCharacter.antialiasing = true;
-		curCharacter.playAnim('idle');
+		curCharacter.dance();
 		add(curCharacter);
 
 		curCharacter.x = curBGtext.x + (curBG.width / 2) - (curCharacter.frameWidth / 2);
@@ -364,7 +360,7 @@ class CharacterSelectionSubState extends MusicBeatSubstate
 			greyArrow.animation.addByPrefix('purple', 'arrowLEFT');
 			greyArrow.animation.addByPrefix('red', 'arrowRIGHT');
 
-			greyArrow.antialiasing = true;
+			greyArrow.antialiasing = MythsListEngineData.menuAntialiasing;
 			greyArrow.alpha = 0.6;
 
 			greyArrow.setGraphicSize(Std.int(greyArrow.width * 0.7));

@@ -86,7 +86,7 @@ class ArrowColorSubState extends MusicBeatSubstate
 			babyArrow.animation.addByPrefix('purple', 'arrowLEFT');
 			babyArrow.animation.addByPrefix('red', 'arrowRIGHT');
 	
-			babyArrow.antialiasing = true;
+			babyArrow.antialiasing = MythsListEngineData.menuAntialiasing;
 	
 			babyArrow.setGraphicSize(Std.int(babyArrow.width * 1.1));
 	
@@ -126,7 +126,7 @@ class ArrowColorSubState extends MusicBeatSubstate
 	
 			babyArrow.frames = Paths.getSparrowAtlas('customNOTE_assets', 'shared');
 		
-			babyArrow.antialiasing = true;
+			babyArrow.antialiasing = MythsListEngineData.menuAntialiasing;
 		
 			babyArrow.setGraphicSize(Std.int(babyArrow.width * 0.7));
 		
@@ -192,11 +192,6 @@ class ArrowColorSubState extends MusicBeatSubstate
 		engineversionText.scrollFactor.set();
 		engineversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(engineversionText);
-
-		var modversionText:FlxText = new FlxText(5, engineversionText.y - engineversionText.height, 0, MythsListEngineData.modVersion, 12);
-		modversionText.scrollFactor.set();
-		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
-		add(modversionText);
 	}
 
 	override function update(elapsed:Float)

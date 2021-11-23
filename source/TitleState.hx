@@ -61,11 +61,13 @@ class TitleState extends MusicBeatState
 		#end
 
 		if (Std.is(FlxG.save.data.keyBinds, String) || !Std.is(FlxG.save.data.keyBinds, Array))
-		{
 			FlxG.save.data.keyBinds = null;
-			FlxG.save.flush();
-		}
+
+		#if html5
+			FlxG.save.data.keyBinds = null;
+		#end
 	
+		FlxG.save.flush();
 		MythsListEngineData.dataLoad();
 
 		PlayerSettings.init();
@@ -147,7 +149,7 @@ class TitleState extends MusicBeatState
 
 		logoBl = new FlxSprite(-150, -100);
 		logoBl.frames = Paths.getSparrowAtlas('logoBumpin', 'preload');
-		logoBl.antialiasing = true;
+		logoBl.antialiasing = MythsListEngineData.menuAntialiasing;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24);
 		logoBl.animation.play('bump');
 		logoBl.updateHitbox();
@@ -156,13 +158,13 @@ class TitleState extends MusicBeatState
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle', 'preload');
 		gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
 		gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
-		gfDance.antialiasing = true;
+		gfDance.antialiasing = MythsListEngineData.menuAntialiasing;
 		add(gfDance);
 		add(logoBl);
 
 		/*
 		logoEngine = new FlxSprite(0, 0).loadGraphic(Paths.image('MythsListEngineLogo', 'preload'), false);
-		logoEngine.antialiasing = true;
+		logoEngine.antialiasing = MythsListEngineData.menuAntialiasing;
 		logoEngine.updateHitbox();
 		add(logoEngine);
 		logoEngine.width *= 1.5;
@@ -175,7 +177,7 @@ class TitleState extends MusicBeatState
 		titleText.frames = Paths.getSparrowAtlas('titleEnter', 'preload');
 		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
 		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
-		titleText.antialiasing = true;
+		titleText.antialiasing = MythsListEngineData.menuAntialiasing;
 		titleText.animation.play('idle');
 		titleText.updateHitbox();
 		add(titleText);
@@ -184,12 +186,7 @@ class TitleState extends MusicBeatState
 		engineversionText.scrollFactor.set();
 		engineversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(engineversionText);
-
-		var modversionText:FlxText = new FlxText(5, engineversionText.y - engineversionText.height, 0, MythsListEngineData.modVersion, 12);
-		modversionText.scrollFactor.set();
-		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
-		add(modversionText);
-
+		
 		credGroup = new FlxGroup();
 		add(credGroup);
 		textGroup = new FlxGroup();
@@ -203,7 +200,7 @@ class TitleState extends MusicBeatState
 		ngSpr.setGraphicSize(Std.int(ngSpr.width * 0.8));
 		ngSpr.updateHitbox();
 		ngSpr.screenCenter(X);
-		ngSpr.antialiasing = true;
+		ngSpr.antialiasing = MythsListEngineData.menuAntialiasing;
 
 		FlxG.mouse.visible = false;
 
@@ -272,12 +269,11 @@ class TitleState extends MusicBeatState
 
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
-				var version:String = "v" + Application.current.meta.get('version');
-
-				if (version.trim() != NGio.GAME_VER_NUMS.trim() && !OutdatedSubState.leftState)
+				#if debug
 					FlxG.switchState(new OutdatedSubState());
-				else
+				#else
 					FlxG.switchState(new MainMenuState());
+				#end
 			});
 		}
 
@@ -333,7 +329,7 @@ class TitleState extends MusicBeatState
 
 		FlxG.log.add(curBeat);
 
-		switch (curBeat)
+		switch(curBeat)
 		{
 			case 4:
 				createCoolText(['In association', 'with', 'Newgrounds']);

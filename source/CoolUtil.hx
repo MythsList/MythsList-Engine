@@ -1,6 +1,7 @@
 package;
 
 import lime.utils.Assets;
+import openfl.utils.Assets as OpenFlAssets;
 
 using StringTools;
 

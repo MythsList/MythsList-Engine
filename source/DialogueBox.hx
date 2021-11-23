@@ -237,6 +237,7 @@ class DialogueBox extends FlxSpriteGroup
 
 	var dialogueOpened:Bool = false;
 	var dialogueStarted:Bool = false;
+	var dialogueSkipped:Bool = false;
 
 	override function update(elapsed:Float)
 	{
@@ -256,13 +257,16 @@ class DialogueBox extends FlxSpriteGroup
 			dialogueStarted = true;
 		}
 
-		if (FlxG.keys.anyJustPressed([SPACE, ENTER]) && dialogueStarted == true)
+		if (FlxG.keys.justPressed.SHIFT)
+			dialogueSkipped = true;
+
+		if (FlxG.keys.anyJustPressed([SPACE, ENTER, SHIFT]) && dialogueStarted == true)
 		{
 			remove(dialogue);
 				
 			FlxG.sound.play(Paths.sound('clickText', 'shared'), 0.75);
 
-			if (dialogueList[0] != null && dialogueList[1] == null)
+			if ((dialogueList[0] != null && dialogueList[1] == null) || dialogueSkipped)
 			{
 				if (!isEnding)
 				{

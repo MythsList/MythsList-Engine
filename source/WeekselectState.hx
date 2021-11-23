@@ -22,6 +22,7 @@ class WeekselectState extends MusicBeatState
 	var curSelected:Int = 0;
 	public static var curWeek:Int = 0;
 
+	var isDebug:Bool = false;
 	private var curPlaying:Bool = false;
 
 	private var grpWeeks:FlxTypedGroup<Alphabet>;
@@ -33,8 +34,6 @@ class WeekselectState extends MusicBeatState
 			DiscordClient.changePresence("In The Week Selection Menu", null);
 		#end
 
-		var isDebug:Bool = false;
-
 		#if debug
 			isDebug = true;
 		#end
@@ -43,31 +42,27 @@ class WeekselectState extends MusicBeatState
 		THIS IS WHERE YOU ADD YOUR WEEKS IN THAT MENU
 		{the week name doesn't matter, change it to whatever you want}
 
-		format : (week number, character name, week name)
+		format : (character name, week name)
 		*/
 
-		if (StoryMenuState.weekUnlocked[0] || isDebug)
-			addWeek(0, 'gf', 'TUTORIAL');
+		var weekData:Array<Dynamic> = [
+			['gf', 'TUTORIAL'],
+			['dad', 'VS DOUBLE D'],
+			['spooky', 'SPOOKY MONTH'],
+			['pico', 'NG SHOWDOWN'],
+			['mom', 'VS DOUBLE M'],
+			['parents', 'UNHOLY XMAS'],
+			['senpai', 'HATING SIMULATOR']
+		];
 
-		if (StoryMenuState.weekUnlocked[1] || isDebug)
-			addWeek(1, 'dad', 'VS DOUBLE D');
-
-		if (StoryMenuState.weekUnlocked[2] || isDebug)
-			addWeek(2, 'spooky', 'SPOOKY MONTH');
-
-		if (StoryMenuState.weekUnlocked[3] || isDebug)
-			addWeek(3, 'pico', 'NG SHOWDOWN');
-
-		if (StoryMenuState.weekUnlocked[4] || isDebug)
-			addWeek(4, 'mom', 'VS DOUBLE M');
-
-		if (StoryMenuState.weekUnlocked[5] || isDebug)
-			addWeek(5, 'parents-christmas', 'UNHOLY XMAS');
-
-		if (StoryMenuState.weekUnlocked[6] || isDebug)
-			addWeek(6, 'senpai', 'HATING SIMULATOR');
+		for (i in 0...weekData.length)
+		{
+			if (StoryMenuState.weekUnlocked[i] || isDebug)
+				addWeek(i, weekData[i][0], weekData[i][1]);
+		}
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuBGBlue', 'preload'));
+		bg.antialiasing = true;
 		add(bg);
 
 		grpWeeks = new FlxTypedGroup<Alphabet>();
@@ -78,10 +73,7 @@ class WeekselectState extends MusicBeatState
 
 		for (i in 0...weeks.length)
 		{
-			var weekText:Alphabet = null;
-
-			weekText = new Alphabet(0, (70 * i) + 30, weeks[i].weekName, true, false);
-
+			var weekText:Alphabet = new Alphabet(0, (70 * i) + 30, weeks[i].weekName, true, false);
 			weekText.isMenuItem = true;
 			weekText.targetY = i;
 			grpWeeks.add(weekText);
@@ -97,7 +89,7 @@ class WeekselectState extends MusicBeatState
 		scoreBG.scrollFactor.set();
 		add(scoreBG);
 
-		var titleText:FlxText = new FlxText(0, scoreBG.y + 5, 0, "WEEK SELECTION", 32);
+		var titleText:FlxText = new FlxText(0, scoreBG.y + 5, 0, 'WEEK SELECTION', 32);
 		titleText.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
 		titleText.screenCenter(X);
 		titleText.scrollFactor.set();
@@ -107,11 +99,6 @@ class WeekselectState extends MusicBeatState
 		engineversionText.scrollFactor.set();
 		engineversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(engineversionText);
-
-		var modversionText:FlxText = new FlxText(5, engineversionText.y - engineversionText.height, 0, MythsListEngineData.modVersion, 12);
-		modversionText.scrollFactor.set();
-		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
-		add(modversionText);
 
 		changeSelection();
 
@@ -147,10 +134,13 @@ class WeekselectState extends MusicBeatState
 
 		if (controls.ACCEPT)
 		{
-			FlxG.sound.play(Paths.sound('confirmMenu', 'preload'));
+			if (StoryMenuState.weekUnlocked[curSelected] || isDebug)
+			{
+				FlxG.sound.play(Paths.sound('confirmMenu', 'preload'));
 			
-			curWeek = curSelected;
-			FlxG.switchState(new FreeplayState());
+				curWeek = curSelected;
+				FlxG.switchState(new FreeplayState());
+			}
 		}
 	}
 

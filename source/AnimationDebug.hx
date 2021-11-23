@@ -19,29 +19,26 @@ class AnimationDebug extends FlxState
 {
 	var _file:FileReference;
 
-	var bf:Boyfriend;
-	var dad:Character;
 	var char:Character;
 
 	var textAnim:FlxText;
-
 	var redgridBG:FlxSprite;
-
 	var dumbTexts:FlxTypedGroup<FlxText>;
-	var animList:Array<String> = [];
 
+	var animList:Array<String> = [];
 	var curAnim:Int = 0;
 
-	var isDad:Bool = true;
-
 	var daAnim:String = 'bf';
+	var isPlayer:Bool = false;
 
 	var camFollow:FlxObject;
 
-	public function new(daAnim:String = 'bf')
+	public function new(daAnim:String = 'bf', isPlayer:Bool = false)
 	{
 		super();
+
 		this.daAnim = daAnim;
+		this.isPlayer = isPlayer;
 	}
 
 	override function create()
@@ -57,47 +54,20 @@ class AnimationDebug extends FlxState
 
 		var gridBG:FlxSprite = FlxGridOverlay.create(10, 10);
 		gridBG.scrollFactor.set();
+
+		char = new Character(0, 0, daAnim, isPlayer);
+		char.updateHitbox();
+		char.screenCenter(XY);
+		char.scrollFactor.set(1, 1);
+		char.debugMode = true;
+
+		redgridBG = new FlxSprite(char.x, char.y).makeGraphic(Std.int(char.width), Std.int(char.height), FlxColor.RED);
+		redgridBG.alpha = 0.25;
+		redgridBG.scrollFactor.set(1, 1);
+
 		add(gridBG);
-
-		if (CharacterSelectionSubState.icons.contains(daAnim))
-			isDad = false;
-
-		if (isDad == true)
-		{
-			dad = new Character(0, 0, daAnim);
-			dad.updateHitbox();
-			dad.screenCenter(XY);
-			dad.scrollFactor.set(1, 1);
-			dad.debugMode = true;
-
-			redgridBG = new FlxSprite(0, 0).makeGraphic(Std.int(dad.width), Std.int(dad.height), FlxColor.RED);
-			redgridBG.alpha = 0.25;
-			redgridBG.scrollFactor.set(1, 1);
-			add(redgridBG);
-
-			add(dad);
-
-			char = dad;
-		}
-		else
-		{
-			bf = new Boyfriend(0, 0, daAnim);
-			bf.updateHitbox();
-			bf.screenCenter(XY);
-			bf.scrollFactor.set(1, 1);
-			bf.debugMode = true;
-
-			redgridBG = new FlxSprite(0, 0).makeGraphic(Std.int(bf.width), Std.int(bf.height), FlxColor.RED);
-			redgridBG.alpha = 0.25;
-			redgridBG.scrollFactor.set(1, 1);
-			add(redgridBG);
-
-			add(bf);
-
-			char = bf;
-		}
-
-		redgridBG.screenCenter(XY);
+		add(redgridBG);
+		add(char);
 
 		dumbTexts = new FlxTypedGroup<FlxText>();
 		add(dumbTexts);
@@ -105,7 +75,7 @@ class AnimationDebug extends FlxState
 		textAnim = new FlxText(0, 10, 0, 'PlaceHolder', 32);
 		textAnim.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		textAnim.scrollFactor.set();
-		textAnim.antialiasing = true;
+		textAnim.antialiasing = MythsListEngineData.menuAntialiasing;
 		add(textAnim);
 
 		textAnim.x = FlxG.width - (textAnim.width + 10);
@@ -113,7 +83,7 @@ class AnimationDebug extends FlxState
 		var noteText:FlxText = new FlxText(0, 0, 0, 'Press ENTER or ALT to save offsets', 26);
 		noteText.scrollFactor.set();
 		noteText.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		noteText.antialiasing = true;
+		noteText.antialiasing = MythsListEngineData.menuAntialiasing;
 		add(noteText);
 
 		noteText.x = FlxG.width - noteText.width - 5;
@@ -139,7 +109,7 @@ class AnimationDebug extends FlxState
 			var text:FlxText = new FlxText(10, 10 + (28 * daLoop), 0, anim + ' : ' + offsets, 26);
 			text.setFormat(Paths.font("vcr.ttf"), 26, FlxColor.BLUE, LEFT);
 			text.scrollFactor.set();
-			text.antialiasing = true;
+			text.antialiasing = MythsListEngineData.menuAntialiasing;
 			dumbTexts.add(text);
 
 			if (pushList)
@@ -166,18 +136,7 @@ class AnimationDebug extends FlxState
 		switch(char.animation.curAnim.name.toLowerCase())
 		{
 			case 'danceleft' | 'danceright' | 'idle':
-			{
-				if (isDad)
-				{
-					redgridBG.x = (dad.getGraphicMidpoint().x) - (redgridBG.width / 2);
-					redgridBG.y = (dad.getGraphicMidpoint().y) - (redgridBG.height / 2);
-				}
-				else
-				{
-					redgridBG.x = (bf.getGraphicMidpoint().x) - (redgridBG.width / 2);
-					redgridBG.y = (bf.getGraphicMidpoint().y) - (redgridBG.height / 2);
-				}
-			}
+				redgridBG.setPosition(char.x, char.y);
 		}
 
 		if (FlxG.keys.justPressed.E)

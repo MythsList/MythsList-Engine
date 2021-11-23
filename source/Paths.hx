@@ -74,6 +74,11 @@ class Paths
 		return getPath('data/$key.txt', TEXT, library);
 	}
 
+	inline static public function lua(key:String, ?library:String)
+	{
+		return getPath('data/$key.lua', TEXT, library);
+	}
+
 	inline static public function xml(key:String, ?library:String)
 	{
 		return getPath('data/$key.xml', TEXT, library);
@@ -134,11 +139,11 @@ class Paths
 		return FlxAtlasFrames.fromSpriteSheetPacker(image(key, library), file('images/$key.txt', library));
 	}
 
-	inline public static function offsets(path:String, ?library:String):Array<String>
+	inline public static function offsets(key:String, ?library:String):Array<String>
 	{
 		var daList:Array<String> = [];
 
-		daList = lime.utils.Assets.getText('shared:assets/shared/images/characters/offsets/$path.txt').trim().split('\n');
+		daList = lime.utils.Assets.getText(library + ':assets/' + library + '/images/characters/offsets/$key.txt').trim().split('\n');
 	
 		for (i in 0...daList.length)
 		{

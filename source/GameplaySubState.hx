@@ -24,23 +24,25 @@ using StringTools;
 
 class GameplaySubState extends MusicBeatSubstate
 {
-	var textMenuItems:Array<String> = [
-		'Downscroll',
-		'Middlescroll',
-		'Ghost tapping',
-		'Inputs counter',
-		'Stats display',
-		'Song infos display',
-		'Version display',
-		'Song position display',
-		'Bot play',
-		'Fullscreen'
+	var optionItems:Array<Dynamic> = [
+		['Downscroll', 'Puts your arrows at the bottom of the screen'],
+		['Middlescroll', 'Puts your arrows at the middle of the screen'],
+		['Ghost tapping', 'Does not punish you when you tap while there is no note'],
+		['Inputs counter', 'Adds extra UI that counts your inputs'],
+		['Stats display', 'Adds extra UI that tells you your current song stats'],
+		['Song infos display', 'Adds extra text that tells you the informations of the song'],
+		['Version display', 'Adds extra text that tells you the current version of the engine'],
+		['Song position display', 'Adds extra UI that shows the current position of the song'],
+		['Bot play', 'Plays for you'],
+		['Fullscreen', 'Sets the game to fullscreen']
 	];
 
 	var dataStuff:Array<Bool> = [];
 
 	var curSelected:Int = 0;
 
+	var optionDesc:FlxText;
+	var optionStatus:FlxText;
 	var grpOptions:FlxTypedGroup<Alphabet>;
 
 	public function new()
@@ -62,11 +64,14 @@ class GameplaySubState extends MusicBeatSubstate
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
-		for (i in 0...textMenuItems.length)
+		for (i in 0...optionItems.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, (70 * i) + 30, textMenuItems[i], true, false);
+			var optionText:Alphabet = new Alphabet(0, (70 * i) + 30, optionItems[i][0], true, false);
+			optionText.screenCenter(X);
+
 			optionText.isMenuItem = true;
 			optionText.targetY = i;
+			optionText.xForce = optionText.x;
 
 			getDataList();
 
@@ -78,15 +83,31 @@ class GameplaySubState extends MusicBeatSubstate
 			grpOptions.add(optionText);
 		}
 
-		var engineversionText:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
+		var background:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, 24, 0xFF000000);
+		background.scrollFactor.set();
+		background.alpha = 0.6;
+		add(background);
+
+		var backgroundtwo:FlxSprite = new FlxSprite(0, FlxG.height - 24).makeGraphic(FlxG.width, 24, 0xFF000000);
+		backgroundtwo.scrollFactor.set();
+		backgroundtwo.alpha = 0.6;
+		add(backgroundtwo);
+
+		optionDesc = new FlxText(5, background.y + background.height - 22, 0, 'PlaceHolder', 20);
+		optionDesc.scrollFactor.set();
+		optionDesc.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, LEFT);
+		add(optionDesc);
+
+		optionStatus = new FlxText(0, backgroundtwo.y + 2, 0, 'PlaceHolder', 20);
+		optionStatus.x = FlxG.width - optionStatus.width - 5;
+		optionStatus.scrollFactor.set();
+		optionStatus.setFormat("VCR OSD Mono", 20, FlxColor.WHITE, LEFT);
+		add(optionStatus);
+
+		var engineversionText:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 16);
 		engineversionText.scrollFactor.set();
 		engineversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(engineversionText);
-
-		var modversionText:FlxText = new FlxText(5, engineversionText.y - engineversionText.height, 0, MythsListEngineData.modVersion, 12);
-		modversionText.scrollFactor.set();
-		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
-		add(modversionText);
 
 		changeSelection(0);
 	}
@@ -124,6 +145,11 @@ class GameplaySubState extends MusicBeatSubstate
 				interact(true, curSelected);
 				grpOptions.members[curSelected].color = FlxColor.GREEN;
 			}
+
+			getDataList();
+
+			optionStatus.text = 'Currently ' + (dataStuff[curSelected] ? 'ON' : 'OFF');
+			optionStatus.x = FlxG.width - optionStatus.width - 5;
 		}
 	}
 
@@ -132,12 +158,19 @@ class GameplaySubState extends MusicBeatSubstate
 		if (change != 0)
 			FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 
+		getDataList();
+
 		curSelected += change;
 
 		if (curSelected < 0)
-			curSelected = textMenuItems.length - 1;
-		else if (curSelected >= textMenuItems.length)
+			curSelected = optionItems.length - 1;
+		else if (curSelected >= optionItems.length)
 			curSelected = 0;
+
+		optionDesc.text = optionItems[curSelected][1];
+
+		optionStatus.text = 'Currently ' + (dataStuff[curSelected] ? 'ON' : 'OFF');
+		optionStatus.x = FlxG.width - optionStatus.width - 5;
 
 		var bullShit:Int = 0;
 
@@ -153,7 +186,7 @@ class GameplaySubState extends MusicBeatSubstate
 		}
 	}
 
-	function interact(change:Bool = true, selected:Int = 0)
+	function interact(change:Dynamic = true, selected:Int = 0)
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu', 'preload'), 0.4);
 

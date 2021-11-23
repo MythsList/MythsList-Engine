@@ -33,6 +33,7 @@ class FreeplayState extends MusicBeatState
 
 	var curWeekfp:Int = WeekselectState.curWeek;
 
+	var isDebug:Bool = false;
 	private var curPlaying:Bool = false;
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
@@ -45,66 +46,50 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In The Freeplay Menu", null);
 		#end
 
-		var isDebug:Bool = false;
+		MythsListEngineData.dataSave();
 
 		#if debug
 			isDebug = true;
 		#end
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
+		bg.antialiasing = true;
+		bg.color = 0xFFFFFFFF;
+		add(bg);
 
 		/*
 		THIS IS WHERE YOU ADD YOUR SONGS IN THAT MENU
 		{source guide on gamebanana should be useful for that}
 
-		format : (song names, week number, character names)
+		format : (song names, character names, background color)
 
 		You can also change the background's color with 'bg.color = hex color code,
 		it will defaults to white if you didn't add a line to change the color
 		*/
 
-		bg.color = 0xFFFFFFFF;
+		var songData:Array<Dynamic> = [
+			[['TUTORIAL'], ['gf'], 0xFF7f003b],
+			[['BOPEEBO', 'FRESH', 'DADBATTLE'], ['dad'], 0xFFaf66ce],
+			[['SPOOKEEZ', 'SOUTH', 'MONSTER'], ['spooky', 'spooky', 'monster'], 0xFFd56a00],
+			[['PICO', 'PHILLY', 'BLAMMED'], ['pico'], 0xFFb7d855],
+			[['SATIN-PANTIES', 'HIGH', 'MILF'], ['mom'], 0xFFd8558e],
+			[['COCOA', 'EGGNOG', 'WINTER-HORRORLAND'], ['parents', 'parents', 'monster'], 0xFFf3ff6e],
+			[['SENPAI', 'ROSES', 'THORNS'], ['senpai', 'senpai-angry', 'spirit'], 0xFFffaa6f]
+		];
 
-		switch (curWeekfp)
+		for (i in 0...songData.length)
 		{
-			case 0:
-				if (StoryMenuState.weekUnlocked[0] || isDebug)
-					addWeek(['TUTORIAL'], 0, ['gf']);
+			if (curWeekfp == i)
+			{
+				if (StoryMenuState.weekUnlocked[i] || isDebug)
+				{
+					addWeek(songData[i][0], i, songData[i][1]);
 
-				bg.color = 0xFF7f003b;
-			case 1:
-				if (StoryMenuState.weekUnlocked[1] || isDebug)
-					addWeek(['BOPEEBO', 'FRESH', 'DADBATTLE'], 1, ['dad']);
-
-				bg.color = 0xFFaf66ce;
-			case 2:
-				if (StoryMenuState.weekUnlocked[2] || isDebug)
-					addWeek(['SPOOKEEZ', 'SOUTH', 'MONSTER'], 2, ['spooky', 'spooky', 'monster']);
-
-				bg.color = 0xFFd56a00;
-			case 3:
-				if (StoryMenuState.weekUnlocked[3] || isDebug)
-					addWeek(['PICO', 'PHILLY', 'BLAMMED'], 3, ['pico']);
-
-				bg.color = 0xFFb7d855;
-			case 4:
-				if (StoryMenuState.weekUnlocked[4] || isDebug)
-					addWeek(['SATIN-PANTIES', 'HIGH', 'MILF'], 4, ['mom']);
-
-				bg.color = 0xFFd8558e;
-			case 5: 
-				if (StoryMenuState.weekUnlocked[5] || isDebug)
-					addWeek(['COCOA', 'EGGNOG', 'WINTER-HORRORLAND'], 5, ['parents-christmas', 'parents-christmas', 'monster-christmas']);
-
-				bg.color = 0xFFf3ff6e;
-			case 6: 
-				if (StoryMenuState.weekUnlocked[6] || isDebug)
-					addWeek(['SENPAI', 'ROSES', 'THORNS'], 6, ['senpai', 'senpai-angry', 'spirit']);
-
-				bg.color = 0xFFffaa6f;
+					if (songData[i][2] != null)
+						bg.color = songData[i][2];
+				}
+			}
 		}
-
-		add(bg);
 
 		grpSongs = new FlxTypedGroup<Alphabet>();
 		add(grpSongs);
@@ -136,28 +121,23 @@ class FreeplayState extends MusicBeatState
 
 		leftArrow = new FlxText(scoreBG.x + 5, scoreText.y + 35, 0, "<", 24);
 		leftArrow.font = scoreText.font;
-		leftArrow.antialiasing = true;
+		leftArrow.antialiasing = MythsListEngineData.menuAntialiasing;
 		add(leftArrow);
 
 		diffText = new FlxText(leftArrow.width + leftArrow.x + 5, leftArrow.y, 0, "NORMAL", 24);
 		diffText.setFormat(Paths.font("vcr.ttf"), 24, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		diffText.antialiasing = true;
+		diffText.antialiasing = MythsListEngineData.menuAntialiasing;
 		add(diffText);
 
 		rightArrow = new FlxText(diffText.width + diffText.x + 5, diffText.y, 0, ">", 24);
 		rightArrow.font = scoreText.font;
-		rightArrow.antialiasing = true;
+		rightArrow.antialiasing = MythsListEngineData.menuAntialiasing;
 		add(rightArrow);
 
 		var engineversionText:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
 		engineversionText.scrollFactor.set();
 		engineversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(engineversionText);
-
-		var modversionText:FlxText = new FlxText(5, engineversionText.y - engineversionText.height, 0, MythsListEngineData.modVersion, 12);
-		modversionText.scrollFactor.set();
-		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
-		add(modversionText);
 
 		changeSelection(0);
 		changeDiff(0);

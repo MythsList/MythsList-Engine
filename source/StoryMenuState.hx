@@ -86,6 +86,8 @@ class StoryMenuState extends MusicBeatState
 			DiscordClient.changePresence("In The Story Menu", null);
 		#end
 
+		MythsListEngineData.dataSave();
+
 		if (FlxG.sound.music != null)
 		{
 			if (!FlxG.sound.music.playing)
@@ -109,11 +111,6 @@ class StoryMenuState extends MusicBeatState
 		engineversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(engineversionText);
 
-		var modversionText:FlxText = new FlxText(5, engineversionText.y - engineversionText.height, 0, MythsListEngineData.modVersion, 12);
-		modversionText.scrollFactor.set();
-		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
-		add(modversionText);
-
 		var ui_tex = Paths.getSparrowAtlas('storymenu/campaign_menu_UI', 'preload');
 
 		grpWeekText = new FlxTypedGroup<MenuItem>();
@@ -133,11 +130,10 @@ class StoryMenuState extends MusicBeatState
 			
 			weekThing.y += ((weekThing.height + 20) * i);
 			weekThing.targetY = i;
+			weekThing.screenCenter(X);
+			weekThing.antialiasing = MythsListEngineData.menuAntialiasing;
 
 			grpWeekText.add(weekThing);
-
-			weekThing.screenCenter(X);
-			weekThing.antialiasing = true;
 
 			if (!weekUnlocked[i] && i < weekUnlocked.length)
 			{
@@ -146,7 +142,7 @@ class StoryMenuState extends MusicBeatState
 				lock.animation.addByPrefix('lock', 'lock');
 				lock.animation.play('lock');
 				lock.ID = i;
-				lock.antialiasing = true;
+				lock.antialiasing = MythsListEngineData.menuAntialiasing;
 				grpLocks.add(lock);
 			}
 		}
@@ -156,7 +152,7 @@ class StoryMenuState extends MusicBeatState
 			var weekCharacterThing:MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * (1 + char) - 150, weekCharacters[curWeek][char]);
 	
 			weekCharacterThing.y += 70;
-			weekCharacterThing.antialiasing = true;
+			weekCharacterThing.antialiasing = MythsListEngineData.menuAntialiasing;
 			weekCharacterThing.alpha = 1;
 	
 			switch(weekCharacterThing.character)
@@ -185,6 +181,7 @@ class StoryMenuState extends MusicBeatState
 		leftArrow.animation.addByPrefix('press', "arrow push left");
 		leftArrow.animation.play('idle');
 		leftArrow.updateHitbox();
+		leftArrow.antialiasing = MythsListEngineData.menuAntialiasing;
 		difficultySelectors.add(leftArrow);
 
 		for (i in 0...CoolUtil.difficultyArray.length)
@@ -193,6 +190,7 @@ class StoryMenuState extends MusicBeatState
 			difficulty.visible = false;
 			difficulty.scrollFactor.set();
 			difficulty.updateHitbox();
+			difficulty.antialiasing = MythsListEngineData.menuAntialiasing;
 			difficulty.ID = i;
 			difficulties.add(difficulty);
 		}
@@ -203,13 +201,14 @@ class StoryMenuState extends MusicBeatState
 		rightArrow.animation.addByPrefix('press', "arrow push right", 24, false);
 		rightArrow.animation.play('idle');
 		rightArrow.updateHitbox();
+		rightArrow.antialiasing = MythsListEngineData.menuAntialiasing;
 		difficultySelectors.add(rightArrow);
 
 		txtTracklist = new FlxText(FlxG.width * 0.05, BG.x + BG.height + 100, 0, 'TRACKS:', 32);
 		txtTracklist.alignment = CENTER;
 		txtTracklist.setFormat(Paths.font("vcr.ttf"), 32);
 		txtTracklist.color = 0xFFFFFFFF;
-		txtTracklist.antialiasing = true;
+		txtTracklist.antialiasing = MythsListEngineData.menuAntialiasing;
 
 		add(BG);
 		add(grpWeekCharacters);
@@ -297,7 +296,7 @@ class StoryMenuState extends MusicBeatState
 				var weekCharacterThing:MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * (1 + 1) - 150, 'bfConfirm');
 
 				weekCharacterThing.y += 70;
-				weekCharacterThing.antialiasing = true;
+				weekCharacterThing.antialiasing = MythsListEngineData.menuAntialiasing;
 
 				weekCharacterThing.setGraphicSize(Std.int(weekCharacterThing.width * 0.9));
 				weekCharacterThing.updateHitbox();
@@ -445,7 +444,7 @@ class StoryMenuState extends MusicBeatState
 		var newMenuChar:MenuCharacter = new MenuCharacter((FlxG.width * 0.25) * 1 - 150, weekCharacters[curWeek][0]);
 
 		newMenuChar.y += 70;
-		newMenuChar.antialiasing = true;
+		newMenuChar.antialiasing = MythsListEngineData.menuAntialiasing;
 		newMenuChar.alpha = 1;
 
 		newMenuChar.setGraphicSize(Std.int(newMenuChar.width * 0.5));

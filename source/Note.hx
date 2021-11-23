@@ -35,6 +35,9 @@ class Note extends FlxSprite
 
 	public var prevNote:Note;
 
+	// ultimate sustain note fix (number should always be positive so the code can make it negative for upscroll)
+	public static var sustainOffset:Float = 125;
+
 	public static var swagWidth:Float = 112;
 
 	public static var PURP_NOTE:Int = 0;
@@ -45,8 +48,6 @@ class Note extends FlxSprite
 	public function new(strumTime:Float, noteData:Int, ?prevNote:Note, ?sustainNote:Bool = false, noteType:Int = 0)
 	{
 		super();
-
-		var daStage:String = PlayState.curStage;
 
 		var arrowColorArray:Array<String> = ['purple', 'blue', 'green', 'red'];
 
@@ -60,17 +61,13 @@ class Note extends FlxSprite
 		isSustainNote = sustainNote;
 
 		y -= 2000;
-
-		if (MythsListEngineData.middleScroll)
-			x += ((FlxG.width / 2) * -0.42) + 50;
-		else
-			x += 96;
+		x += (MythsListEngineData.middleScroll ? -218.8 : 96);
 
 		this.strumTime = strumTime;
 		this.noteData = noteData;
 		this.noteType = noteType;
 
-		switch(daStage)
+		switch(PlayState.curStage)
 		{
 			case 'school' | 'schoolEvil':
 			{
@@ -79,27 +76,25 @@ class Note extends FlxSprite
 					case 0:
 						arrowPath = (MythsListEngineData.arrowColors ? 'weeb/pixelUI/customarrows-pixels' : 'weeb/pixelUI/arrows-pixels');
 						arrowLibrary = 'week6';
+						sustainOffset = 135;
 				}
+
+				// lazy to redo the xml for this one so new variable
+				var suffixArray:Array<String> = ['left', 'down', 'up', 'right'];
 
 				frames = Paths.getSparrowAtlas(arrowPath, arrowLibrary);
 
-				animation.addByPrefix(arrowColorArray[0] + 'Scroll', 'arrows-pixels arrowleft');
-				animation.addByPrefix(arrowColorArray[1] + 'Scroll', 'arrows-pixels arrowdown');
-				animation.addByPrefix(arrowColorArray[2] + 'Scroll', 'arrows-pixels arrowup');
-				animation.addByPrefix(arrowColorArray[3] + 'Scroll', 'arrows-pixels arrowright');
-
-				animation.addByPrefix(arrowColorArray[0] + 'holdend', 'arrows-pixels holdendleft');
-				animation.addByPrefix(arrowColorArray[1] + 'holdend', 'arrows-pixels holdenddown');
-				animation.addByPrefix(arrowColorArray[2] + 'holdend', 'arrows-pixels holdendup');
-				animation.addByPrefix(arrowColorArray[3] + 'holdend', 'arrows-pixels holdendright');
-
-				animation.addByPrefix(arrowColorArray[0] + 'hold', 'arrows-pixels holdleft');
-				animation.addByPrefix(arrowColorArray[1] + 'hold', 'arrows-pixels holddown');
-				animation.addByPrefix(arrowColorArray[2] + 'hold', 'arrows-pixels holdup');
-				animation.addByPrefix(arrowColorArray[3] + 'hold', 'arrows-pixels holdright');
+				for (i in 0...4)
+				{
+					animation.addByPrefix(arrowColorArray[i] + 'Scroll', 'arrows-pixels arrow' + suffixArray[i]);
+					animation.addByPrefix(arrowColorArray[i] + 'holdend', 'arrows-pixels holdend' + suffixArray[i]);
+					animation.addByPrefix(arrowColorArray[i] + 'hold', 'arrows-pixels hold' + suffixArray[i]);
+				}
 
 				setGraphicSize(Std.int(width * PlayState.daPixelZoom));
 				updateHitbox();
+
+				antialiasing = false;
 			}
 			default:
 			{
@@ -108,24 +103,17 @@ class Note extends FlxSprite
 					case 0:
 						arrowPath = (MythsListEngineData.arrowColors ? 'customNOTE_assets' : 'NOTE_assets');
 						arrowLibrary = 'shared';
+						sustainOffset = 125;
 				}
 
 				frames = Paths.getSparrowAtlas(arrowPath, arrowLibrary);
 
-				animation.addByPrefix(arrowColorArray[0] + 'Scroll', 'purple0');
-				animation.addByPrefix(arrowColorArray[1] + 'Scroll', 'blue0');
-				animation.addByPrefix(arrowColorArray[2] + 'Scroll', 'green0');
-				animation.addByPrefix(arrowColorArray[3] + 'Scroll', 'red0');
-
-				animation.addByPrefix(arrowColorArray[0] + 'holdend', 'purple hold end');
-				animation.addByPrefix(arrowColorArray[1] + 'holdend', 'blue hold end');
-				animation.addByPrefix(arrowColorArray[2] + 'holdend', 'green hold end');
-				animation.addByPrefix(arrowColorArray[3] + 'holdend', 'red hold end');
-
-				animation.addByPrefix(arrowColorArray[0] + 'hold', 'purple hold piece');
-				animation.addByPrefix(arrowColorArray[1] + 'hold', 'blue hold piece');
-				animation.addByPrefix(arrowColorArray[2] + 'hold', 'green hold piece');
-				animation.addByPrefix(arrowColorArray[3] + 'hold', 'red hold piece');
+				for (i in 0...4)
+				{
+					animation.addByPrefix(arrowColorArray[i] + 'Scroll', arrowColorArray[i] + '0');
+					animation.addByPrefix(arrowColorArray[i] + 'holdend', arrowColorArray[i] + ' hold end');
+					animation.addByPrefix(arrowColorArray[i] + 'hold', arrowColorArray[i] + ' hold trail');
+				}
 
 				setGraphicSize(Std.int(width * 0.7));
 				updateHitbox();
@@ -134,34 +122,32 @@ class Note extends FlxSprite
 			}
 		}
 
-		x += swagWidth * noteData;
+		x += swagWidth * (noteData % 4);
 
-		animation.play(arrowColorArray[noteData] + 'Scroll');
+		animation.play(arrowColorArray[noteData % 4] + 'Scroll');
 
 		if (isSustainNote && prevNote != null)
 		{
 			noteScore * 0.2;
-			alpha = 0.6;
 
 			x += width / 2;
 
-			animation.play(arrowColorArray[noteData] + 'holdend');
-
+			animation.play(arrowColorArray[noteData % 4] + 'holdend');
 			updateHitbox();
 
 			x -= width / 2;
 
-			if (MythsListEngineData.downScroll)
-				flipY = true;
+			flipY = (MythsListEngineData.downScroll ? true : false);
 
 			if (prevNote.isSustainNote)
 			{
-				prevNote.animation.play(arrowColorArray[prevNote.noteData] + 'hold');
+				prevNote.animation.play(arrowColorArray[prevNote.noteData % 4] + 'hold');
 
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
-
 				prevNote.updateHitbox();
 			}
+
+			alpha = 0.6;
 		}
 	}
 
@@ -178,12 +164,7 @@ class Note extends FlxSprite
 					if (!MythsListEngineData.botPlay)
 						canBeHit = true;
 					else
-					{
-						if (!botplayMiss)
-							canBeHit = true;
-						else
-							canBeHit = false;
-					}
+						canBeHit = (!botplayMiss ? true : false);
 				}
 				else
 					canBeHit = false;
@@ -193,12 +174,7 @@ class Note extends FlxSprite
 				if (!MythsListEngineData.botPlay && strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition + Conductor.safeZoneOffset)
 					canBeHit = true;
 				else if (MythsListEngineData.botPlay && strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition)
-				{
-					if (!botplayMiss)
-						canBeHit = true;
-					else
-						canBeHit = false;
-				}
+					canBeHit = (!botplayMiss ? true : false);
 				else
 					canBeHit = false;
 			}

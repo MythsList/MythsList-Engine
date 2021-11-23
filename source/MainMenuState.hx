@@ -43,6 +43,8 @@ class MainMenuState extends MusicBeatState
 		DiscordClient.changePresence("In The Main Menu", null);
 		#end
 
+		MythsListEngineData.dataSave();
+
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
@@ -95,20 +97,15 @@ class MainMenuState extends MusicBeatState
 			menuItems.add(menuItem);
 
 			menuItem.scrollFactor.set();
-			menuItem.antialiasing = true;
+			menuItem.antialiasing = MythsListEngineData.menuAntialiasing;
 		}
 
 		FlxG.camera.follow(camFollow, null, 0.06);
 
-		var engineversionShit:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
-		engineversionShit.scrollFactor.set();
-		engineversionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(engineversionShit);
-
-		var versionShit:FlxText = new FlxText(5, engineversionShit.y - engineversionShit.height, 0, MythsListEngineData.modVersion, 12);
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
+		var engineversion:FlxText = new FlxText(5, FlxG.height - 18, 0, "MythsList Engine - " + MythsListEngineData.engineVersion, 12);
+		engineversion.scrollFactor.set();
+		engineversion.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(engineversion);
 
 		changeItem(0);
 

@@ -6,8 +6,7 @@ class MythsListEngineData
 {
     // VERSION
 
-    public static var engineVersion:String = 'V.1.1.1';
-    public static var modVersion:String = '';
+    public static var engineVersion:String = 'V.1.1.2';
 
     // KEYBINDS
 
@@ -31,8 +30,9 @@ class MythsListEngineData
 
 	// PERFORMANCE
 
-	public static var antiAliasing:Bool;
 	public static var backgroundDisplay:Bool;
+	public static var antiAliasing:Bool;
+	public static var menuAntialiasing:Bool;
 
 	// ARROW COLORS
 
@@ -96,10 +96,12 @@ class MythsListEngineData
 		if (FlxG.save.data.botPlay == null)
 			FlxG.save.data.botPlay = false;
 
-		if (FlxG.save.data.antiAliasing == null)
-			FlxG.save.data.antiAliasing = true;
 		if (FlxG.save.data.backgroundDisplay == null)
 			FlxG.save.data.backgroundDisplay = true;
+		if (FlxG.save.data.antiAliasing == null)
+			FlxG.save.data.antiAliasing = true;
+		if (FlxG.save.data.menuAntialiasing == null)
+			FlxG.save.data.menuAntialiasing = true;
 
 		if (FlxG.save.data.characterSkin == null)
 			FlxG.save.data.characterSkin = 'bf';
@@ -170,8 +172,9 @@ class MythsListEngineData
 		MythsListEngineData.songpositionDisplay = FlxG.save.data.songpositionDisplay;
 		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
 
-		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
 		MythsListEngineData.backgroundDisplay = FlxG.save.data.backgroundDisplay;
+		MythsListEngineData.antiAliasing = FlxG.save.data.antiAliasing;
+		MythsListEngineData.menuAntialiasing = FlxG.save.data.menuAntialiasing;
 
 		MythsListEngineData.characterSkin = FlxG.save.data.characterSkin;
 
@@ -217,10 +220,12 @@ class MythsListEngineData
 		if (FlxG.save.data.botPlay != null)
 			FlxG.save.data.botPlay = false;
 
-		if (FlxG.save.data.antiAliasing != null)
-			FlxG.save.data.antiAliasing = true;
 		if (FlxG.save.data.backgroundDisplay != null)
 			FlxG.save.data.backgroundDisplay = true;
+		if (FlxG.save.data.antiAliasing != null)
+			FlxG.save.data.antiAliasing = true;
+		if (FlxG.save.data.menuAntialiasing != null)
+			FlxG.save.data.menuAntialiasing = true;
 
 		if (FlxG.save.data.characterSkin != null)
 			FlxG.save.data.characterSkin = 'bf';

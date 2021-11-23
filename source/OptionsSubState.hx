@@ -23,7 +23,7 @@ using StringTools;
 class OptionsSubState extends MusicBeatState
 {
 	public static var textMenuItems:Array<String> = [
-		'Controls',
+		#if !html5 'Controls', #end
 		'Gameplay',
 		'Performance',
 		'Arrow colors',
@@ -44,6 +44,8 @@ class OptionsSubState extends MusicBeatState
 			DiscordClient.changePresence("In The Options Menu", null);
 		#end
 
+		MythsListEngineData.dataSave();
+
 		var menuBG:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
 		menuBG.color = 0xFF71fd89;
 		menuBG.setGraphicSize(Std.int(menuBG.width * 1.1));
@@ -58,8 +60,12 @@ class OptionsSubState extends MusicBeatState
 		for (i in 0...textMenuItems.length)
 		{
 			var optionText:Alphabet = new Alphabet(0, (70 * i) + 30, textMenuItems[i], true, false);
+			optionText.screenCenter(X);
+
 			optionText.isMenuItem = true;
 			optionText.targetY = i;
+			optionText.xForce = optionText.x;
+			
 			grpOptions.add(optionText);
 
 			if (textMenuItems[i] == 'Reset data')
@@ -70,11 +76,6 @@ class OptionsSubState extends MusicBeatState
 		engineversionText.scrollFactor.set();
 		engineversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
 		add(engineversionText);
-
-		var modversionText:FlxText = new FlxText(5, engineversionText.y - engineversionText.height, 0, MythsListEngineData.modVersion, 12);
-		modversionText.scrollFactor.set();
-		modversionText.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT);
-		add(modversionText);
 
 		changeSelection(0);
 	}

@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import flixel.animation.FlxBaseAnimation;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.tweens.FlxTween;
+import openfl.utils.Assets as OpenFlAssets;
 
 using StringTools;
 
@@ -13,17 +14,18 @@ class Character extends FlxSprite
 	public var animOffsets:Map<String, Array<Dynamic>>;
 	public var debugMode:Bool = false;
 
-	public var colorTween:FlxTween;
-
 	public var isPlayer:Bool = false;
 	public var curCharacter:String = 'bf';
 
 	public var holdTimer:Float = 0;
+	public var stunned:Bool = false;
 
+	// Just some settings
 	var colorPrefix:String = '0xFF';
 	public var healthBarColor:String;
 	
 	public var hasTrail:Bool = false;
+	public var hasDanceAnimations:Bool = false; // For shitass characters that can't have a damn idle
 	var flipAnimations:Bool = true;
 	var isMenuChar:Bool = false;
 
@@ -37,13 +39,14 @@ class Character extends FlxSprite
 		animOffsets = new Map<String, Array<Dynamic>>();
 
 		curCharacter = character;
-		antialiasing = MythsListEngineData.antiAliasing;
+		antialiasing = (!isMenuChar ? MythsListEngineData.antiAliasing : MythsListEngineData.menuAntialiasing);
 		healthBarColor = colorPrefix + '';
 
 		switch(curCharacter)
 		{
 			case 'gf':
 				healthBarColor = colorPrefix + 'A5004D';
+				hasDanceAnimations = true;
 
 				frames = Paths.getSparrowAtlas('characters/GF_assets', 'shared');
 
@@ -63,6 +66,7 @@ class Character extends FlxSprite
 
 			case 'gf-christmas':
 				healthBarColor = colorPrefix + 'A5004D';
+				hasDanceAnimations = true;
 
 				frames = Paths.getSparrowAtlas('christmas/gfChristmas', 'week5');
 
@@ -82,6 +86,7 @@ class Character extends FlxSprite
 
 			case 'gf-car':
 				healthBarColor = colorPrefix + 'A5004D';
+				hasDanceAnimations = true;
 
 				frames = Paths.getSparrowAtlas('gfCar', 'week4');
 				
@@ -93,6 +98,7 @@ class Character extends FlxSprite
 
 			case 'gf-pixel':
 				healthBarColor = colorPrefix + 'A5004D';
+				hasDanceAnimations = true;
 
 				frames = Paths.getSparrowAtlas('weeb/gfPixel', 'week6');
 				
@@ -122,6 +128,7 @@ class Character extends FlxSprite
 
 			case 'spooky':
 				healthBarColor = colorPrefix + 'D57E00';
+				hasDanceAnimations = true;
 
 				frames = Paths.getSparrowAtlas('spooky_kids_assets', 'week2');
 				
@@ -375,10 +382,10 @@ class Character extends FlxSprite
 				frames = Paths.getSparrowAtlas('characters/BOYFRIEND_CORRUPTED', 'shared');
 				
 				animation.addByPrefix('idle', 'BF idle dance', 24, false);
-				animation.addByPrefix('singUP', 'BF NOTE UP', 24, false);
-				animation.addByPrefix('singLEFT', 'BF NOTE LEFT', 24, false);
-				animation.addByPrefix('singRIGHT', 'BF NOTE RIGHT', 24, false);
-				animation.addByPrefix('singDOWN', 'BF NOTE DOWN', 24, false);
+				animation.addByPrefix('singUP', 'BF NOTE UP0', 24, false);
+				animation.addByPrefix('singLEFT', 'BF NOTE LEFT0', 24, false);
+				animation.addByPrefix('singRIGHT', 'BF NOTE RIGHT0', 24, false);
+				animation.addByPrefix('singDOWN', 'BF NOTE DOWN0', 24, false);
 				animation.addByPrefix('singUPmiss', 'BF NOTE UP MISS', 24, false);
 				animation.addByPrefix('singLEFTmiss', 'BF NOTE LEFT MISS', 24, false);
 				animation.addByPrefix('singRIGHTmiss', 'BF NOTE RIGHT MISS', 24, false);
@@ -453,10 +460,10 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'SENPAI RIGHT NOTE', 24, false);
 				animation.addByPrefix('singDOWN', 'SENPAI DOWN NOTE', 24, false);
 
-				playAnim('idle');
-
 				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
+
+				playAnim('idle');
 
 				antialiasing = false;
 
@@ -471,10 +478,10 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', 'Angry Senpai RIGHT NOTE', 24, false);
 				animation.addByPrefix('singDOWN', 'Angry Senpai DOWN NOTE', 24, false);
 
-				playAnim('idle');
-
 				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
+
+				playAnim('idle');
 
 				antialiasing = false;
 
@@ -489,8 +496,6 @@ class Character extends FlxSprite
 				animation.addByPrefix('singRIGHT', "right_", 24, false);
 				animation.addByPrefix('singLEFT', "left_", 24, false);
 				animation.addByPrefix('singDOWN', "spirit down_", 24, false);
-				
-				hasTrail = true;
 
 				setGraphicSize(Std.int(width * 6));
 				updateHitbox();
@@ -579,6 +584,19 @@ class Character extends FlxSprite
 				animation.addByPrefix('singDOWNmiss', 'rhys down', 24, false);
 	
 				playAnim('idle');
+
+			case 'mythslist':
+				healthBarColor = colorPrefix + '29211F';
+		
+				frames = Paths.getSparrowAtlas('characters/lowbudget', 'shared');
+					
+				animation.addByPrefix('idle', 'idle', 24, false);
+				animation.addByPrefix('singUP', 'up', 2, false);
+				animation.addByPrefix('singRIGHT', 'right', 2, false);
+				animation.addByPrefix('singDOWN', 'down', 2, false);
+				animation.addByPrefix('singLEFT', 'left', 2, false);
+		
+				playAnim('idle');
 		}
 
 		if (isMenuChar)
@@ -593,21 +611,17 @@ class Character extends FlxSprite
 		{
 			flipX = !flipX;
 
-			if ((!curCharacter.startsWith('bf') && flipAnimations) || flipAnimations)
+			if (flipAnimations)
 			{
-				if (animation.getByName('singRIGHT') != null && animation.getByName('singLEFT') != null)
-				{
-					var oldRight = animation.getByName('singRIGHT').frames;
-					animation.getByName('singRIGHT').frames = animation.getByName('singLEFT').frames;
-					animation.getByName('singLEFT').frames = oldRight;
-				}
+				var rightFrames = (animation.getByName('singRIGHT') != null ? animation.getByName('singRIGHT').frames : null);
+				var leftFrames = (animation.getByName('singLEFT') != null ? animation.getByName('singLEFT').frames : null);
+				var rightMissFrames = (animation.getByName('singRIGHTmiss') != null ? animation.getByName('singRIGHTmiss').frames : null);
+				var leftMissFrames = (animation.getByName('singLEFTmiss') != null ? animation.getByName('singLEFTmiss').frames : null);
 
-				if (animation.getByName('singRIGHTmiss') != null && animation.getByName('singLEFTmiss') != null)
-				{
-					var oldMiss = animation.getByName('singRIGHTmiss').frames;
-					animation.getByName('singRIGHTmiss').frames = animation.getByName('singLEFTmiss').frames;
-					animation.getByName('singLEFTmiss').frames = oldMiss;
-				}
+				if (leftFrames != null) animation.getByName('singRIGHT').frames = leftFrames;
+				if (rightFrames != null) animation.getByName('singLEFT').frames = rightFrames;
+				if (leftMissFrames != null) animation.getByName('singRIGHTmiss').frames = leftMissFrames;
+				if (rightMissFrames != null) animation.getByName('singLEFTmiss').frames = rightMissFrames;
 			}
 		}
 
@@ -618,39 +632,27 @@ class Character extends FlxSprite
 	{
 		var offsetFile = Paths.offsets(character + 'Offsets', library);
 	
-		for (i in 0...offsetFile.length)
+		if (offsetFile != null)
 		{
-			var data:Array<String> = offsetFile[i].split(' ');
-			var newdata:String = null;
-
-			if (isPlayer && flipAnimations && animation.getByName(data[0]) != null)
+			for (i in 0...offsetFile.length)
 			{
-				if (data[0] == 'singLEFT')
-					newdata = 'singRIGHT';
+				var data:Array<String> = offsetFile[i].split(' ');
 
-				if (data[0] == 'singRIGHT')
-					newdata = 'singLEFT';
+				if (animation.getByName(data[0]) != null)
+				{
+					if (data[1] == null) data[1] = '0';
+					if (data[2] == null) data[2] = '0';
 
-				if (data[0] == 'singLEFTmiss')
-					newdata = 'singRIGHTmiss';
+					var curX:Int = Std.parseInt(data[1]);
+					var curY:Int = Std.parseInt(data[2]);
+					var curMultiplier:Float = (!isMenuChar ? 1 : 0.5);
 
-				if (data[0] == 'singRIGHTmiss')
-					newdata = 'singLEFTmiss';
+					if (isPlayer && flipAnimations)
+						addOffset(data[0], -(curX * curMultiplier), curY * curMultiplier);
+					else
+						addOffset(data[0], curX * curMultiplier, curY * curMultiplier);
+				}
 			}
-
-			if (newdata != null)
-				data[0] = newdata;
-
-			if (data[1] == null)
-				data[1] = '0';
-
-			if (data[2] == null)
-				data[2] = '0';
-
-			if (!isMenuChar)
-				addOffset(data[0], Std.parseInt(data[1]), Std.parseInt(data[2]));
-			else
-				addOffset(data[0], Std.parseInt(data[1]) * 0.5, Std.parseInt(data[2]) * 0.5);
 		}
 	}
 
@@ -658,17 +660,12 @@ class Character extends FlxSprite
 	{
 		if (!isPlayer)
 		{
-			var dadVar:Float;
+			var daVar:Float = (curCharacter == 'dad' ? 6.1 : 4);
 
-			if (curCharacter != 'gf-pixel' || curCharacter != 'gf-christmas' || curCharacter != 'gf-car')
+			if (animation.curAnim.name.startsWith('sing'))
 				holdTimer += elapsed;
 
-			if (curCharacter == 'dad')
-				dadVar = 6.1;
-			else
-				dadVar = 4;
-
-			if (holdTimer >= Conductor.stepCrochet * dadVar * 0.001)
+			if (holdTimer >= Conductor.stepCrochet * 0.001 * daVar)
 			{
 				dance();
 				holdTimer = 0;
@@ -684,39 +681,18 @@ class Character extends FlxSprite
 	{
 		if (!debugMode)
 		{
-			switch(curCharacter)
+			if (hasDanceAnimations)
 			{
-				case 'gf' | 'gf-christmas' | 'gf-car' | 'gf-pixel':
+				if (animOffsets.exists('danceRight') && animOffsets.exists('danceLeft'))
 				{
-					var gfAnimations:Array<String> = ['singLEFT', 'singUP', 'singDOWN', 'singRIGHT', 'scared', 'sad'];
-
-					if ((gfAnimations.contains(animation.curAnim.name) && animation.finished) || animation.finished)
-					{
-						danced = !danced;
-			
-						if (danced)
-							playAnim('danceRight');
-						else
-							playAnim('danceLeft');
-					}
+					danced = !danced;
+					playAnim((danced ? 'danceRight' : 'danceLeft'));
 				}
-				case 'spooky':
-				{
-					if ((animation.curAnim.name.startsWith('sing') && animation.finished) || animation.finished)
-					{
-						danced = !danced;
-
-						if (danced)
-							playAnim('danceRight');
-						else
-							playAnim('danceLeft');
-					}
-				}
-				default:
-				{
-					if (curCharacter != 'bf-pixel-dead')
-						playAnim('idle');
-				}
+			}
+			else
+			{
+				if (animOffsets.exists('idle'))
+					playAnim('idle');
 			}
 		}
 	}
@@ -732,7 +708,7 @@ class Character extends FlxSprite
 		else
 			offset.set(0, 0);
 
-		if (curCharacter == 'gf')
+		if (hasDanceAnimations)
 		{
 			switch(animName)
 			{

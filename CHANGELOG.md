@@ -2,6 +2,29 @@
 
 All notable changes will be documented in this file.
 
+## [V.1.1.2]
+### Addition
+- .lua scripts support (!! EXPERIMENTAL !!) (Example file inside of the data/tutorial folder)
+- Option to enable/disable antialiasing for menus (doesn't affect backgrounds)
+- Bot play option in the pause menu
+- You can now press SHIFT to skip dialogues
+- Options now have descriptions
+
+### Tweak
+- Visual changes
+- Unhardcoded GF / player 3 (Make sure to report messed up JSONs in the Discord server)
+- Missing icons now show the default icon instead of an error
+- Attempt on making sustain notes better (you can change the offset for each note skin in Note.hx)
+- Made character trail creation better (CTRL + F the function 'makeTrail' in PlayState.hx)
+- Missing week images now show an actual placeholder image instead of the haxeflixel logo
+- Song position bar has a new asset
+
+### Bugfix
+- Overall animation fix (finally)
+- Restricted custom keybinds to non-browser users since you can't set custom keybinds on browser
+- Charting debug menu's arrow deletion fixed
+- Note types / Special notes fixed
+
 ## [V.1.1.1]
 ### Addition
 - MP4 SUPPORT
