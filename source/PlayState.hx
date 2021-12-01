@@ -2085,7 +2085,7 @@ class PlayState extends MusicBeatState
 
 		// DATA
 
-		#if windows
+		#if desktop
 		var ret:Dynamic = callOnLuas('endSong', []);
 		#else
 		var ret:Dynamic = Modchart.Function_Continue;
@@ -2976,7 +2976,7 @@ class PlayState extends MusicBeatState
 	{
 		var returnedValue:Dynamic = Modchart.Function_Continue;
 
-		#if windows
+		#if desktop
 		for (i in 0...modchartArray.length)
 		{
 			var ret:Dynamic = modchartArray[i].call(event, args);
@@ -2991,7 +2991,7 @@ class PlayState extends MusicBeatState
 
 	public function setOnLuas(variable:String, arg:Dynamic)
 	{
-		#if windows
+		#if desktop
 		for (i in 0...modchartArray.length)
 		{
 			modchartArray[i].set(variable, arg);
