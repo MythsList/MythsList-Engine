@@ -2512,7 +2512,7 @@ class PlayState extends MusicBeatState
 								{
 									if (controlPressArray[i])
 									{
-										ghostMiss(i);
+										ghostMiss(i, daNote.noteType);
 
 									}
 								}
