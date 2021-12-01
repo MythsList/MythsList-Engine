@@ -2411,6 +2411,13 @@ class PlayState extends MusicBeatState
 				var controlPressArray:Array<Bool> = [leftP, downP, upP, rightP];
 				var controlReleaseArray:Array<Bool> = [leftR, downR, upR, rightR];
 				var controlArray:Array<Bool> = [left, down, up, right];
+				
+				if (MythsListEngineData.botPlay)
+		{
+			controlArray = [false, false, false, false];
+			controlPressArray = [false, false, false, false];
+			controReleaseArray = [false, false, false, false];
+		}
 		
 				if (!boyfriend.stunned && generatedMusic)
 				{
