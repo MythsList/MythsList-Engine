@@ -1,4 +1,4 @@
-#if windows
+#if desktop
 import llua.Lua;
 import llua.LuaL;
 import llua.State;
