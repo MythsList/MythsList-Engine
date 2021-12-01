@@ -157,27 +157,18 @@ class Note extends FlxSprite
 
 		if (mustPress)
 		{
-			if (isSustainNote)
-			{
-				if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
-				{
-					if (!MythsListEngineData.botPlay)
-						canBeHit = true;
-					else
-						canBeHit = (!botplayMiss ? true : false);
-				}
-				else
-					canBeHit = false;
-			}
-			else
-			{
-				if (!MythsListEngineData.botPlay && strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition + Conductor.safeZoneOffset)
+			if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset
+				&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * (isSustainNote ? 0.5 : 1)))
+				canBeHit = true;
+			
+				if (!MythsListEngineData.botPlay && strumTime > Conductor.songPosition - Conductor.safeZoneOffset
+				&& strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * (isSustainNote ? 0.5 : 1))
 					canBeHit = true;
 				else if (MythsListEngineData.botPlay && strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition)
 					canBeHit = (!botplayMiss ? true : false);
 				else
 					canBeHit = false;
-			}
+			
 
 			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit)
 				tooLate = true;
