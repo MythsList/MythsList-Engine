@@ -2428,16 +2428,11 @@ class PlayState extends MusicBeatState
 					notes.forEachAlive(function(daNote:Note) {
 						boyfriend.holdTimer = 0;
 
-				    	if (isBotplay && daNote.isSustainNote && daNote.canBeHit && daNote.mustPress)
-							goodNoteHit(daNote);
-					});
-
 		
 					if(controlPressArray.contains(true) && !endingSong)	//NORMAL NOTES
 					{
 						boyfriend.holdTimer = 0;
 		
-						var canMiss:Bool = false;
 		
 						var notesToHit:Array<Note> = [];
 						var notesDatasArray:Array<Int> = [];
@@ -2491,11 +2486,9 @@ class PlayState extends MusicBeatState
 								//
 								if(controlArray[i] && notesDatasArray.indexOf(i) == -1)
 								{
-									if(canMiss) 
-									{
-										noteMiss(i);
+										noteMiss(i, daNote.noteType, daNote, true);
 										break;
-									}
+									
 								}
 							}
 							for (i in 0...notesToHit.length) 
@@ -2507,12 +2500,12 @@ class PlayState extends MusicBeatState
 		
 								}
 							}
-						} else if(canMiss) {
+						} else if(!MythsListEngineData.ghostTapping) {
 							for (i in 0...controlPressArray.length) 
 								{
 									if (controlPressArray[i])
 									{
-										ghostMiss(i, daNote.noteType);
+										noteMiss(i, daNote.noteType, daNote, true);
 
 									}
 								}
