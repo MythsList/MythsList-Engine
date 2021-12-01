@@ -41,6 +41,19 @@ class CoolUtil
 
 		return daList;
 	}
+	
+	
+		public static function camLerpShit(daLerp:Float) 
+			{
+              return (FlxG.elapsed / 0.016666666666666666) * daLerp;
+			}
+	    
+		
+
+
+		public static function coolLerp(first:Float, second:Float, third:Float){
+			return first + camLerpShit(third) * (second - first);
+		}
 
 	public static function numberArray(max:Int, ?min = 0):Array<Int>
 	{
