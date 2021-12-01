@@ -2390,133 +2390,165 @@ class PlayState extends MusicBeatState
 		setOnLuas('noteHits', totalNotesHit);
 	}
 
-	private function keyShit():Void
-	{
-		var controlArray:Array<Bool> = [controls.LEFT, controls.DOWN, controls.UP, controls.RIGHT];
-		var controlArrayPress:Array<Bool> = [controls.LEFT_P, controls.DOWN_P, controls.UP_P, controls.RIGHT_P];
-		var controlArrayRelease:Array<Bool> = [controls.LEFT_R, controls.DOWN_R, controls.UP_R, controls.RIGHT_R];
-
-		if (MythsListEngineData.botPlay)
-		{
-			controlArray = [false, false, false, false];
-			controlArrayPress = [false, false, false, false];
-			controlArrayRelease = [false, false, false, false];
-		}
-
-		if ((controlArrayPress.contains(true) || MythsListEngineData.botPlay) && generatedMusic && !endingSong)
-		{
-			boyfriend.holdTimer = 0;
-
-			var possibleNotes:Array<Note> = [];
-			var ignoreList:Array<Int> = [];
-
-			notes.forEachAlive(function(daNote:Note)
+	private function keyShit():Void 
 			{
-				if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit)
-				{
-					possibleNotes.push(daNote);
-					possibleNotes.sort((a, b) -> Std.int(a.strumTime - b.strumTime));
-
-					ignoreList.push(daNote.noteData);
-				}
-			});
-
-			if (possibleNotes.length > 0)
-			{
-				var daNote:Note = possibleNotes[0];
-
-				if (possibleNotes.length >= 2)
-				{
-					if (possibleNotes[0].strumTime == possibleNotes[1].strumTime)
-					{
-						for (coolNote in possibleNotes)
-						{
-							if (controlArrayPress[coolNote.noteData] || MythsListEngineData.botPlay)
-								goodNoteHit(coolNote);
-							else
-							{
-								var inIgnoreList:Bool = false;
-
-								for (shit in 0...ignoreList.length)
-								{
-									if (controlArrayPress[ignoreList[shit]])
-										inIgnoreList = true;
-								}
-
-								if (!inIgnoreList)
-									badNoteCheck(coolNote);
-							}
-						}
-					}
-					else if (possibleNotes[0].noteData == possibleNotes[1].noteData)
-					{
-						noteCheck(controlArrayPress, daNote);
-					}
-					else
-					{
-						for (coolNote in possibleNotes)
-						{
-							noteCheck(controlArrayPress, daNote);
-						}
-					}
-				}
-				else
-				{
-					noteCheck(controlArrayPress, daNote);
-				}
-			}
-			else
-			{
-				badNoteCheck(null);
-			}
-		}
+				// HOLDING
+				var up = controls.UP;
+				var right = controls.RIGHT;
+				var down = controls.DOWN;
+				var left = controls.LEFT;
+	
+				var upP = controls.UP_P;
+				var rightP = controls.RIGHT_P;
+				var downP = controls.DOWN_P;
+				var leftP = controls.LEFT_P;
+	
+				var upR = controls.UP_R;
+				var rightR = controls.RIGHT_R;
+				var downR = controls.DOWN_R;
+				var leftR = controls.LEFT_R;
+	
+				var controlPressArray:Array<Bool> = [leftP, downP, upP, rightP];
+				var controlReleaseArray:Array<Bool> = [leftR, downR, upR, rightR];
+				var controlArray:Array<Bool> = [left, down, up, right];
 		
-		if ((controlArray.contains(true) || MythsListEngineData.botPlay) && generatedMusic && !endingSong)
-		{
-			notes.forEachAlive(function(daNote:Note)
-			{
-				if (daNote.isSustainNote)
+				if (!boyfriend.stunned && generatedMusic)
 				{
-					if (daNote.canBeHit && daNote.mustPress && !daNote.tooLate)
-						goodNoteHit(daNote);
-					else if (!daNote.canBeHit && daNote.tooLate)
-						daNote.kill();
+					if(controlArray.contains(true) && !endingSong) //HOLD NOTES
+					 {
+						notes.forEachAlive(function(daNote:Note) {
+							if(daNote.isSustainNote && controlArray[daNote.noteData] && daNote.canBeHit && daNote.mustPress) {
+								goodNoteHit(daNote);
+							
+							}
+						});		
+						
+					} 
+
+					notes.forEachAlive(function(daNote:Note) {
+						boyfriend.holdTimer = 0;
+
+				    	if (isBotplay && daNote.isSustainNote && daNote.canBeHit && daNote.mustPress)
+							goodNoteHit(daNote);
+					});
+
+		
+					if(controlPressArray.contains(true) && !endingSong)	//NORMAL NOTES
+					{
+						boyfriend.holdTimer = 0;
+		
+						var canMiss:Bool = false;
+		
+						var notesToHit:Array<Note> = [];
+						var notesDatasArray:Array<Int> = [];
+						var dupeNotes:Array<Note> = [];
+						notes.forEachAlive(function(daNote:Note)
+						{
+							if (!daNote.isSustainNote && daNote.canBeHit && daNote.mustPress && !daNote.tooLate && !daNote.wasGoodHit) 
+							{
+								if (notesDatasArray.contains(daNote.noteData))
+								{
+									// activate the directions being hit
+									for (i in 0...notesToHit.length) 
+									{
+										var prevNote = notesToHit[i];
+										if (prevNote.noteData == daNote.noteData && Math.abs(daNote.strumTime - prevNote.strumTime) < 10) 
+										{
+											dupeNotes.push(daNote);
+											break;
+										} 
+										else if (prevNote.noteData == daNote.noteData && daNote.strumTime < prevNote.strumTime) 
+										{
+											notesToHit.remove(prevNote);
+											notesToHit.push(daNote);
+											break;
+										}
+									}
+								} 
+								else 
+								{
+									notesToHit.push(daNote);
+									notesDatasArray.push(daNote.noteData);
+								}
+							}
+						});
+		
+						for (i in 0...dupeNotes.length)
+						{
+							var daNote = dupeNotes[i];
+							daNote.kill();
+							notes.remove(daNote, true);
+							daNote.destroy();
+						}
+						notesToHit.sort(sortByShit);
+		
+						if (perfectMode)
+							goodNoteHit(notesToHit[0]);
+						else if (notesToHit.length > 0) 
+						{
+							for (i in 0...controlArray.length) 
+							{ 
+								//
+								if(controlArray[i] && notesDatasArray.indexOf(i) == -1)
+								{
+									if(canMiss) 
+									{
+										noteMiss(i);
+										break;
+									}
+								}
+							}
+							for (i in 0...notesToHit.length) 
+							{
+								var daNote = notesToHit[i];
+								if(controlArray[daNote.noteData]) 
+								{
+									goodNoteHit(daNote);
+		
+								}
+							}
+						} else if(canMiss) {
+							for (i in 0...controlPressArray.length) 
+								{
+									if (controlPressArray[i])
+									{
+										ghostMiss(i);
+
+									}
+								}
+						}
+					}
 				}
-			});
-		}
 
-		if (boyfriend.holdTimer > Conductor.stepCrochet * 4 * 0.001 && (!controlArray.contains(true) || MythsListEngineData.botPlay))
-		{
-			if (boyfriend.animation.curAnim.name.startsWith('sing') && !boyfriend.animation.curAnim.name.endsWith('miss') && health > 0)
-				boyfriend.dance();
-		}
+				notes.forEachAlive(function(daNote:Note) {
+					boyfriend.holdTimer = 0;
 
-		playerStrums.forEach(function(spr:FlxSprite)
-		{
-			if (controlArrayPress[spr.ID] && spr.animation.curAnim.name != 'confirm')
-			{
-				spr.animation.play('pressed');
-
-				if (MythsListEngineData.arrowColors)
-					spr.color = FlxColor.fromRGB(colorArray[spr.ID][0], colorArray[spr.ID][1], colorArray[spr.ID][2]);
-			}
-
-			if (controlArrayRelease[spr.ID])
-			{
-				spr.animation.play('static');
-				spr.color = FlxColor.WHITE;
-			}
+					if (isBotplay && daNote.canBeHit && daNote.mustPress)
+						goodNoteHit(daNote);
+				});
+		
+				playerStrums.forEach(function(spr:FlxSprite)
+					{
+						if (controlPressArray[spr.ID] && spr.animation.curAnim.name != 'confirm') {
+							replayPressTimes.push(FlxG.sound.music.time);
+							replayNoteDatas.push(spr.ID);
+							replayGoodHits.push(false);
+							replayTotalHits++;
+							spr.animation.play('pressed');
+						}
+						if (!controlArray[spr.ID])
+							spr.animation.play('static');
 			
-			if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
-			{
-				spr.centerOffsets();
-				spr.offset.x -= 13;
-				spr.offset.y -= 13;
+						if (spr.animation.curAnim.name == 'confirm' && !curStage.startsWith('school'))
+						{
+							spr.centerOffsets();
+							spr.offset.x -= 13;
+							spr.offset.y -= 13;
+						}
+						else
+							spr.centerOffsets();
+					});
 			}
-			else
-				spr.centerOffsets();
-		});
-	}
 
 	function noteMiss(noteData:Int = 0, noteType:Int = 0, ?note:Note, ?tooLate:Bool = false):Void
 	{
