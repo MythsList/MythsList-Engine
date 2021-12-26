@@ -6,10 +6,10 @@ import openfl.utils.Assets as OpenFlAssets;
 class HealthIcon extends FlxSprite
 {
 	public var sprTracker:FlxSprite;
+	public var isAnimated:Bool = false;
+	public var isPlayer:Bool = false;
 
 	private var char:String = 'face';
-
-	private var isPlayer:Bool = false;
 	private var isMenuIcon:Bool = false;
 	private var daAntialiasing:Bool = true;
 
@@ -36,15 +36,28 @@ class HealthIcon extends FlxSprite
 
 	function generateIcon(char:String = 'face')
 	{
+		isAnimated = false;
 		char = updateIconProperties(char);
 
 		var imagePath:String = checkFile(char);
-		var file:Dynamic = Paths.image(imagePath, 'preload');
 
-		loadGraphic(file, true, 150, 150);
+		if (OpenFlAssets.exists(Paths.getPath('images/healthicons/icon-' + char + '.xml', TEXT, 'preload')))
+			isAnimated = true;
 
-		animation.add(char, [0, 1, 2], 0, false, isPlayer);
-		animation.play(char);
+		if (!isAnimated)
+		{
+			loadGraphic(Paths.image(imagePath, 'preload'), true, 150, 150);
+			animation.add(char, [0, 1, 2], 0, false, isPlayer);
+			animation.play(char);
+		}
+		else
+		{
+			frames = Paths.getSparrowAtlas(imagePath, 'preload');
+			animation.addByPrefix('neutral', 'neutral', 24, false);
+			animation.addByPrefix('losing', 'losing', 24, false);
+			animation.addByPrefix('winning', 'winning', 24, false);
+			animation.play('neutral');
+		}
 	}
 
 	function updateIconProperties(char:String = 'face')
@@ -91,5 +104,27 @@ class HealthIcon extends FlxSprite
 			return 'healthicons/icon-' + char;
 
 		return 'healthicons/icon-face';
+	}
+
+	public function updateIconState(animatedIcon:Bool = false, playerIcon:Bool = false)
+	{
+		if (!animatedIcon)
+		{
+			if (PlayState.healthBar.percent <= 20)
+				animation.curAnim.curFrame = (playerIcon ? 1 : 2);
+			else if (PlayState.healthBar.percent >= 80)
+				animation.curAnim.curFrame = (playerIcon ? 2 : 1);
+			else
+				animation.curAnim.curFrame = 0;
+		}
+		else
+		{
+			if (PlayState.healthBar.percent <= 20)
+				animation.play((playerIcon ? 'losing' : 'winning'));
+			else if (PlayState.healthBar.percent >= 80)
+				animation.play((playerIcon ? 'winning' : 'losing'));
+			else
+				animation.play('neutral');
+		}
 	}
 }

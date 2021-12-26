@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxG;
 import lime.utils.Assets;
 import openfl.utils.Assets as OpenFlAssets;
 
@@ -52,5 +53,14 @@ class CoolUtil
 		}
 		
 		return dumbArray;
+	}
+
+	public static function openURL(url:String)
+	{
+		#if linux
+			Sys.command('/usr/bin/xdg-open', [url]);
+		#else
+			FlxG.openURL(url);
+		#end
 	}
 }

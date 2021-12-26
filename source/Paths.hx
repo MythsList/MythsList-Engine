@@ -22,12 +22,12 @@ class Paths
 
 	static var currentLevel:String;
 
-	static public function setCurrentLevel(name:String)
+	public static function setCurrentLevel(name:String)
 	{
 		currentLevel = name.toLowerCase();
 	}
 
-	static function getPath(file:String, type:AssetType, library:Null<String>)
+	public static function getPath(file:String, type:AssetType, library:Null<String>)
 	{
 		if (library != null)
 			return getLibraryPath(file, library);
@@ -46,7 +46,7 @@ class Paths
 		return getPreloadPath(file);
 	}
 
-	static public function getLibraryPath(file:String, library = "preload")
+	public static function getLibraryPath(file:String, library = "preload")
 	{
 		return if (library == "preload" || library == "default") 
 			getPreloadPath(file); 

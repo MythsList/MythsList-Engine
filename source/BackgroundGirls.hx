@@ -16,6 +16,11 @@ class BackgroundGirls extends FlxSprite
 		animation.addByIndices('danceLeft', animationStr, CoolUtil.numberArray(14), "", 24, false);
 		animation.addByIndices('danceRight', animationStr, CoolUtil.numberArray(30, 15), "", 24, false);
 
+		scrollFactor.set(0.9, 0.9);
+		antialiasing = false;
+		setGraphicSize(Std.int(width * 6));
+		updateHitbox();
+
 		animation.play('danceLeft');
 	}
 

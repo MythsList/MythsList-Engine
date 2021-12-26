@@ -16,7 +16,6 @@ class Note extends FlxSprite
 {
 	public var strumTime:Float = 0;
 	public var sustainLength:Float = 0;
-	public var noteScore:Float = 1;
 
 	public var mustPress:Bool = false;
 	public var canBeHit:Bool = false;
@@ -54,18 +53,16 @@ class Note extends FlxSprite
 		var arrowPath:String = 'NOTE_assets';
 		var arrowLibrary:String = 'shared';
 
-		if (prevNote == null)
-			prevNote = this;
+		if (prevNote == null) prevNote = this;
 
 		this.prevNote = prevNote;
+		this.strumTime = strumTime;
+		this.noteData = noteData;
+		this.noteType = noteType;
 		isSustainNote = sustainNote;
 
 		y -= 2000;
 		x += (MythsListEngineData.middleScroll ? -218.8 : 96);
-
-		this.strumTime = strumTime;
-		this.noteData = noteData;
-		this.noteType = noteType;
 
 		switch(PlayState.curStage)
 		{
@@ -128,8 +125,6 @@ class Note extends FlxSprite
 
 		if (isSustainNote && prevNote != null)
 		{
-			noteScore * 0.2;
-
 			x += width / 2;
 
 			animation.play(arrowColorArray[noteData % 4] + 'holdend');
@@ -137,17 +132,15 @@ class Note extends FlxSprite
 
 			x -= width / 2;
 
+			alpha = 0.6;
 			flipY = (MythsListEngineData.downScroll ? true : false);
 
 			if (prevNote.isSustainNote)
 			{
 				prevNote.animation.play(arrowColorArray[prevNote.noteData % 4] + 'hold');
-
 				prevNote.scale.y *= Conductor.stepCrochet / 100 * 1.5 * PlayState.SONG.speed;
 				prevNote.updateHitbox();
 			}
-
-			alpha = 0.6;
 		}
 	}
 
@@ -157,27 +150,12 @@ class Note extends FlxSprite
 
 		if (mustPress)
 		{
-			if (isSustainNote)
-			{
-				if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
-				{
-					if (!MythsListEngineData.botPlay)
-						canBeHit = true;
-					else
-						canBeHit = (!botplayMiss ? true : false);
-				}
-				else
-					canBeHit = false;
-			}
+			if (!MythsListEngineData.botPlay && strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * (isSustainNote ? 0.5 : 1)))
+				canBeHit = true;
+			else if (MythsListEngineData.botPlay && strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition + (isSustainNote ? Conductor.safeZoneOffset * 0.5 : 0))
+				canBeHit = (!botplayMiss ? true : false);
 			else
-			{
-				if (!MythsListEngineData.botPlay && strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition + Conductor.safeZoneOffset)
-					canBeHit = true;
-				else if (MythsListEngineData.botPlay && strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition)
-					canBeHit = (!botplayMiss ? true : false);
-				else
-					canBeHit = false;
-			}
+				canBeHit = false;
 
 			if (strumTime < Conductor.songPosition - Conductor.safeZoneOffset && !wasGoodHit)
 				tooLate = true;
@@ -186,19 +164,8 @@ class Note extends FlxSprite
 		{
 			canBeHit = false;
 
-			if (!playertwoMiss)
-			{
-				if (!isSustainNote)
-				{
-					if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition)
-						wasGoodHit = true;
-				}
-				else
-				{
-					if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition + (Conductor.safeZoneOffset * 0.5))
-						wasGoodHit = true;
-				}
-			}
+			if (strumTime > Conductor.songPosition - Conductor.safeZoneOffset && strumTime < Conductor.songPosition + (isSustainNote ? (Conductor.safeZoneOffset * 0.5) : 0))
+				wasGoodHit = (!playertwoMiss ? true : false);
 		}
 
 		if (tooLate && !wasGoodHit)

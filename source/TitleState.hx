@@ -28,6 +28,7 @@ import flixel.util.FlxTimer;
 import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Assets;
+import openfl.utils.Assets as OpenFlAssets;
 
 using StringTools;
 
@@ -60,7 +61,7 @@ class TitleState extends MusicBeatState
 		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
 		#end
 
-		if (Std.is(FlxG.save.data.keyBinds, String) || !Std.is(FlxG.save.data.keyBinds, Array))
+		if (Std.isOfType(FlxG.save.data.keyBinds, String) || !Std.isOfType(FlxG.save.data.keyBinds, Array))
 			FlxG.save.data.keyBinds = null;
 
 		#if html5
@@ -106,7 +107,8 @@ class TitleState extends MusicBeatState
 		#if desktop
 		DiscordClient.initialize();
 		
-		Application.current.onExit.add (function (exitCode) {
+		Application.current.onExit.add(function(exitCode) {
+			OpenFlAssets.cache.clear('assets');
 			DiscordClient.shutdown();
 		});
 		#end
@@ -238,9 +240,7 @@ class TitleState extends MusicBeatState
 		for (touch in FlxG.touches.list)
 		{
 			if (touch.justPressed)
-			{
 				pressedEnter = true;
-			}
 		}
 		#end
 
@@ -278,9 +278,7 @@ class TitleState extends MusicBeatState
 		}
 
 		if (pressedEnter && !skippedIntro)
-		{
 			skipIntro();
-		}
 
 		super.update(elapsed);
 	}
@@ -318,48 +316,49 @@ class TitleState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-
-		logoBl.animation.play('bump');
-		danceLeft = !danceLeft;
-
-		if (danceLeft)
-			gfDance.animation.play('danceRight');
-		else
-			gfDance.animation.play('danceLeft');
-
 		FlxG.log.add(curBeat);
 
-		switch(curBeat)
+		danceLeft = !danceLeft;
+
+		if (logoBl != null) logoBl.animation.play('bump');
+		if (gfDance != null) gfDance.animation.play((!danceLeft ? 'danceRight' : 'danceLeft'));
+
+		if (!transitioning)
 		{
-			case 4:
-				createCoolText(['In association', 'with', 'Newgrounds']);
-				ngSpr.visible = true;
-			case 5:
-				deleteCoolText();
-				remove(ngSpr);
-			case 6:
-				createCoolText(['Engine made by', 'MythsList']);
-			case 7:
-				deleteCoolText();
-			case 8:
-				createCoolText(['Mod made by']);
-			case 9:
-				addMoreText('MythsList');
-			case 10:
-				deleteCoolText();
-			case 11:
-				createCoolText(['PLACEHOLDER']);
-			case 12:
-				addMoreText('TEXT');
-			case 13:
-				addMoreText('LOL');
-			case 14:
-				deleteCoolText();
-			case 15:
-				createCoolText(['PLACEHOLDER']);
-			case 16:
-				skipIntro();
+			switch(curBeat)
+			{
+				case 4:
+					createCoolText(['In association', 'with', 'Newgrounds']);
+					ngSpr.visible = true;
+				case 5:
+					deleteCoolText();
+					remove(ngSpr);
+				case 6:
+					createCoolText(['Engine made by', 'MythsList']);
+				case 7:
+					deleteCoolText();
+				case 8:
+					createCoolText(['Mod made by']);
+				case 9:
+					addMoreText('MythsList');
+				case 10:
+					deleteCoolText();
+				case 11:
+					createCoolText(['PLACEHOLDER']);
+				case 12:
+					addMoreText('TEXT');
+				case 13:
+					addMoreText('LOL');
+				case 14:
+					deleteCoolText();
+				case 15:
+					createCoolText(['PLACEHOLDER']);
+				case 16:
+					skipIntro();
+			}
 		}
+		else
+			skipIntro();
 	}
 
 	var skippedIntro:Bool = false;
@@ -369,9 +368,9 @@ class TitleState extends MusicBeatState
 		if (!skippedIntro)
 		{
 			remove(ngSpr);
+			remove(credGroup);
 
 			FlxG.camera.flash(FlxColor.WHITE, 4);
-			remove(credGroup);
 			skippedIntro = true;
 		}
 	}

@@ -2,6 +2,21 @@
 
 All notable changes will be documented in this file.
 
+## [V.1.1.3]
+### Addition
+- Results screen (Option that can be enabled / disabled in the gameplay options menu)
+- Animated icons support (XML should have 'neutral', 'losing' and 'winning')
+- Animated portraits support (XML should have 'idle' and 'talking')
+- Unhardcoded stages
+
+### Tweak
+- Character position is easier to set (Character.hx)
+- The outdated screen now has more features so now it's not just a warning notice
+- The song position bar now has a timer showing you the time left
+
+### Bugfix
+- Freeplay scores now show no matter what
+
 ## [V.1.1.2]
 ### Addition
 - .lua scripts support (!! EXPERIMENTAL !!) (Example file inside of the data/tutorial folder)

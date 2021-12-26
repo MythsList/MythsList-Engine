@@ -33,6 +33,7 @@ class GameplaySubState extends MusicBeatSubstate
 		['Song infos display', 'Adds extra text that tells you the informations of the song'],
 		['Version display', 'Adds extra text that tells you the current version of the engine'],
 		['Song position display', 'Adds extra UI that shows the current position of the song'],
+		['Results screen', 'Shows your results at the end of a song or a week'],
 		['Bot play', 'Plays for you'],
 		['Fullscreen', 'Sets the game to fullscreen']
 	];
@@ -75,10 +76,7 @@ class GameplaySubState extends MusicBeatSubstate
 
 			getDataList();
 
-			if (dataStuff[i])
-				optionText.color = FlxColor.GREEN;
-			else if (!dataStuff[i])
-				optionText.color = FlxColor.RED;
+			optionText.color = (dataStuff[i] ? FlxColor.GREEN : FlxColor.RED);
 
 			grpOptions.add(optionText);
 		}
@@ -135,16 +133,10 @@ class GameplaySubState extends MusicBeatSubstate
 
 			getDataList();
 
-			if (dataStuff[curSelected])
-			{
-				interact(false, curSelected);
-				grpOptions.members[curSelected].color = FlxColor.RED;
-			}
-			else if (!dataStuff[curSelected])
-			{
-				interact(true, curSelected);
-				grpOptions.members[curSelected].color = FlxColor.GREEN;
-			}
+			var dataCheck:Bool = dataStuff[curSelected];
+
+			interact(!dataCheck, curSelected);
+			grpOptions.members[curSelected].color = (dataCheck ? FlxColor.RED : FlxColor.GREEN);
 
 			getDataList();
 
@@ -209,8 +201,10 @@ class GameplaySubState extends MusicBeatSubstate
 			case 7:
 				FlxG.save.data.songpositionDisplay = change;
 			case 8:
-				FlxG.save.data.botPlay = change;
+				FlxG.save.data.resultsScreen = change;
 			case 9:
+				FlxG.save.data.botPlay = change;
+			case 10:
 				FlxG.fullscreen = change;
 		}
 
@@ -230,6 +224,7 @@ class GameplaySubState extends MusicBeatSubstate
 			FlxG.save.data.songinfosDisplay,
 			FlxG.save.data.versionDisplay,
 			FlxG.save.data.songpositionDisplay,
+			FlxG.save.data.resultsScreen,
 			FlxG.save.data.botPlay,
 			FlxG.fullscreen
 		];

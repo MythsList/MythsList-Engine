@@ -10,16 +10,17 @@ import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.addons.effects.chainable.FlxWaveEffect;
 
-class Stage extends StageSprite
+class Stage extends FlxSprite
 {
-	public static var background:FlxTypedGroup<StageSprite>;
+	public static var background:FlxTypedGroup<Dynamic>;
+	public static var camZoom:Float = 1.05;
 
 	public function new(stage:String = 'stage')
 	{
 		super();
 
-		var layerOrder:Array<StageSprite> = null;
-		background = new FlxTypedGroup<StageSprite>();
+		var layerOrder:Array<Dynamic> = null;
+		background = new FlxTypedGroup<Dynamic>();
 
 		var pixelStage:Bool = false;
 
@@ -27,6 +28,8 @@ class Stage extends StageSprite
 		{
 			case 'stage':
 			{
+				camZoom = 0.9;
+
 				var bg:StageSprite = new StageSprite('stageback', 'week1', -600, -200, 0.9, 0.9);
 
 				var stageFront:StageSprite = new StageSprite('stagefront', 'week1', -650, 600, 0.9, 0.9);
@@ -39,6 +42,8 @@ class Stage extends StageSprite
 			}
 			case 'spooky':
 			{
+				camZoom = 1.05;
+
 				var halloweenBG:StageSprite = new StageSprite('halloween_bg', 'week2', -200, -100, 1, 1, ['halloweem bg0', 'halloweem bg lightning strike'], false);
 				halloweenBG.playAnim('halloweem bg0');
 
@@ -46,6 +51,8 @@ class Stage extends StageSprite
 			}
 			case 'philly':
 			{
+				camZoom = 1.05;
+
 				var bg:StageSprite = new StageSprite('philly/sky', 'week3', -100, 0, 0.1, 0.1);
 
 				var city:StageSprite = new StageSprite('philly/city', 'week3', -10, 0, 0.3, 0.3);
@@ -60,11 +67,14 @@ class Stage extends StageSprite
 				var street:StageSprite = new StageSprite('philly/street', 'week3', -40, 50, 1, 1);
 
 				PlayState.trainSound = new FlxSound().loadEmbedded(Paths.sound('train_passes', 'shared'));
+				FlxG.sound.list.add(PlayState.trainSound);
 
 				layerOrder = [bg, city, lights, streetBehind, phillyTrain, street];
 			}
 			case 'limo':
 			{
+				camZoom = 0.9;
+
 				var skyBG:StageSprite = new StageSprite('limo/limoSunset', 'week4', -120, -50, 0.1, 0.1);
 
 				var bgLimo:StageSprite = new StageSprite('limo/bgLimo', 'week4', -200, 480, 0.4, 0.4, ['background limo pink'], true);
@@ -75,7 +85,6 @@ class Stage extends StageSprite
 				for (i in 0...5)
 				{
 					var dancer:BackgroundDancer = new BackgroundDancer((370 * i) + 130, 80);
-					dancer.scrollFactor.set(0.4, 0.4);
 					PlayState.grpLimoDancers.add(dancer);
 				}
 
@@ -87,10 +96,12 @@ class Stage extends StageSprite
 
 		        PlayState.fastCar = new FlxSprite(-300, 160).loadGraphic(Paths.image('limo/fastCarLol', 'week4'));
 
-				layerOrder = [skyBG, bgLimo];
+				layerOrder = [skyBG, bgLimo, PlayState.grpLimoDancers];
 			}
 			case 'mall':
 			{
+				camZoom = 0.8;
+
 		        var bg:StageSprite = new StageSprite('christmas/bgWalls', 'week5', -1000, -500, 0.2, 0.2);
 				bg.newGraphicSize(0.8);
 
@@ -109,6 +120,8 @@ class Stage extends StageSprite
 			}
 			case 'mallEvil':
 			{
+				camZoom = 1.05;
+
 				var bg:StageSprite = new StageSprite('christmas/evilBG', 'week5', -400, -500, 0.2, 0.2);
 				bg.newGraphicSize(0.8);
 
@@ -119,6 +132,7 @@ class Stage extends StageSprite
 			}
 			case 'school':
 			{
+				camZoom = 1.05;
 				pixelStage = true;
 
 				var bgSky:StageSprite = new StageSprite('weeb/weebSky', 'week6', 0, 0, 0.1, 0.1);
@@ -144,24 +158,13 @@ class Stage extends StageSprite
 				treeLeaves.playAnim('PETALS ALL');
 				treeLeaves.newGraphicSize(6);
 
-				var scaredGirls:Bool = false;
+		        PlayState.bgGirls = new BackgroundGirls(-100, 190, (PlayState.SONG.song.toLowerCase() == 'roses' ? true : false));
 
-				if (PlayState.SONG.song.toLowerCase() != 'thorns')
-				{ 
-					if (PlayState.SONG.song.toLowerCase() == 'roses')
-						scaredGirls = true;
-
-		        	PlayState.bgGirls = new BackgroundGirls(-100, 190, scaredGirls);
-		        	PlayState.bgGirls.scrollFactor.set(0.9, 0.9);
-					PlayState.bgGirls.antialiasing = false;
-		        	PlayState.bgGirls.setGraphicSize(Std.int(PlayState.bgGirls.width * 6));
-		        	PlayState.bgGirls.updateHitbox();
-				}
-
-				layerOrder = [bgSky, bgSchool, bgStreet, fgTrees, bgTrees, treeLeaves];
+				layerOrder = [bgSky, bgSchool, bgStreet, fgTrees, bgTrees, treeLeaves, PlayState.bgGirls];
 			}
 			case 'schoolEvil':
 			{
+				camZoom = 1.05;
 				pixelStage = true;
 
 				var waveEffectBG:FlxWaveEffect = new FlxWaveEffect(FlxWaveMode.ALL, 2, -1, 3, 2);
@@ -175,21 +178,17 @@ class Stage extends StageSprite
 			}
 		}
 
-		if (layerOrder != null)
-			addObjects(layerOrder, pixelStage);
+		if (layerOrder != null) addObjects(layerOrder, pixelStage);
 	}
 
-	function addObjects(daLayerOrder:Array<StageSprite>, daPixelStage:Bool)
+	function addObjects(daLayerOrder:Array<Dynamic>, daPixelStage:Bool)
 	{
 		for (item in daLayerOrder)
 		{
-			if (Std.is(item, StageSprite))
-			{
-				if (daPixelStage)
-					item.antialiasing = false;
+			if (daPixelStage && Std.isOfType(item, StageSprite))
+				item.antialiasing = false;
 
-				background.add(item);
-			}
+			background.add(item);
 		}
 	}
 }

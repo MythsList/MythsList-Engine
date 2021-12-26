@@ -68,10 +68,7 @@ class PerformanceSubState extends MusicBeatSubstate
 
 			getDataList();
 
-			if (dataStuff[i])
-				optionText.color = FlxColor.GREEN;
-			else if (!dataStuff[i])
-				optionText.color = FlxColor.RED;
+			optionText.color = (dataStuff[i] ? FlxColor.GREEN : FlxColor.RED);
 
 			grpOptions.add(optionText);
 		}
@@ -128,16 +125,10 @@ class PerformanceSubState extends MusicBeatSubstate
 
 			getDataList();
 
-			if (dataStuff[curSelected])
-			{
-				interact(false, curSelected);
-				grpOptions.members[curSelected].color = FlxColor.RED;
-			}
-			else if (!dataStuff[curSelected])
-			{
-				interact(true, curSelected);
-				grpOptions.members[curSelected].color = FlxColor.GREEN;
-			}
+			var dataCheck:Bool = dataStuff[curSelected];
+
+			interact(!dataCheck, curSelected);
+			grpOptions.members[curSelected].color = (dataCheck ? FlxColor.RED : FlxColor.GREEN);
 
 			getDataList();
 

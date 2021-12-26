@@ -21,6 +21,10 @@ class Character extends FlxSprite
 	public var stunned:Bool = false;
 
 	// Just some settings
+	public var playerPosition:Array<Float> = [770, 450];
+	public var opponentPosition:Array<Float> = [100, 100];
+	public var girlfriendPosition:Array<Float> = [400, 130];
+
 	var colorPrefix:String = '0xFF';
 	public var healthBarColor:String;
 	
@@ -42,9 +46,16 @@ class Character extends FlxSprite
 		antialiasing = (!isMenuChar ? MythsListEngineData.antiAliasing : MythsListEngineData.menuAntialiasing);
 		healthBarColor = colorPrefix + '';
 
+		playerPosition = [770, 450];
+		opponentPosition = [100, 100];
+		girlfriendPosition = [400, 130];
+
 		switch(curCharacter)
 		{
 			case 'gf':
+				playerPosition = [400, 130];
+				opponentPosition = [400, 130];
+
 				healthBarColor = colorPrefix + 'A5004D';
 				hasDanceAnimations = true;
 
@@ -65,6 +76,9 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 
 			case 'gf-christmas':
+				playerPosition = [400, 130];
+				opponentPosition = [400, 130];
+
 				healthBarColor = colorPrefix + 'A5004D';
 				hasDanceAnimations = true;
 
@@ -114,6 +128,8 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'dad':
+				playerPosition = [770, 100];
+
 				healthBarColor = colorPrefix + 'AF66CE';
 
 				frames = Paths.getSparrowAtlas('DADDY_DEAREST', 'week1');
@@ -127,6 +143,9 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'spooky':
+				playerPosition = [770, 300];
+				opponentPosition = [100, 300];
+
 				healthBarColor = colorPrefix + 'D57E00';
 				hasDanceAnimations = true;
 
@@ -142,6 +161,8 @@ class Character extends FlxSprite
 				playAnim('danceRight');
 
 			case 'mom':
+				playerPosition = [770, 100];
+
 				healthBarColor = colorPrefix + 'D8558E';
 
 				frames = Paths.getSparrowAtlas('Mom_Assets', 'week4');
@@ -155,6 +176,8 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'mom-car':
+				playerPosition = [770, 100];
+
 				healthBarColor = colorPrefix + 'D8558E';
 
 				frames = Paths.getSparrowAtlas('momCar', 'week4');
@@ -168,6 +191,9 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'monster':
+				playerPosition = [770, 200];
+				opponentPosition = [100, 200];
+
 				healthBarColor = colorPrefix + 'F3FF6E';
 
 				frames = Paths.getSparrowAtlas('NewMonster_Assets', 'week2');
@@ -181,6 +207,9 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'monster-christmas':
+				playerPosition = [770, 230];
+				opponentPosition = [100, 230];
+
 				healthBarColor = colorPrefix + 'F3FF6E';
 
 				frames = Paths.getSparrowAtlas('christmas/monsterChristmas', 'week5');
@@ -194,6 +223,9 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'pico':
+				playerPosition = [770, 400];
+				opponentPosition = [100, 400];
+
 				healthBarColor = colorPrefix + 'B7D855';
 
 				var animationName:Array<String>;
@@ -347,6 +379,8 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'bf-veryold':
+				playerPosition = [770, 480];
+
 				healthBarColor = colorPrefix + '5FB6F1';
 
 				flipAnimations = false;
@@ -450,6 +484,9 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'senpai':
+				playerPosition = [770, 460];
+				opponentPosition = [250, 460];
+
 				healthBarColor = colorPrefix + 'FFAA6F';
 
 				frames = Paths.getSparrowAtlas('weeb/senpai', 'week6');
@@ -468,6 +505,9 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'senpai-angry':
+				playerPosition = [770, 460];
+				opponentPosition = [250, 460];
+
 				healthBarColor = colorPrefix + 'FFAA6F';
 
 				frames = Paths.getSparrowAtlas('weeb/senpai', 'week6');
@@ -486,6 +526,9 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'spirit':
+				playerPosition = [770, 200];
+				opponentPosition = [-50, 200];
+
 				healthBarColor = colorPrefix + 'FF3C6E';
 				hasTrail = true;
 
@@ -505,6 +548,9 @@ class Character extends FlxSprite
 				antialiasing = false;
 
 			case 'parents-christmas':
+				playerPosition = [770, 100];
+				opponentPosition = [-400, 100];
+
 				healthBarColor = colorPrefix + 'C55CAA';
 
 				frames = Paths.getSparrowAtlas('christmas/mom_dad_christmas_assets', 'week5');
@@ -522,6 +568,8 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'brody-foxx':
+				playerPosition = [770, 230];
+
 				healthBarColor = colorPrefix + 'FFA8C8';
 
 				flipAnimations = false;
@@ -541,6 +589,8 @@ class Character extends FlxSprite
 				playAnim('idle');
 			
 			case 'template':
+				playerPosition = [760, 390];
+
 				healthBarColor = colorPrefix + 'A1A1A1';
 
 				flipAnimations = false;
@@ -569,6 +619,8 @@ class Character extends FlxSprite
 				flipX = true;
 
 			case 'rhys':
+				playerPosition = [810, 70];
+
 				healthBarColor = colorPrefix + '7C6E89';
 	
 				frames = Paths.getSparrowAtlas('characters/rhys', 'shared');
@@ -586,6 +638,9 @@ class Character extends FlxSprite
 				playAnim('idle');
 
 			case 'mythslist':
+				playerPosition = [770, 400];
+				opponentPosition = [200, 400];
+
 				healthBarColor = colorPrefix + '29211F';
 		
 				frames = Paths.getSparrowAtlas('characters/lowbudget', 'shared');
@@ -725,5 +780,75 @@ class Character extends FlxSprite
 	public function addOffset(name:String, x:Float = 0, y:Float = 0)
 	{
 		animOffsets[name] = [x, y];
+	}
+
+	// why didn't i think about that earlier?
+	public function setCharacterPosition(character:String = 'bf')
+	{
+		switch(character.toLowerCase())
+		{
+			case 'bf' | 'boyfriend' | 'player1':
+				setPosition(PlayState.bfX, PlayState.bfY);
+			case 'dad' | 'opponent' | 'player2':
+				setPosition(PlayState.dadX, PlayState.dadY);
+			case 'gf' | 'girlfriend' | 'player3':
+				setPosition(PlayState.gfX, PlayState.gfY);
+		}
+	}
+
+	public function setCharacterCoordinate(character:String = 'bf', xValue:Float = null, yValue:Float = null, addValue:Bool = false)
+	{
+		switch(character.toLowerCase())
+		{
+			case 'bf' | 'boyfriend' | 'player1':
+				if (addValue)
+				{
+					if (xValue != null) PlayState.bfX += xValue;
+					if (yValue != null) PlayState.bfY += yValue;
+				}
+				else
+				{
+					if (xValue != null) PlayState.bfX = xValue;
+					if (yValue != null) PlayState.bfY = yValue;
+				}
+			case 'dad' | 'opponent' | 'player2':
+				if (addValue)
+				{
+					if (xValue != null) PlayState.dadX += xValue;
+					if (yValue != null) PlayState.dadY += yValue;
+				}
+				else
+				{
+					if (xValue != null) PlayState.dadX = xValue;
+					if (yValue != null) PlayState.dadY = yValue;
+				}
+			case 'gf' | 'girlfriend' | 'player3':
+				if (addValue)
+				{
+					if (xValue != null) PlayState.gfX += xValue;
+					if (yValue != null) PlayState.gfY += yValue;
+				}
+				else
+				{
+					if (xValue != null) PlayState.gfX = xValue;
+					if (yValue != null) PlayState.gfY = yValue;
+				}
+		}
+	}
+
+	public function updateCharacterCoordinate(character:String = 'bf')
+	{
+		switch(character.toLowerCase())
+		{
+			case 'bf' | 'boyfriend' | 'player1':
+				PlayState.bfX = playerPosition[0];
+				PlayState.bfY = playerPosition[1];
+			case 'dad' | 'opponent' | 'player2':
+				PlayState.dadX = opponentPosition[0];
+				PlayState.dadY = opponentPosition[1];
+			case 'gf' | 'girlfriend' | 'player3':
+				PlayState.gfX = girlfriendPosition[0];
+				PlayState.gfY = girlfriendPosition[1];
+		}
 	}
 }

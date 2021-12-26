@@ -332,13 +332,10 @@ class DialogueBox extends FlxSpriteGroup
 	{
 		cleanDialog();
 
-		swagDialogue.resetText(dialogueList[0]);
-		swagDialogue.start(0.04, true);
-
 		remove(portraitLeft);
 		remove(portraitRight);
 
-		switch(curSide)
+		switch(curSide.toLowerCase())
 		{
 			case 'left':
 			{
@@ -377,6 +374,26 @@ class DialogueBox extends FlxSpriteGroup
 				add(portraitRight);
 			}
 		}
+
+		swagDialogue.resetText(dialogueList[0]);
+
+		swagDialogue.start(0.04, true, false, null, function()
+		{
+			if (portraitLeft != null && portraitLeft.isAnimated)
+				portraitLeft.animation.play('idle');
+
+			if (portraitRight != null && portraitRight.isAnimated)
+				portraitRight.animation.play('idle');
+		});
+
+		new FlxTimer().start(0.04, function(tmr:FlxTimer)
+		{
+			if (portraitLeft != null && portraitLeft.isAnimated && portraitLeft.animation.curAnim != null)
+				portraitLeft.animation.play('talking');
+
+			if (portraitRight != null && portraitRight.isAnimated && portraitRight.animation.curAnim != null)
+				portraitRight.animation.play('talking');
+		});
 	}
 
 	function portraitSetGraphicSize(character:String = 'bf', object:Portrait)

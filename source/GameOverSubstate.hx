@@ -15,38 +15,31 @@ class GameOverSubstate extends MusicBeatSubstate
 	var stageSuffix:String = '';
 	var altLibrary:String = '';
 
-	var daBf:String = 'bf';
+	var isEnding:Bool = false;
 
-	public function new(x:Float, y:Float, character:String)
+	public function new(x:Float, y:Float, character:String = 'bf')
 	{
 		super();
 
-		daBf = character;
-
-		if (daBf == 'bf-pixel')
-			daBf += '-dead';
-
-		switch(daBf)
+		switch(character)
 		{
-			case 'bf-pixel-dead':
+			case 'bf-pixel':
+				character += '-dead';
 				stageSuffix = '-pixel';
 				altLibrary = 'week6';
 			case 'bf':
 				altLibrary = 'shared';
-			default:
-				daBf = 'bf';
-				altLibrary = 'shared';
 		}
 
-		Conductor.songPosition = 0;
-
-		bf = new Boyfriend(x, y, daBf);
+		bf = new Boyfriend(x, y, character);
 		add(bf);
 
 		camFollow = new FlxObject(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y, 1, 1);
 		add(camFollow);
 
 		FlxG.sound.play(Paths.sound('fnf_loss_sfx' + stageSuffix, 'shared'));
+
+		Conductor.songPosition = 0;
 		Conductor.changeBPM(100);
 
 		FlxG.camera.scroll.set();
@@ -60,7 +53,26 @@ class GameOverSubstate extends MusicBeatSubstate
 		super.update(elapsed);
 
 		if (controls.ACCEPT)
-			endBullshit();
+		{
+			if (!isEnding)
+			{
+				isEnding = true;
+				bf.playAnim('deathConfirm', true);
+				FlxG.sound.music.stop();
+				FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix, altLibrary));
+		
+				new FlxTimer().start(0.7, function(tmr:FlxTimer)
+				{
+					FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
+					{
+						remove(camFollow);
+						remove(bf);
+		
+						LoadingState.loadAndSwitchState(new PlayState(), true);
+					});
+				});
+			}
+		}
 
 		if (controls.BACK)
 		{
@@ -93,29 +105,5 @@ class GameOverSubstate extends MusicBeatSubstate
 		super.beatHit();
 
 		FlxG.log.add('beat');
-	}
-
-	var isEnding:Bool = false;
-
-	function endBullshit():Void
-	{
-		if (!isEnding)
-		{
-			isEnding = true;
-			bf.playAnim('deathConfirm', true);
-			FlxG.sound.music.stop();
-			FlxG.sound.play(Paths.music('gameOverEnd' + stageSuffix, altLibrary));
-
-			new FlxTimer().start(0.7, function(tmr:FlxTimer)
-			{
-				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
-				{
-					remove(camFollow);
-					remove(bf);
-
-					LoadingState.loadAndSwitchState(new PlayState(), true);
-				});
-			});
-		}
 	}
 }

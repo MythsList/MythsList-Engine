@@ -22,8 +22,8 @@ class FreeplayState extends MusicBeatState
 	var curSelected:Int = 0;
 	var curDifficulty:Int = 1;
 
+	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
-
 	var diffText:FlxText;
 	var leftArrow:FlxText;
 	var rightArrow:FlxText;
@@ -46,11 +46,11 @@ class FreeplayState extends MusicBeatState
 		DiscordClient.changePresence("In The Freeplay Menu", null);
 		#end
 
-		MythsListEngineData.dataSave();
-
 		#if debug
 			isDebug = true;
 		#end
+
+		MythsListEngineData.dataSave();
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat', 'preload'));
 		bg.antialiasing = true;
@@ -110,7 +110,7 @@ class FreeplayState extends MusicBeatState
 			iconArray.add(icon);
 		}
 
-		var scoreBG:FlxSprite = new FlxSprite(0, 0).makeGraphic(Std.int(FlxG.width * 0.25), 70, 0xFF000000);
+		scoreBG = new FlxSprite(0, 0).makeGraphic(2, 70, 0xFF000000);
 		scoreBG.alpha = 0.25;
 		scoreBG.screenCenter(X);
 		add(scoreBG);
@@ -180,7 +180,8 @@ class FreeplayState extends MusicBeatState
 
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, 0.5));
 
-		scoreText.text = "HIGHSCORE:" + lerpScore;
+		scoreText.text = 'HIGHSCORE:' + lerpScore;
+		updateObjects();
 
 		if (!selected)
 		{
@@ -231,9 +232,9 @@ class FreeplayState extends MusicBeatState
 	function startSong()
 	{
 		var songName:String = songs[curSelected].songName.toLowerCase();
-		var poop:String = Highscore.formatSong(songName, curDifficulty);
+		var formattedSong:String = Highscore.formatSong(songName, curDifficulty);
 
-		PlayState.SONG = Song.loadFromJson(poop, songName);
+		PlayState.SONG = Song.loadFromJson(formattedSong, songName);
 		PlayState.isStoryMode = false;
 		PlayState.storyDifficulty = curDifficulty;
 
@@ -269,8 +270,7 @@ class FreeplayState extends MusicBeatState
 		diffText.text = CoolUtil.difficultyArray[curDifficulty][0].toUpperCase();
 		diffText.color = CoolUtil.difficultyArray[curDifficulty][2];
 
-		diffText.setPosition(leftArrow.width + leftArrow.x + 5, leftArrow.y);
-		rightArrow.setPosition(diffText.width + diffText.x + 5, diffText.y);
+		updateObjects();
 	}
 
 	function changeSelection(change:Int = 0)
@@ -311,6 +311,17 @@ class FreeplayState extends MusicBeatState
 			if (item.targetY == 0)
 				item.alpha = 1;
 		}
+	}
+
+	function updateObjects()
+	{
+		scoreBG.scale.x = (scoreText.width + 12) / 2;
+		scoreBG.updateHitbox();
+		scoreBG.screenCenter(X);
+		scoreText.x = scoreBG.x + 6;
+		leftArrow.x = scoreText.x;
+		diffText.x = leftArrow.x + leftArrow.width + 6;
+		rightArrow.x = diffText.x + diffText.width + 6;
 	}
 }
 

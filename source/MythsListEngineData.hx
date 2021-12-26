@@ -6,7 +6,7 @@ class MythsListEngineData
 {
     // VERSION
 
-    public static var engineVersion:String = 'V.1.1.2';
+    public static var engineVersion:String = 'V.1.1.3';
 
     // KEYBINDS
 
@@ -26,6 +26,7 @@ class MythsListEngineData
     public static var songinfosDisplay:Bool;
     public static var versionDisplay:Bool;
 	public static var songpositionDisplay:Bool;
+	public static var resultsScreen:Bool;
 	public static var botPlay:Bool;
 
 	// PERFORMANCE
@@ -93,6 +94,8 @@ class MythsListEngineData
 			FlxG.save.data.versionDisplay = true;
 		if (FlxG.save.data.songpositionDisplay == null)
 			FlxG.save.data.songpositionDisplay = false;
+		if (FlxG.save.data.resultsScreen == null)
+			FlxG.save.data.resultsScreen = false;
 		if (FlxG.save.data.botPlay == null)
 			FlxG.save.data.botPlay = false;
 
@@ -170,6 +173,7 @@ class MythsListEngineData
 		MythsListEngineData.songinfosDisplay = FlxG.save.data.songinfosDisplay;
 		MythsListEngineData.versionDisplay = FlxG.save.data.versionDisplay;
 		MythsListEngineData.songpositionDisplay = FlxG.save.data.songpositionDisplay;
+		MythsListEngineData.resultsScreen = FlxG.save.data.resultsScreen;
 		MythsListEngineData.botPlay = FlxG.save.data.botPlay;
 
 		MythsListEngineData.backgroundDisplay = FlxG.save.data.backgroundDisplay;
@@ -217,6 +221,8 @@ class MythsListEngineData
 			FlxG.save.data.versionDisplay = true;
 		if (FlxG.save.data.songpositionDisplay != null)
 			FlxG.save.data.songpositionDisplay = false;
+		if (FlxG.save.data.resultsScreen != null)
+			FlxG.save.data.resultsScreen = false;
 		if (FlxG.save.data.botPlay != null)
 			FlxG.save.data.botPlay = false;
 

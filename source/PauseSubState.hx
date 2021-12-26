@@ -17,13 +17,12 @@ import flixel.util.FlxTimer;
 class PauseSubState extends MusicBeatSubstate
 {
 	var curSelected:Int = 0;
+	var canSelect:Bool = false;
 
 	var pauseMusic:FlxSound;
 
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 	var menuItems:Array<String>;
-
-	var canSelect:Bool = false;
 
 	public function new(x:Float, y:Float)
 	{

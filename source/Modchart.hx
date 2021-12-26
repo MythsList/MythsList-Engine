@@ -550,33 +550,7 @@ class Modchart
 			return curPos;
 		});
 
-		Lua_helper.add_callback(lua, 'setCharacterPos', function(character:String = 'bf', axis:String = 'X', value:Float = 0)
-		{
-			var curCharacter:Character = null;
-
-			switch(character.toLowerCase())
-			{
-				case 'dad' | 'opponent' | 'player2':
-					curCharacter = playstate.dad;
-				case 'gf' | 'girlfriend' | 'player3':
-					curCharacter = playstate.gf;
-				case 'bf' | 'boyfriend' | 'player1':
-					curCharacter = playstate.boyfriend;
-			}
-
-			if (curCharacter != null)
-			{
-				switch(axis.toUpperCase())
-				{
-					case 'X':
-						curCharacter.x = value;
-					case 'Y':
-						curCharacter.y = value;
-				}
-			}
-		});
-
-		Lua_helper.add_callback(lua, 'addCharacterPos', function(character:String = 'bf', axis:String = 'X', value:Float = 0)
+		Lua_helper.add_callback(lua, 'setCharacterPos', function(character:String = 'bf', xValue:Float = null, yValue:Float = null, addValue:Bool = false)
 		{
 			var curCharacter:Character = null;
 	
@@ -592,13 +566,8 @@ class Modchart
 	
 			if (curCharacter != null)
 			{
-				switch(axis.toUpperCase())
-				{
-					case 'X':
-						curCharacter.x += value;
-					case 'Y':
-						curCharacter.y += value;
-				}
+				curCharacter.setCharacterCoordinate(character, xValue, yValue, addValue);
+				curCharacter.setCharacterPosition(character);
 			}
 		});
 
@@ -658,13 +627,6 @@ class Modchart
 		Lua_helper.add_callback(lua, 'debugPrint', function(text:String = 'placeholder')
 		{
 			#if debug
-			luaTrace(text, true, false);
-			#end
-		});
-
-		Lua_helper.add_callback(lua, 'releasePrint', function(text:String = 'placeholder')
-		{
-			#if !debug
 			luaTrace(text, true, false);
 			#end
 		});
